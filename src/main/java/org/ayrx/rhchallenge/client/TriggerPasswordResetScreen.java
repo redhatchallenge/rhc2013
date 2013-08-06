@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author: Terry Chia (Ayrx)
+ * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class TriggerPasswordResetScreen extends Composite {
 
