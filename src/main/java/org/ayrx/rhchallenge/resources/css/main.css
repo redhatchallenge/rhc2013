@@ -1,0 +1,551 @@
+    /* 	Reset http://meyerweb.com/eric/tools/css/reset/
+            v2.0 | 20110126
+           License: none (public domain) */
+
+        /*
+          Override the default (display: inline) for
+          browsers that do not recognize HTML5 tags.
+
+          IE8 (and lower) requires a shiv:
+          http://ejohn.org/blog/html5-shiv
+        */
+
+
+        /*	Basic HTML
+        ---------------------------------------------------------*/
+
+    #main {
+        font-size: 90%;}
+
+
+        /*	Headings
+        ---------------------------------------------------------*/
+
+    .panel01 h3 {
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.38);
+    }
+
+
+        /* ================================================
+         Customizations
+        ===================================================*/
+
+    html.bg-grid { background-position: 50% 0; background-repeat: no-repeat; }
+    html.bg-grid body { filter:alpha(opacity=70); opacity: .7; }
+    html.bg-grid {background: transparent url(/cloudforms/i/12_columns.png) top center repeat-y;}
+
+
+        /*=================
+            Colors ===========
+            ===================
+            Blues
+                base		4E9FDD <- brand
+                shade		257ec2 <- panel
+                shade		15466c <- panel border
+            Reds
+                base		CC0000 <- brand
+                shade		f00001 <- callout
+                shade		800f00 <- nav band
+            ===================================*/
+
+
+        /*	Generic
+        ---------------------------------------------------*/
+
+    .goleft {float: left;}
+    .goright {float: right;}
+    .smaller {font-size: 88%;}
+    .smallest {font-size: 77%;}
+    .larger {font-size: 118%;}
+    .largest {font-size: 138%;}
+    .hide {display: none;}
+    .block {display: block;}
+    .nowrap {white-space: nowrap;}
+
+
+    .red {
+        color: #cc0000;
+    }
+    .gray {
+        color: #888888;
+    }
+
+
+        /*	Structure
+         ---------------------------------------------------*/
+
+    body {
+        margin: 0 auto;
+        width: 100%;
+    }
+    #wrapper {
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+        background: #fff url("../images/bodybg1003.png") top center repeat-y;
+    }
+    #page {
+        position: relative;
+        margin: 0 auto;
+        width: 1003px; /* 1024x768 "safe area" http://978.gs/browsers/ */
+        min-height: 725px;
+        overflow: hidden;
+    }
+
+    #main {
+        padding-top: 25px;
+    }
+    .key-bullets {
+        font-size: 109%;
+        font-family: Interstate,'Liberation Sans',Helvetica,Arial,sans-serif;
+    }
+
+    .textbox{
+        width:603px;
+        height:200px;
+        margin-left:175px;
+        margin-right:200px;
+        padding-top:75px;
+
+    }
+        /*	Side form
+        ---------------------------------------------------*/
+
+    .panel01 .required {
+        font-size: 80%;
+        color: #fc0;
+    }
+    .panel01 {
+        background-color: #CC0000;
+        border: 5px solid #800f00;
+        padding: 20px;
+        color: #fff;
+        -moz-box-shadow:4px 4px 4px -2px #777;
+        -webkit-box-shadow:4px 4px 4px -2px #777;
+        box-shadow:4px 4px 4px -2px #777;
+    }
+    .panel01 ul {
+        margin: 0;
+    }
+    .panel01 ul li {
+        list-style-type: none;
+        margin: 0 0 7px;
+        position: relative;
+        width: 100%;
+    }
+
+    .panel01 .leftcol {
+        width: 48%;
+        float:left;
+    }
+    .panel01 .rightcol {
+        width: 49%;
+        margin-left: 50%;
+    }
+    .panel01 .rightcol input {
+        *margin-left: -83px; /* IE7 */
+    }
+
+    .panel01 a {
+        color: #fff;
+        text-decoration: none;
+    }
+    .panel01 a:hover {
+        text-decoration: none;
+    }
+    .panel01 p, .panel01 label {
+        font-size: 100%;
+    }
+    .panel01 input, .panel01 textarea, .panel01 select {
+        background-color: #e1e7ec;
+        border: 1px solid #206ba5;
+        padding: 2px 1px;
+        width: inherit;
+        display: block;
+        width: 99%;
+        font-size: 100%;
+        margin-bottom: 5px;
+    }
+    .panel01 input[type="checkbox"],
+    .panel01 input[type="radio"] {width: auto; display: inline; }
+
+    .panel01 input[type="text"]:focus, .panel01 textarea:focus, .panel01 select:focus {
+        background-color: #fff;
+        border: 1px solid #400;
+    }
+    .panel01 select option {
+        background-color: #fff;
+    }
+    .panel01 .submit {
+        display: inline;
+        width: auto;
+        padding: 5px 15px 4px;
+        background-color: #257ec2;
+        color: #fff;
+        font-family: Interstate,'Liberation Sans',Helvetica,Arial,sans-serif;
+        text-transform: uppercase;
+        border: 2px solid transparent;
+    }
+    .panel01 .submit:hover,.panel02 .submit:hover {
+        border: 2px solid #15466c;
+        cursor: pointer;
+    }
+    input:-webkit-input-placeholder,
+    input:-moz-placeholder {
+        color: #a9a9a9;
+    }
+    .panel01  input:focus:required:invalid {
+        outline: none;
+    }
+    input[type=text]:focus:not([pattern]):required:invalid, input[type=email]:focus:not([pattern]):required:invalid, input[type=tel]:focus:not([pattern]):required:invalid {
+        background-color: #fff;
+        background-position: 379px -29px;
+    }
+
+
+        /*	Side blocks
+        ---------------------------------------------------*/
+    .panel02 {
+        /*border-top: 1px solid #CDCDCD;*/
+        font-size: 90%;
+        padding: 8px 0 0;
+        float:right;
+
+    }
+    .panel02 input {
+        background-color: #EDEDED;
+        /*border: 1px solid #666;*/
+        display: block;
+        font-size: 100%;
+        margin-bottom: 5px;
+        padding: 2px 1px;
+        width: 100%;
+
+
+    }
+    .panel02 .submit {
+        background-color: #eee;
+        border: 2px solid #6c6c6c;
+        color: #257EC2;
+        display: inline;
+        font-family: Interstate,'Liberation Sans',Helvetica,Arial,sans-serif;
+        padding: 5px 15px 4px;
+        text-transform: uppercase;
+        width: auto;
+    }
+
+    p.look {
+        background: url("../images/arrow.png") no-repeat scroll 1px 50% transparent;
+        padding-left: 12px;
+    }
+    ul.look li {
+        list-style-image: url("../images/arrow.png");
+        margin: 8px 0 0 12px;
+    }
+
+    #bread {
+        color: #A3A3A3;
+        font-size: 80%;
+        margin-bottom: 2em;
+    }
+    #bread a {
+        color: #A3A3A3;
+        margin: 0 2px;
+    }
+
+    #sidebar ul.social-icons {
+        color: #333;
+        float: right;
+    }
+    #sidebar ul.social-icons li {
+        list-style:none;
+        float: left;
+        padding-left: 5px;
+        margin-left: 0;
+        margin-top: -10px;
+    }
+    #sidebar ul.social-icons span {
+        padding-top: 4px;
+        width: 45px;
+        display: block;
+        font-size: .75em;
+    }
+
+        /*	Misc
+        ---------------------------------------------------*/
+    input[type="hidden"] { border: 0; padding: 0; margin: 0; background-color: transparent; }
+
+
+
+        /*	Less Framework 4
+                http://lessframework.com
+                by Joni Korpi
+                License: http://creativecommons.org/licenses/MIT/ */
+
+        /* Selection colours
+        ::selection 	 	{background: rgb(255,255,158);}
+        ::-moz-selection 	{background: rgb(255,255,158);}*/
+    img::selection 		{background: transparent;}
+    img::-moz-selection	{background: transparent;}
+    body {-webkit-tap-highlight-color: rgb(255,255,158);}
+
+
+        /*	Default Layout: 992px.
+                Gutters: 24px.
+                Outer margins: 48px.
+                Leftover space for scrollbars @1024px: 32px.
+        -------------------------------------------------------------------------------
+        cols    1     2      3      4      5      6      7      8      9      10
+        px      68    160    252    344    436    528    620    712    804    896    */
+
+    body {
+        -webkit-text-size-adjust: 100%; /* Stops Mobile Safari from auto-adjusting font-sizes */
+    }
+
+
+        /*	Tablet Layout: 768px.
+                Gutters: 24px.
+                Outer margins: 28px.
+                Inherits styles from: Default Layout.
+        -----------------------------------------------------------------
+        cols    1     2      3      4      5      6      7      8
+        px      68    160    252    344    436    528    620    712    */
+
+
+    div.myButton input {
+        background:url(../images/submit_button.png) no-repeat;
+        cursor:pointer;
+        width: 100px;
+        height: 50px;
+        border: none;
+
+    }
+    div.myButton2 input {
+        background:url(../images/login_button.png) no-repeat;
+        cursor:pointer;
+        width: 100px;
+        height: 50px;
+        border: none;
+
+    }
+
+    div.myButton3 input {
+        background:url(../images/saveprofile_button.png) no-repeat;
+        cursor:pointer;
+        width: 100px;
+        height: 50px;
+        border: none;
+
+    }
+
+    #table{
+
+        margin-left:270px;
+        margin-right:270px;
+    }
+
+    #table2{
+
+        margin-left:320px;
+        margin-right:100px;margin-top:50px;
+        margin-bottom:100px;
+    }
+
+    #profile_info{
+        margin-left:200px;
+        margin-right:200px;
+
+
+    }
+
+    .rowform {
+        height: 25px;
+    }
+
+    #footer {
+        min-height: 70px;
+        margin-top: 20px;
+        font-size: 85%;
+        color: #666;
+    }
+    #footer-nav ul.footer-nav-list {
+        margin-left: -8px;
+    }
+    #footer-nav ul.footer-nav-list li {
+        list-style: none;
+        float: left;
+        color: #666;
+        margin: 0px 8px 4px 8px;
+    }
+    #footer-nav ul.footer-nav-list li a {
+        color: #c00;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+    #footer-nav ul.footer-nav-list li a:hover {
+        text-decoration: underline;
+    }
+    #footer ul.social-icons {
+        color: #333;
+        float: right;
+    }
+    #footer ul.social-icons li {
+        list-style:none;
+        float: left;
+        padding-left: 5px;
+        margin-left: 0;
+        margin-top: -4px;
+    }
+    #footer ul.social-icons span {
+        padding-top: 4px;
+        width: 45px;
+        display: block;
+    }
+
+    .sf-menu, .sf-menu * {
+        margin:0;
+        padding:0;
+        list-style:none;
+    }
+    .sf-menu {
+        line-height:1.0;
+    }
+    .sf-menu ul {
+        position:absolute;
+        top:-999em;
+        width:18em; /* left offset of submenus need to match (see below) */
+    }
+    .sf-menu ul li {
+        width:100%;
+        padding: 0 23px;
+        border-left: 1px solid #bbb;
+        border-right: 1px solid #bbb;
+    }
+    .sf-menu ul li:last-child {
+        border-bottom: 1px solid #aaa;
+    }
+    .sf-menu li:hover {
+        visibility:inherit; /* fixes IE7 'sticky bug' */
+    }
+    .sf-menu li {
+        float:left;
+        position:relative;
+    }
+    .sf-menu a {
+        display:block;
+        position:relative;
+    }
+    .sf-menu li:hover ul,
+    .sf-menu li.sfHover ul {
+        left:0;
+        top:35px; /* match top ul list item height */
+        z-index:99;
+    }
+    ul.sf-menu li:hover li ul,
+    ul.sf-menu li.sfHover li ul {
+        top:-999em;
+    }
+    ul.sf-menu li li:hover ul,
+    ul.sf-menu li li.sfHover ul {
+        left:0em; /* match ul width */
+        top:0;
+    }
+    ul.sf-menu li li:hover li ul,
+    ul.sf-menu li li.sfHover li ul {
+        top:-999em;
+    }
+    ul.sf-menu li li li:hover ul,
+    ul.sf-menu li li li.sfHover ul {
+        left:18em; /* match ul width */
+        top:0;
+    }
+
+    .primary-nav .sf-menu {
+        float: left;
+    }
+    .primary-nav .sf-menu li a {
+        padding:11px 16px;
+        text-decoration:none;
+    }
+    .primary-nav .sf-menu li li a {
+        padding: 8px 8px 8px 0;
+        width: inherit;
+        float: none;
+        border-top:		1px solid #ccc;
+        color: #000 !important;
+        background-color: #fff !important;
+        font-weight: bold;
+        text-shadow: none;
+    }
+    .primary-nav .sf-menu li li.first a {
+        border-top: 0;
+    }
+    .primary-nav .sf-menu li li a:hover {
+        color: #c00 !important;
+    }
+    .primary-nav .sf-menu li li {
+        background: #fff url('../images/arrow.png') 13px 53% no-repeat;
+    }
+    .sf-menu li:hover, .sf-menu li.sfHover,
+    .sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active {
+        outline:		0;
+    }
+
+    .nav-band {
+        bottom: 0;
+        height: 35px;
+        margin-left: -32px;
+        position: absolute;
+        width: 1005px; /* excess is trimmed */
+        background-color: #F00; /* fallback for browsers not supporting rgba */
+        background: rgba(204, 0, 0, 0.7); /* decendent elements not effected  */
+    }
+    .nav-band .primary-nav {
+        margin: 0;
+        padding: 0;
+        list-style-type: none;
+        float: left;
+        width: 100%;
+    }
+    .primary-nav ul li a {
+        color: #fff;
+        display: block;
+        float: left;
+        text-transform: uppercase;
+        font-family: Interstate,'Liberation Sans',Helvetica,Arial,sans-serif;
+        text-shadow: 1px 1px 0 #000000;
+        font-weight: bold;
+        text-decoration: none;
+        -moz-transition: color 0.15s linear 0s, background-color 0.15s linear 0s;
+        -webkit-transition-property: background-color, color;
+        -webkit-transition-duration: 0.25s;
+    }
+
+    .primary-nav ul li a:hover {
+        cursor: pointer;
+        text-shadow: 1px 1px 0 #000000;
+        background-color: #F00;
+    }
+    .primary-nav ul li ul li a:hover {
+        background-color: transparent;
+        text-shadow: none;
+    }
+
+    .nav-first {
+        margin-left: 2.6em;
+    }
+
+    .nav-first .link,
+    .nav-link a {
+        /*background:#300;*/
+        color:#fff;
+        text-shadow:none;
+    }
+
+    .nav-first a:hover,
+    .nav-link a:hover{
+        background:#000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+

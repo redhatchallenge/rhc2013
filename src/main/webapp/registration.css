@@ -1,0 +1,114 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1;
+}
+ol, ul {
+    list-style: none;
+    margin-left: 3px;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+svg {
+    overflow: hidden; /* For IE9 */
+}
+
+h1,h2,h3,h4 {
+    margin: 0 0 .15em 0;
+    font-family: Interstate,'Liberation Sans',Helvetica,Arial,sans-serif;
+}
+h1 {
+    color: #000000;
+    font-size: 144%;
+    text-transform: uppercase;
+    line-height: 1.1em;
+    margin-bottom: 0.75em;
+}
+h2 {
+    font-size: 132%;
+    line-height: 1.1em;
+    margin-bottom: 0.75em;
+}
+h3 {
+    font-size: 118%;
+    text-transform: uppercase;
+}
+h4 {
+    font-size: 105%;
+}
+h5 {
+    font-size: 90%;
+}
+* + h2, * + h3, * + h4, * + h5, * + h6 {
+    margin-top: 1.75em;
+}
+h1 + h2, h2 + h3, h3 + h4, h4 + h5 {
+    margin-top: -.25em;
+}
+
+p, dl, hr, ol, ul, pre, table, address, fieldset, figure {
+    margin-bottom: 0.45em;
+}
+
+body {
+    font-size: small;
+    line-height: 1.4;
+    font-family: 'Liberation Sans',Helvetica,Arial,sans-serif;
+    color: #333;
+}
+
+ol {
+    list-style: decimal;
+}
+ul {
+    list-style: disc;
+}
+li {
+    margin: 0 0 6px 21px;
+}
+p, dl, hr, ol, ul, pre, table, address, fieldset, figure {
+    margin-bottom: 0.45em;
+}
+
+p {margin: .375em 0 1.3em;}
+
+a, a:link, a:active, a:visited {
+    color: #CC0000;
+    cursor: pointer;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}

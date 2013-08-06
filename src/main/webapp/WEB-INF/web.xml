@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+              http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5"
+         xmlns="http://java.sun.com/xml/ns/javaee">
+    <servlet>
+        <servlet-name>org.ayrx.rhchallenge.registration AuthenticationService</servlet-name>
+        <servlet-class>org.ayrx.rhchallenge.server.AuthenticationServiceImpl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>org.ayrx.rhchallenge.registration ProfileService</servlet-name>
+        <servlet-class>org.ayrx.rhchallenge.server.ProfileServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>org.ayrx.rhchallenge.registration AuthenticationService</servlet-name>
+        <url-pattern>/registration/AuthenticationService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>org.ayrx.rhchallenge.registration ProfileService</servlet-name>
+        <url-pattern>/registration/ProfileService</url-pattern>
+    </servlet-mapping>
+
+    <!-- Servlets -->
+    <!--<servlet>-->
+        <!--<servlet-name>greetServlet</servlet-name>-->
+        <!--<servlet-class>org.ayrx.rhchallenge.server.GreetingServiceImpl</servlet-class>-->
+    <!--</servlet>-->
+  <!---->
+    <!--<servlet-mapping>-->
+        <!--<servlet-name>greetServlet</servlet-name>-->
+        <!--<url-pattern>/registration/greet</url-pattern>-->
+    <!--</servlet-mapping>-->
+  
+    <!-- Default page to serve -->
+    <welcome-file-list>
+        <welcome-file>registration.html</welcome-file>
+    </welcome-file-list>
+
+    <!--Shiro Configuration-->
+    <listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>
+
+</web-app>

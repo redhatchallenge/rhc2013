@@ -1,0 +1,23 @@
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="res" type="org.ayrx.rhchallenge.resources.Resources"/>
+
+    <g:HTMLPanel>
+        <div class="{res.grid.clear}"/>
+        <div class="{res.grid.container_12} {res.grid.clearfix}">
+            <div id="main">
+                <div class="{res.grid.grid_12}">
+
+                    <div class="{res.grid.grid_8} {res.grid.alpha}" style="text-align:center; margin:0 auto;">
+                        <div class="{res.main.textbox}">
+                            <g:HTML ui:field="messageLabel"/>
+                        </div>
+                        <div class="{res.main.panel02} {res.grid.clearfix}" style="margin-top: 1em;"/>
+                    </div>
+                    <div class="{res.grid.clear}"/>
+                </div>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
