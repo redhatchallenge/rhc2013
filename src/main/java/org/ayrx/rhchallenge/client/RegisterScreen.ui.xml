@@ -41,6 +41,7 @@
                                 <tr>
                                     <td style="width: 174px" class="{res.main.rowform}">Email Address:</td>
                                     <td style="width: 268px" class="{res.main.rowform}"><g:TextBox ui:field="emailField" maxLength="120" visibleLength="33"/></td>
+                                    <td class="{res.main.rowform}"><g:Label ui:field="emailLabel"/></td>
                                 </tr>
                                 <tr>
                                     <td class="{res.main.rowform}">Password:</td>

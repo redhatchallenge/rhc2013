@@ -12,6 +12,7 @@ import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -26,6 +27,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.ayrx.rhchallenge.resources.Resources;
+import org.ayrx.rhchallenge.shared.FieldVerifier;
 import org.ayrx.rhchallenge.shared.Student;
 
 /**
@@ -39,6 +41,7 @@ public class RegisterScreen extends Composite {
 
     @UiField HTMLPanel htmlPanel;
     @UiField TextBox emailField;
+    @UiField Label emailLabel;
     @UiField PasswordTextBox passwordField;
     @UiField PasswordTextBox confirmPasswordField;
     @UiField TextBox firstNameField;
@@ -62,6 +65,7 @@ public class RegisterScreen extends Composite {
     private AuthenticationServiceAsync authenticationService = null;
 
     public RegisterScreen() {
+
         Resources.INSTANCE.main().ensureInjected();
         Resources.INSTANCE.grid().ensureInjected();
         Resources.INSTANCE.buttons().ensureInjected();
@@ -116,7 +120,13 @@ public class RegisterScreen extends Composite {
 
     @UiHandler("registerButton")
     public void handleRegisterButtonClick(ClickEvent event) {
-        registerStudent();
+        if(!FieldVerifier.isValidEmail(emailField.getText())) {
+            emailLabel.setText("Your email is in an invalid format!");
+        }
+
+        else {
+            registerStudent();
+        }
     }
 
     @UiHandler({"emailField", "passwordField", "confirmPasswordField", "firstNameField",

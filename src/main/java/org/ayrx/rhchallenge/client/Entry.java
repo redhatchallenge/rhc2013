@@ -3,6 +3,9 @@ package org.ayrx.rhchallenge.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -40,7 +43,27 @@ public class Entry implements EntryPoint {
             }
         });
 
-        parseTokens();
+        History.addValueChangeHandler(new ValueChangeHandler<String>() {
+            @Override
+            public void onValueChange(ValueChangeEvent<String> event) {
+                String historyToken = event.getValue();
+
+                if(historyToken.isEmpty()) {
+                    parseTokens();
+                    ContentContainer.INSTANCE.setContent(new IndexScreen());
+                }
+
+                else if(historyToken.equalsIgnoreCase("registration")) {
+                    ContentContainer.INSTANCE.setContent(new RegisterScreen());
+                }
+
+                else if(historyToken.equalsIgnoreCase("login")) {
+                    ContentContainer.INSTANCE.setContent(new LoginScreen());
+                }
+            }
+        });
+
+        History.fireCurrentHistoryState();
         RootPanel.get("footer").add(new Footer());
 
     }
