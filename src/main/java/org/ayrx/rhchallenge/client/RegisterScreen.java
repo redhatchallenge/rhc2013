@@ -132,17 +132,17 @@ public class RegisterScreen extends Composite {
     private void registerStudent() {
 
         final String email = emailField.getText();
-        String password = passwordField.getText();
+        final String password = passwordField.getText();
         final String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
-        String contact = contactField.getText();
-        String country = countryField.getItemText(countryField.getSelectedIndex());
-        String countryCode = countryCodeField.getItemText(countryCodeField.getSelectedIndex());
-        String school = schoolField.getText();
-        String lecturerFirstName = lecturerFirstNameField.getText();
-        String lecturerLastName = lecturerLastNameField.getText();
-        String lecturerEmail = lecturerEmailField.getText();
-        String language = languageField.getItemText(languageField.getSelectedIndex());
+        final String lastName = lastNameField.getText();
+        final String contact = contactField.getText();
+        final String country = countryField.getItemText(countryField.getSelectedIndex());
+        final String countryCode = countryCodeField.getItemText(countryCodeField.getSelectedIndex());
+        final String school = schoolField.getText();
+        final String lecturerFirstName = lecturerFirstNameField.getText();
+        final String lecturerLastName = lecturerLastNameField.getText();
+        final String lecturerEmail = lecturerEmailField.getText();
+        final String language = languageField.getItemText(languageField.getSelectedIndex());
 
         authenticationService = AuthenticationService.Util.getInstance();
 

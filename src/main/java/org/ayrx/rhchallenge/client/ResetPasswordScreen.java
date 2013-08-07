@@ -73,8 +73,8 @@ public class ResetPasswordScreen extends Composite {
 
     private void resetPassword() {
 
-        String email = emailLabel.getText();
-        String password = passwordField.getText();
+        final String email = emailLabel.getText();
+        final String password = passwordField.getText();
 
         resetPasswordButton.setEnabled(false);
         authenticationService = AuthenticationService.Util.getInstance();

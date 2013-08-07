@@ -186,19 +186,19 @@ public class ProfileScreen extends Composite {
 
     private void updateProfile() {
 
-        String email = emailField.getText();
-        String oldPassword = currentPasswordField.getText();
-        String newPassword = passwordField.getText();
-        String firstName = firstNameField.getText();
-        String lastName = lastNameField.getText();
-        String contact = contactField.getText();
-        String country = countryField.getItemText(countryField.getSelectedIndex());
-        String countryCode = countryCodeField.getItemText(countryCodeField.getSelectedIndex());
-        String school = schoolField.getText();
-        String lecturerFirstName = lecturerFirstNameField.getText();
-        String lecturerLastName = lecturerLastNameField.getText();
-        String lecturerEmail = lecturerEmailField.getText();
-        String language = languageField.getItemText(languageField.getSelectedIndex());
+        final String email = emailField.getText();
+        final String oldPassword = currentPasswordField.getText();
+        final String newPassword = passwordField.getText();
+        final String firstName = firstNameField.getText();
+        final String lastName = lastNameField.getText();
+        final String contact = contactField.getText();
+        final String country = countryField.getItemText(countryField.getSelectedIndex());
+        final String countryCode = countryCodeField.getItemText(countryCodeField.getSelectedIndex());
+        final String school = schoolField.getText();
+        final String lecturerFirstName = lecturerFirstNameField.getText();
+        final String lecturerLastName = lecturerLastNameField.getText();
+        final String lecturerEmail = lecturerEmailField.getText();
+        final String language = languageField.getItemText(languageField.getSelectedIndex());
 
 
         profileService = ProfileService.Util.getInstance();
@@ -215,6 +215,24 @@ public class ProfileScreen extends Composite {
             public void onSuccess(Boolean bool) {
                 if(bool) {
                     errorLabel.setText("Profile update successful!");
+                    Storage localStorage = LocalStorage.INSTANCE.getLocalStorage();
+                    /**
+                     * If browser supports HTML5 storage, stores the authenticated user's
+                     * profile data.
+                     */
+                    if(localStorage != null) {
+                        localStorage.setItem("email", email);
+                        localStorage.setItem("firstName", firstName);
+                        localStorage.setItem("lastName", lastName);
+                        localStorage.setItem("contact", contact);
+                        localStorage.setItem("country", country);
+                        localStorage.setItem("countryCode", countryCode);
+                        localStorage.setItem("school", school);
+                        localStorage.setItem("lecturerFirstName", lecturerFirstName);
+                        localStorage.setItem("lecturerLastName", lecturerLastName);
+                        localStorage.setItem("lecturerEmail", lecturerEmail);
+                        localStorage.setItem("language", language);
+                    }
                 }
 
                 else {

@@ -70,8 +70,8 @@ public class LoginScreen extends Composite {
     private void authenticateStudent() {
 
         final String email = emailField.getText();
-        String password = passwordField.getText();
-        Boolean rememberMe = rememberMeField.getValue();
+        final String password = passwordField.getText();
+        final Boolean rememberMe = rememberMeField.getValue();
 
         authenticationService = AuthenticationService.Util.getInstance();
 

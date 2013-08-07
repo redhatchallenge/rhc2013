@@ -18,11 +18,11 @@
 );
 
 CREATE TABLE reset_tokens (
-    email character varying(50) NOT NULL references contestant(email),
+    email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
     token character varying(50) NOT NULL primary key
 );
 
 CREATE TABLE confirm_tokens (
-    email character varying(50) NOT NULL references contestant(email),
+    email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
     token character varying(50) NOT NULL primary key
 );
