@@ -2,6 +2,7 @@ package org.ayrx.rhchallenge.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -68,7 +69,8 @@ public class AuthenticatedHeader extends Composite {
                 RootPanel.get("header").clear();
                 RootPanel.get("header").add(new Header());
                 ContentContainer.INSTANCE.setContent(new IndexScreen());
-                LocalStorage.INSTANCE.clearLocalStorage();
+                Storage localStorage = Storage.getLocalStorageIfSupported();
+                localStorage.clear();
             }
         });
     }

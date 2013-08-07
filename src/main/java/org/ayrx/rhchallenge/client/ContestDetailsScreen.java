@@ -37,7 +37,8 @@ public class ContestDetailsScreen extends Composite {
          * from the server through a RPC call. Else retrieves first name from the
          * local storage.
          */
-        StorageMap localStorageMap = new StorageMap(LocalStorage.INSTANCE.getLocalStorage());
+        final Storage localStorage = Storage.getLocalStorageIfSupported();
+        StorageMap localStorageMap = new StorageMap(localStorage);
         if(localStorageMap.size() != 11) {
             profileService = ProfileService.Util.getInstance();
             profileService.getProfileData(new AsyncCallback<Student>() {
@@ -54,8 +55,6 @@ public class ContestDetailsScreen extends Composite {
 
                     else {
                         welcomeLabel.setHTML("<h1>Hello,"+result.getFirstName()+"</h1>");
-                        Storage localStorage = LocalStorage.INSTANCE.getLocalStorage();
-
                         /**
                          * If browser supports HTML5 storage, stores the authenticated user's
                          * profile data.
@@ -79,8 +78,7 @@ public class ContestDetailsScreen extends Composite {
         }
 
         else {
-            String name = LocalStorage.INSTANCE.getLocalStorage().getItem("firstName");
-            welcomeLabel.setHTML("<h1>Hello,"+ name +"</h1>");
+            welcomeLabel.setHTML("<h1>Hello,"+ localStorage.getItem("firstName") +"</h1>");
         }
     }
 

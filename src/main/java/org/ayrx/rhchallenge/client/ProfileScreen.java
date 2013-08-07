@@ -67,7 +67,8 @@ public class ProfileScreen extends Composite {
          * from the server through a RPC call. Else retrieves first name from the
          * local storage.
          */
-        StorageMap localStorageMap = new StorageMap(LocalStorage.INSTANCE.getLocalStorage());
+        final Storage localStorage = Storage.getLocalStorageIfSupported();
+        StorageMap localStorageMap = new StorageMap(localStorage);
         if(localStorageMap.size() != 11) {
             profileService.getProfileData(new AsyncCallback<Student>() {
                 @Override
@@ -77,35 +78,46 @@ public class ProfileScreen extends Composite {
 
                 @Override
                 public void onSuccess(Student student) {
-                    emailField.setText(student.getEmail());
-                    firstNameField.setText(student.getFirstName());
-                    lastNameField.setText(student.getLastName());
-                    contactField.setText(student.getContact());
-                    countryField.setSelectedIndex(getIndexFromValue(student.getCountry(), countryField));
-                    countryCodeField.setSelectedIndex(getIndexFromValue(student.getCountryCode(), countryCodeField));
-                    schoolField.setText(student.getSchool());
-                    lecturerFirstNameField.setText(student.getLecturerFirstName());
-                    lecturerLastNameField.setText(student.getLecturerLastName());
-                    lecturerEmailField.setText(student.getLecturerEmail());
-                    languageField.setSelectedIndex(getIndexFromValue(student.getLanguage(), languageField));
+                    final String email = student.getEmail();
+                    final String firstName = student.getFirstName();
+                    final String lastName = student.getLastName();
+                    final String contact = student.getContact();
+                    final String country = student.getCountry();
+                    final String countryCode = student.getCountryCode();
+                    final String school = student.getSchool();
+                    final String lecturerFirstName = student.getLecturerFirstName();
+                    final String lecturerLastName = student.getLecturerLastName();
+                    final String lecturerEmail = student.getLecturerEmail();
+                    final String language = student.getLanguage();
 
-                    Storage localStorage = LocalStorage.INSTANCE.getLocalStorage();
+                    emailField.setText(email);
+                    firstNameField.setText(firstName);
+                    lastNameField.setText(lastName);
+                    contactField.setText(contact);
+                    countryField.setSelectedIndex(getIndexFromValue(country, countryField));
+                    countryCodeField.setSelectedIndex(getIndexFromValue(countryCode, countryCodeField));
+                    schoolField.setText(school);
+                    lecturerFirstNameField.setText(lecturerFirstName);
+                    lecturerLastNameField.setText(lecturerLastName);
+                    lecturerEmailField.setText(lecturerEmail);
+                    languageField.setSelectedIndex(getIndexFromValue(language, languageField));
+
                     /**
                      * If browser supports HTML5 storage, stores the authenticated user's
                      * profile data.
                      */
                     if(localStorage != null) {
-                        localStorage.setItem("email", student.getEmail());
-                        localStorage.setItem("firstName", student.getFirstName());
-                        localStorage.setItem("lastName", student.getLastName());
-                        localStorage.setItem("contact", student.getContact());
-                        localStorage.setItem("country", student.getCountry());
-                        localStorage.setItem("countryCode", student.getCountryCode());
-                        localStorage.setItem("school", student.getSchool());
-                        localStorage.setItem("lecturerFirstName", student.getLecturerFirstName());
-                        localStorage.setItem("lecturerLastName", student.getLecturerLastName());
-                        localStorage.setItem("lecturerEmail", student.getLecturerEmail());
-                        localStorage.setItem("language", student.getLanguage());
+                        localStorage.setItem("email", email);
+                        localStorage.setItem("firstName", firstName);
+                        localStorage.setItem("lastName", lastName);
+                        localStorage.setItem("contact", contact);
+                        localStorage.setItem("country", country);
+                        localStorage.setItem("countryCode", countryCode);
+                        localStorage.setItem("school", school);
+                        localStorage.setItem("lecturerFirstName", lecturerFirstName);
+                        localStorage.setItem("lecturerLastName", lecturerLastName);
+                        localStorage.setItem("lecturerEmail", lecturerEmail);
+                        localStorage.setItem("language", language);
                     }
                 }
             });
@@ -215,7 +227,7 @@ public class ProfileScreen extends Composite {
             public void onSuccess(Boolean bool) {
                 if(bool) {
                     errorLabel.setText("Profile update successful!");
-                    Storage localStorage = LocalStorage.INSTANCE.getLocalStorage();
+                    final Storage localStorage = Storage.getLocalStorageIfSupported();
                     /**
                      * If browser supports HTML5 storage, stores the authenticated user's
                      * profile data.
