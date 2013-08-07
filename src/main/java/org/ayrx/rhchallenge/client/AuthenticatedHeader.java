@@ -68,6 +68,7 @@ public class AuthenticatedHeader extends Composite {
                 RootPanel.get("header").clear();
                 RootPanel.get("header").add(new Header());
                 ContentContainer.INSTANCE.setContent(new IndexScreen());
+                LocalStorage.INSTANCE.clearLocalStorage();
             }
         });
     }

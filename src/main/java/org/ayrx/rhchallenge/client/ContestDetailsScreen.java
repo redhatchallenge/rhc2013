@@ -1,16 +1,16 @@
 package org.ayrx.rhchallenge.client;
 
+import com.google.gson.Gson;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.storage.client.Storage;
+import com.google.gwt.storage.client.StorageMap;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
-import org.ayrx.rhchallenge.resources.Resources;
 import org.ayrx.rhchallenge.shared.Student;
 
 /**
@@ -32,25 +32,56 @@ public class ContestDetailsScreen extends Composite {
 
         initWidget(UiBinder.createAndBindUi(this));
 
-        profileService = ProfileService.Util.getInstance();
-        profileService.getProfileData(new AsyncCallback<Student>() {
-            @Override
-            public void onFailure(Throwable caught) {
-                //To change body of implemented methods use File | Settings | File Templates.
-            }
-
-            @Override
-            public void onSuccess(Student result) {
-                if(result == null) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Oops, are you sure you are logged in?</h1>"));
+        /**
+         * If HTML5 storage does not contain the profile data, retrieves the data
+         * from the server through a RPC call. Else retrieves first name from the
+         * local storage.
+         */
+        StorageMap localStorageMap = new StorageMap(LocalStorage.INSTANCE.getLocalStorage());
+        if(localStorageMap.size() != 11) {
+            profileService = ProfileService.Util.getInstance();
+            profileService.getProfileData(new AsyncCallback<Student>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    //To change body of implemented methods use File | Settings | File Templates.
                 }
 
-                else {
-                    welcomeLabel.setHTML("<h1>Hello,"+result.getFirstName()+"</h1>");
-                }
-            }
-        });
+                @Override
+                public void onSuccess(Student result) {
+                    if(result == null) {
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Oops, are you sure you are logged in?</h1>"));
+                    }
 
+                    else {
+                        welcomeLabel.setHTML("<h1>Hello,"+result.getFirstName()+"</h1>");
+                        Storage localStorage = LocalStorage.INSTANCE.getLocalStorage();
+
+                        /**
+                         * If browser supports HTML5 storage, stores the authenticated user's
+                         * profile data.
+                         */
+                        if(localStorage != null) {
+                            localStorage.setItem("email", result.getEmail());
+                            localStorage.setItem("firstName", result.getFirstName());
+                            localStorage.setItem("lastName", result.getLastName());
+                            localStorage.setItem("contact", result.getContact());
+                            localStorage.setItem("country", result.getCountry());
+                            localStorage.setItem("countryCode", result.getCountryCode());
+                            localStorage.setItem("school", result.getSchool());
+                            localStorage.setItem("lecturerFirstName", result.getLecturerFirstName());
+                            localStorage.setItem("lecturerLastName", result.getLecturerLastName());
+                            localStorage.setItem("lecturerEmail", result.getLecturerEmail());
+                            localStorage.setItem("language", result.getLanguage());
+                        }
+                    }
+                }
+            });
+        }
+
+        else {
+            String name = LocalStorage.INSTANCE.getLocalStorage().getItem("firstName");
+            welcomeLabel.setHTML("<h1>Hello,"+ name +"</h1>");
+        }
     }
 
     @Override

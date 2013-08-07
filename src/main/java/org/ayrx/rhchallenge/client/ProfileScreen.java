@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.storage.client.Storage;
+import com.google.gwt.storage.client.StorageMap;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -60,27 +62,68 @@ public class ProfileScreen extends Composite {
 
         updateButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
-        profileService.getProfileData(new AsyncCallback<Student>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                ContentContainer.INSTANCE.setContent(new MessageScreen("You are probably not logged in"));
-            }
+        /**
+         * If HTML5 storage does not contain the profile data, retrieves the data
+         * from the server through a RPC call. Else retrieves first name from the
+         * local storage.
+         */
+        StorageMap localStorageMap = new StorageMap(LocalStorage.INSTANCE.getLocalStorage());
+        if(localStorageMap.size() != 11) {
+            profileService.getProfileData(new AsyncCallback<Student>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("You are probably not logged in"));
+                }
 
-            @Override
-            public void onSuccess(Student student) {
-                emailField.setText(student.getEmail());
-                firstNameField.setText(student.getFirstName());
-                lastNameField.setText(student.getLastName());
-                contactField.setText(student.getContact());
-                countryField.setSelectedIndex(getIndexFromValue(student.getCountry(), countryField));
-                countryCodeField.setSelectedIndex(getIndexFromValue(student.getCountryCode(), countryCodeField));
-                schoolField.setText(student.getSchool());
-                lecturerFirstNameField.setText(student.getLecturerFirstName());
-                lecturerLastNameField.setText(student.getLecturerLastName());
-                lecturerEmailField.setText(student.getLecturerEmail());
-                languageField.setSelectedIndex(getIndexFromValue(student.getLanguage(), languageField));
-            }
-        });
+                @Override
+                public void onSuccess(Student student) {
+                    emailField.setText(student.getEmail());
+                    firstNameField.setText(student.getFirstName());
+                    lastNameField.setText(student.getLastName());
+                    contactField.setText(student.getContact());
+                    countryField.setSelectedIndex(getIndexFromValue(student.getCountry(), countryField));
+                    countryCodeField.setSelectedIndex(getIndexFromValue(student.getCountryCode(), countryCodeField));
+                    schoolField.setText(student.getSchool());
+                    lecturerFirstNameField.setText(student.getLecturerFirstName());
+                    lecturerLastNameField.setText(student.getLecturerLastName());
+                    lecturerEmailField.setText(student.getLecturerEmail());
+                    languageField.setSelectedIndex(getIndexFromValue(student.getLanguage(), languageField));
+
+                    Storage localStorage = LocalStorage.INSTANCE.getLocalStorage();
+                    /**
+                     * If browser supports HTML5 storage, stores the authenticated user's
+                     * profile data.
+                     */
+                    if(localStorage != null) {
+                        localStorage.setItem("email", student.getEmail());
+                        localStorage.setItem("firstName", student.getFirstName());
+                        localStorage.setItem("lastName", student.getLastName());
+                        localStorage.setItem("contact", student.getContact());
+                        localStorage.setItem("country", student.getCountry());
+                        localStorage.setItem("countryCode", student.getCountryCode());
+                        localStorage.setItem("school", student.getSchool());
+                        localStorage.setItem("lecturerFirstName", student.getLecturerFirstName());
+                        localStorage.setItem("lecturerLastName", student.getLecturerLastName());
+                        localStorage.setItem("lecturerEmail", student.getLecturerEmail());
+                        localStorage.setItem("language", student.getLanguage());
+                    }
+                }
+            });
+        }
+
+        else {
+            emailField.setText(localStorageMap.get("email"));
+            firstNameField.setText(localStorageMap.get("firstName"));
+            lastNameField.setText(localStorageMap.get("lastName"));
+            contactField.setText(localStorageMap.get("contact"));
+            countryField.setSelectedIndex(getIndexFromValue(localStorageMap.get("country"), countryField));
+            countryCodeField.setSelectedIndex(getIndexFromValue(localStorageMap.get("countryCode"), countryCodeField));
+            schoolField.setText(localStorageMap.get("school"));
+            lecturerFirstNameField.setText(localStorageMap.get("lecturerFirstName"));
+            lecturerLastNameField.setText(localStorageMap.get("lecturerLastName"));
+            lecturerEmailField.setText(localStorageMap.get("lecturerEmail"));
+            languageField.setSelectedIndex(getIndexFromValue(localStorageMap.get("language"), languageField));
+        }
     }
 
     @UiHandler("countryField")

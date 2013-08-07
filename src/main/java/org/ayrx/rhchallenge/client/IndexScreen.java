@@ -13,8 +13,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import org.ayrx.rhchallenge.resources.Resources;
 
-import static com.google.gwt.query.client.GQuery.*;
-
 /**
  * @author  Terry Chia (terrycwk1994@gmail.com)
  */
