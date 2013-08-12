@@ -5,7 +5,7 @@ package org.ayrx.rhchallenge.client;
  */
 public class Jquery {
 
-    public static native void bind() /*-{
+    public static native void bind(int time) /*-{
 
         $wnd.jQuery(function(){
 
@@ -16,7 +16,7 @@ public class Jquery {
             if((new Date()) > ts){
                 // The new year is here! Count towards something else.
                 // Notice the *1000 at the end - time must be in milliseconds
-                ts = (new Date()).getTime() + 10*24*60*60*1000;
+                ts = (new Date()).getTime() + time;
                 newYear = false;
             }
 

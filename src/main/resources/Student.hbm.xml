@@ -23,5 +23,6 @@
         <property name="verified" column="verified" type="boolean"/>
         <property name="status" column="status" type="boolean"/>
         <property name="questions" column="questions" type="org.ayrx.rhchallenge.server.IntegerArrayType"/>
+        <property name="timeslot" column="timeslot" type="long"/>
     </class>
 </hibernate-mapping>

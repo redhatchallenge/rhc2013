@@ -53,6 +53,6 @@ public class IndexScreen extends Composite {
     protected void onAttach() {
         super.onAttach();
         Jquery.countdown();
-        Jquery.bind();
+        Jquery.bind(5*24*60*60*1000);
     }
 }

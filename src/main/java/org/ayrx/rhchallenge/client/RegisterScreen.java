@@ -48,6 +48,7 @@ public class RegisterScreen extends Composite {
     @UiField TextBox lastNameField;
     @UiField TextBox contactField;
     @UiField ListBox countryField;
+    @UiField ListBox regionField;
     @UiField ListBox countryCodeField;
     @UiField TextBox schoolField;
     @UiField TextBox lecturerFirstNameField;
@@ -89,31 +90,37 @@ public class RegisterScreen extends Composite {
             case 0:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(0);
+                regionField.setVisible(false);
                 break;
             // Malaysia
             case 1:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(1);
+                regionField.setVisible(false);
                 break;
             // Thailand
             case 2:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(2);
+                regionField.setVisible(false);
                 break;
             // China
             case 3:
                 languageField.setSelectedIndex(1);
                 countryCodeField.setSelectedIndex(3);
+                regionField.setVisible(true);
                 break;
             // Hong Kong
             case 4:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(4);
+                regionField.setVisible(false);
                 break;
             // Taiwan
             case 5:
                 languageField.setSelectedIndex(2);
                 countryCodeField.setSelectedIndex(5);
+                regionField.setVisible(false);
                 break;
         }
     }
@@ -146,13 +153,25 @@ public class RegisterScreen extends Composite {
         final String firstName = firstNameField.getText();
         final String lastName = lastNameField.getText();
         final String contact = contactField.getText();
-        final String country = countryField.getItemText(countryField.getSelectedIndex());
         final String countryCode = countryCodeField.getItemText(countryCodeField.getSelectedIndex());
         final String school = schoolField.getText();
         final String lecturerFirstName = lecturerFirstNameField.getText();
         final String lecturerLastName = lecturerLastNameField.getText();
         final String lecturerEmail = lecturerEmailField.getText();
         final String language = languageField.getItemText(languageField.getSelectedIndex());
+        final String country;
+
+        /**
+         * If country is China, append the region.
+         */
+        if(countryField.getItemText(countryField.getSelectedIndex()).equalsIgnoreCase("china")) {
+            country = countryField.getItemText(countryField.getSelectedIndex()) + "/" +
+                    regionField.getItemText(regionField.getSelectedIndex());
+        }
+
+        else {
+            country = countryField.getItemText(countryField.getSelectedIndex());
+        }
 
         authenticationService = AuthenticationService.Util.getInstance();
 
