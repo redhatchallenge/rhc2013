@@ -2,9 +2,11 @@ package org.ayrx.rhchallenge.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.storage.client.Storage;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -41,21 +43,6 @@ public class AuthenticatedHeader extends Composite {
         ContentContainer.INSTANCE.setContent(new IndexScreen());
     }
 
-    @UiHandler("contestDetailsLink")
-    public void handleContestDetailsLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new ContestDetailsScreen());
-    }
-
-    @UiHandler("tcLink")
-    public void handleTCLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new TCScreen());
-    }
-
-    @UiHandler("profileLink")
-    public void handleProfileLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new ProfileScreen());
-    }
-
     @UiHandler("logoutLink")
     public void handleClick(ClickEvent event) {
         authenticationService.logout(new AsyncCallback<Void>() {
@@ -68,6 +55,8 @@ public class AuthenticatedHeader extends Composite {
                 RootPanel.get("header").clear();
                 RootPanel.get("header").add(new Header());
                 ContentContainer.INSTANCE.setContent(new IndexScreen());
+                Storage localStorage = Storage.getLocalStorageIfSupported();
+                localStorage.clear();
             }
         });
     }

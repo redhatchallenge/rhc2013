@@ -5,6 +5,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
@@ -35,20 +36,5 @@ public class Header extends Composite {
     @UiHandler("indexLink")
     public void handleIndexLinkClick(ClickEvent event) {
         ContentContainer.INSTANCE.setContent(new IndexScreen());
-    }
-
-    @UiHandler("registrationLink")
-    public void handleRegistrationLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new RegisterScreen());
-    }
-
-    @UiHandler("tcLink")
-    public void handleTCLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new TCScreen());
-    }
-
-    @UiHandler("loginLink")
-    public void handleLoginLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new LoginScreen());
     }
 }

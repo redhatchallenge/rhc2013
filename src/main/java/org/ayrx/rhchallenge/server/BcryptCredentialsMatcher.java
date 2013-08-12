@@ -7,7 +7,7 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.mindrot.jbcrypt.BCrypt;
 
 /**
- * @author: Terry Chia (Ayrx)
+ * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 
 public class BcryptCredentialsMatcher implements CredentialsMatcher {
