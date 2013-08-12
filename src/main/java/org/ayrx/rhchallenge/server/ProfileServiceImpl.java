@@ -18,14 +18,11 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
     @Override
     public Student getProfileData() throws IllegalArgumentException {
         try {
-            String email = SecurityUtils.getSubject().getPrincipal().toString();
+            String contestant_id = SecurityUtils.getSubject().getPrincipal().toString();
 
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
-
-            Criteria criteria = session.createCriteria(Student.class);
-            criteria.add(Restrictions.eq("email", email));
-            Student student = (Student)criteria.uniqueResult();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(contestant_id));
             session.close();
 
             return student;
@@ -54,14 +51,12 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
         language = SecurityUtil.escapeInput(language);
 
         try {
-            String principal = SecurityUtils.getSubject().getPrincipal().toString();
+            String contestant_id = SecurityUtils.getSubject().getPrincipal().toString();
+
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(contestant_id));
 
-            Criteria criteria = session.createCriteria(Student.class);
-            criteria.add(Restrictions.eq("email", principal));
-
-            Student student = (Student)criteria.uniqueResult();
             student.setEmail(email);
 
             if(!newPassword.isEmpty()) {

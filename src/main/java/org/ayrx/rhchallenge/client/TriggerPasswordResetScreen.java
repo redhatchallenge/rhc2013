@@ -21,7 +21,7 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author: Terry Chia (Ayrx)
+ * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class TriggerPasswordResetScreen extends Composite {
 
@@ -55,8 +55,8 @@ public class TriggerPasswordResetScreen extends Composite {
 
     private void resetPassword() {
 
-        String email = emailField.getText();
-        String contact = contactField.getText();
+        final String email = emailField.getText();
+        final String contact = contactField.getText();
 
         authenticationService = AuthenticationService.Util.getInstance();
 

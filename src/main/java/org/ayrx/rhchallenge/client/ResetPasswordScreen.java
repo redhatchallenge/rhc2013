@@ -18,7 +18,7 @@ import com.google.gwt.user.client.ui.PasswordTextBox;
 import com.google.gwt.user.client.ui.Widget;
 
 /**
- * @author: Terry Chia (Ayrx)
+ * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class ResetPasswordScreen extends Composite {
 
@@ -73,8 +73,8 @@ public class ResetPasswordScreen extends Composite {
 
     private void resetPassword() {
 
-        String email = emailLabel.getText();
-        String password = passwordField.getText();
+        final String email = emailLabel.getText();
+        final String password = passwordField.getText();
 
         resetPasswordButton.setEnabled(false);
         authenticationService = AuthenticationService.Util.getInstance();

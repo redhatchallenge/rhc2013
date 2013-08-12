@@ -7,13 +7,12 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.Widget;
 import org.ayrx.rhchallenge.resources.Resources;
-
-import static com.google.gwt.query.client.GQuery.*;
 
 /**
  * @author  Terry Chia (terrycwk1994@gmail.com)
@@ -47,7 +46,7 @@ public class IndexScreen extends Composite {
 
     @UiHandler({"registerImage", "challengeLink"})
     public void handleClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new RegisterScreen());
+        History.newItem("registration", true);
     }
 
     @Override
@@ -56,6 +55,4 @@ public class IndexScreen extends Composite {
         Jquery.countdown();
         Jquery.bind();
     }
-
-
 }

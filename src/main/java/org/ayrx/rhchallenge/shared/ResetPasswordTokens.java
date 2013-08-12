@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import java.io.Serializable;
 
 /**
- * @author: Terry Chia (Ayrx)
+ * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 @Entity
 public class ResetPasswordTokens implements Serializable {

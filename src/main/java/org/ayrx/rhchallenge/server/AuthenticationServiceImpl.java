@@ -124,15 +124,29 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     @Override
     public Boolean authenticateStudent(String email, String password, Boolean rememberMe) throws IllegalArgumentException {
 
-        UsernamePasswordToken token = new UsernamePasswordToken(email, password);
-        token.setRememberMe(rememberMe);
-
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Subject currentUser = SecurityUtils.getSubject();
 
         try {
+            /**
+             * This retrieves the contestant ID to use as the "username"
+             * for the authentication process. This is to avoid problems
+             * with the current session when the email is updated in a
+             * normal profile update.
+             */
+            session.beginTransaction();
+            Criteria criteria = session.createCriteria(Student.class);
+            criteria.add(Restrictions.eq("email", email));
+            Student student = (Student)criteria.uniqueResult();
+            session.close();
+
+            UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
+            token.setRememberMe(rememberMe);
+
             currentUser.login(token);
             return true;
         }   catch (AuthenticationException e) {
+            session.close();
             return false;
         }
     }

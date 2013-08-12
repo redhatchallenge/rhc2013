@@ -5,7 +5,7 @@ import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 
 /**
- * @author: Terry Chia (Ayrx)
+ * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class EmailUtil {
 
