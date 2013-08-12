@@ -43,16 +43,6 @@ public class AuthenticatedHeader extends Composite {
         ContentContainer.INSTANCE.setContent(new IndexScreen());
     }
 
-    @UiHandler("contestDetailsLink")
-    public void handleContestDetailsLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new ContestDetailsScreen());
-    }
-
-    @UiHandler("profileLink")
-    public void handleProfileLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new ProfileScreen());
-    }
-
     @UiHandler("logoutLink")
     public void handleClick(ClickEvent event) {
         authenticationService.logout(new AsyncCallback<Void>() {
