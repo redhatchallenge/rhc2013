@@ -50,7 +50,6 @@ public class Entry implements EntryPoint {
 
                 if(historyToken.isEmpty()) {
                     parseTokens();
-                    ContentContainer.INSTANCE.setContent(new IndexScreen());
                 }
 
                 else if(historyToken.equalsIgnoreCase("registration")) {
@@ -59,6 +58,18 @@ public class Entry implements EntryPoint {
 
                 else if(historyToken.equalsIgnoreCase("login")) {
                     ContentContainer.INSTANCE.setContent(new LoginScreen());
+                }
+
+                else if(historyToken.equalsIgnoreCase("tc")) {
+                    ContentContainer.INSTANCE.setContent(new TCScreen());
+                }
+
+                else if(historyToken.equalsIgnoreCase("profile")) {
+                    ContentContainer.INSTANCE.setContent(new ProfileScreen());
+                }
+
+                else if(historyToken.equalsIgnoreCase("details")) {
+                    ContentContainer.INSTANCE.setContent(new ContestDetailsScreen());
                 }
             }
         });

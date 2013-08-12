@@ -37,19 +37,4 @@ public class Header extends Composite {
     public void handleIndexLinkClick(ClickEvent event) {
         ContentContainer.INSTANCE.setContent(new IndexScreen());
     }
-
-    @UiHandler("registrationLink")
-    public void handleRegistrationLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new RegisterScreen());
-    }
-
-    @UiHandler("tcLink")
-    public void handleTCLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new TCScreen());
-    }
-
-    @UiHandler("loginLink")
-    public void handleLoginLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new LoginScreen());
-    }
 }

@@ -46,7 +46,6 @@ public class IndexScreen extends Composite {
 
     @UiHandler({"registerImage", "challengeLink"})
     public void handleClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new RegisterScreen());
         History.newItem("registration", true);
     }
 
@@ -56,6 +55,4 @@ public class IndexScreen extends Composite {
         Jquery.countdown();
         Jquery.bind();
     }
-
-
 }
