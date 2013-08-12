@@ -94,17 +94,17 @@ public class Entry implements EntryPoint {
             authenticationService.setConfirmationStatus(params.get(CONFIRM_TOKEN).get(0), new AsyncCallback<Boolean>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("Error with your confirmation token"));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Error with your confirmation token</h1>"));
                 }
 
                 @Override
                 public void onSuccess(Boolean result) {
                     if(result) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("Thank you for confirming your account!"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Thank you for confirming your account!</h1>"));
                     }
 
                     else {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("Error with your confirmation token"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Error with your confirmation token</h1>"));
                     }
                 }
             });

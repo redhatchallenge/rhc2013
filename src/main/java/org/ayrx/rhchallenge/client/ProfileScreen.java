@@ -42,6 +42,7 @@ public class ProfileScreen extends Composite {
     @UiField TextBox lastNameField;
     @UiField TextBox contactField;
     @UiField ListBox countryField;
+    @UiField ListBox regionField;
     @UiField ListBox countryCodeField;
     @UiField TextBox schoolField;
     @UiField TextBox lecturerFirstNameField;
@@ -94,13 +95,25 @@ public class ProfileScreen extends Composite {
                     firstNameField.setText(firstName);
                     lastNameField.setText(lastName);
                     contactField.setText(contact);
-                    countryField.setSelectedIndex(getIndexFromValue(country, countryField));
                     countryCodeField.setSelectedIndex(getIndexFromValue(countryCode, countryCodeField));
                     schoolField.setText(school);
                     lecturerFirstNameField.setText(lecturerFirstName);
                     lecturerLastNameField.setText(lecturerLastName);
                     lecturerEmailField.setText(lecturerEmail);
                     languageField.setSelectedIndex(getIndexFromValue(language, languageField));
+
+                    /**
+                     * Populates both the country and region field if country is China.
+                     */
+                    if(country.substring(0,5).equalsIgnoreCase("china")) {
+                        regionField.setVisible(true);
+                        countryField.setSelectedIndex(getIndexFromValue("China", countryField));
+                        regionField.setSelectedIndex(getIndexFromValue(country.substring(6), regionField));
+                    }
+
+                    else {
+                        countryField.setSelectedIndex(getIndexFromValue(country, countryField));
+                    }
 
                     /**
                      * If browser supports HTML5 storage, stores the authenticated user's
@@ -128,13 +141,25 @@ public class ProfileScreen extends Composite {
             firstNameField.setText(localStorageMap.get("firstName"));
             lastNameField.setText(localStorageMap.get("lastName"));
             contactField.setText(localStorageMap.get("contact"));
-            countryField.setSelectedIndex(getIndexFromValue(localStorageMap.get("country"), countryField));
             countryCodeField.setSelectedIndex(getIndexFromValue(localStorageMap.get("countryCode"), countryCodeField));
             schoolField.setText(localStorageMap.get("school"));
             lecturerFirstNameField.setText(localStorageMap.get("lecturerFirstName"));
             lecturerLastNameField.setText(localStorageMap.get("lecturerLastName"));
             lecturerEmailField.setText(localStorageMap.get("lecturerEmail"));
             languageField.setSelectedIndex(getIndexFromValue(localStorageMap.get("language"), languageField));
+
+            /**
+             * Populates both the country and region field if country is China.
+             */
+            if(localStorageMap.get("country").substring(0,5).equalsIgnoreCase("china")) {
+                regionField.setVisible(true);
+                countryField.setSelectedIndex(getIndexFromValue("China", countryField));
+                regionField.setSelectedIndex(getIndexFromValue(localStorageMap.get("country").substring(6), regionField));
+            }
+
+            else {
+                countryField.setSelectedIndex(getIndexFromValue(localStorageMap.get("country"), countryField));
+            }
         }
     }
 
@@ -145,31 +170,37 @@ public class ProfileScreen extends Composite {
             case 0:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(0);
+                regionField.setVisible(false);
                 break;
             // Malaysia
             case 1:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(1);
+                regionField.setVisible(false);
                 break;
             // Thailand
             case 2:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(2);
+                regionField.setVisible(false);
                 break;
             // China
             case 3:
                 languageField.setSelectedIndex(1);
                 countryCodeField.setSelectedIndex(3);
+                regionField.setVisible(true);
                 break;
             // Hong Kong
             case 4:
                 languageField.setSelectedIndex(2);
                 countryCodeField.setSelectedIndex(4);
+                regionField.setVisible(false);
                 break;
             // Taiwan
             case 5:
                 languageField.setSelectedIndex(2);
                 countryCodeField.setSelectedIndex(5);
+                regionField.setVisible(false);
                 break;
         }
     }
@@ -204,14 +235,25 @@ public class ProfileScreen extends Composite {
         final String firstName = firstNameField.getText();
         final String lastName = lastNameField.getText();
         final String contact = contactField.getText();
-        final String country = countryField.getItemText(countryField.getSelectedIndex());
         final String countryCode = countryCodeField.getItemText(countryCodeField.getSelectedIndex());
         final String school = schoolField.getText();
         final String lecturerFirstName = lecturerFirstNameField.getText();
         final String lecturerLastName = lecturerLastNameField.getText();
         final String lecturerEmail = lecturerEmailField.getText();
         final String language = languageField.getItemText(languageField.getSelectedIndex());
+        final String country;
 
+        /**
+         * If country is China, append the region.
+         */
+        if(countryField.getItemText(countryField.getSelectedIndex()).equalsIgnoreCase("china")) {
+            country = countryField.getItemText(countryField.getSelectedIndex()) + "/" +
+                    regionField.getItemText(regionField.getSelectedIndex());
+        }
+
+        else {
+            country = countryField.getItemText(countryField.getSelectedIndex());
+        }
 
         profileService = ProfileService.Util.getInstance();
 

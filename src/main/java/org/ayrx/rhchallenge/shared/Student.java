@@ -25,6 +25,7 @@ public class Student implements Serializable {
     private Boolean verified = false;
     private Boolean status = true;
     private int[] questions = {};
+    private long timeslot;
 
     public int getContestantId() {
         return contestantId;
@@ -152,5 +153,13 @@ public class Student implements Serializable {
 
     public void setQuestions(int[] questions) {
         this.questions = questions;
+    }
+
+    public long getTimeslot() {
+        return timeslot;
+    }
+
+    public void setTimeslot(long timeslot) {
+        this.timeslot = timeslot;
     }
 }

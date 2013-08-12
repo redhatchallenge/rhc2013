@@ -14,7 +14,8 @@
     language character varying(40) NOT NULL,
     verified boolean DEFAULT false NOT NULL,
     status boolean DEFAULT true NOT NULL,
-    questions int[] DEFAULT '{}'
+    questions int[] DEFAULT '{}',
+    timeslot bigint DEFAULT NULL
 );
 
 CREATE TABLE reset_tokens (

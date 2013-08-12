@@ -89,11 +89,11 @@ public class ResetPasswordScreen extends Composite {
             @Override
             public void onSuccess(Boolean result) {
                 if(result) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("Password reset is successful!"));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Password reset is successful!</h1>"));
                 }
 
                 else {
-                    errorLabel.setText("An unexpected error has occurred, please try resetting your password again.");
+                    errorLabel.setText("<h1>An unexpected error has occurred, please try resetting your password again.</h1>");
                     resetPasswordButton.setEnabled(true);
                 }
             }

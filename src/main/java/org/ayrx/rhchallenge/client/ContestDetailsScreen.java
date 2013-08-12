@@ -86,6 +86,6 @@ public class ContestDetailsScreen extends Composite {
     protected void onAttach() {
         super.onAttach();
         Jquery.countdown();
-        Jquery.bind();
+        Jquery.bind(10*24*60*60*1000);
     }
 }

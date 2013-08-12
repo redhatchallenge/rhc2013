@@ -15,6 +15,14 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
+import org.infinispan.Cache;
+import org.infinispan.configuration.cache.Configuration;
+import org.infinispan.configuration.cache.ConfigurationBuilder;
+import org.infinispan.configuration.global.GlobalConfigurationBuilder;
+import org.infinispan.manager.DefaultCacheManager;
+import org.infinispan.manager.EmbeddedCacheManager;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.util.HashSet;
 import java.util.Random;
@@ -24,6 +32,21 @@ import java.util.Set;
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class AuthenticationServiceImpl extends RemoteServiceServlet implements AuthenticationService {
+
+    private Cache<String, Integer> cache;
+
+    public AuthenticationServiceImpl() {
+        GlobalConfigurationBuilder global = new GlobalConfigurationBuilder();
+        global.globalJmxStatistics()
+                .allowDuplicateDomains(true).jmxDomain("org.ayrx.rhchallenge");
+        ConfigurationBuilder builder = new ConfigurationBuilder();
+        Configuration config = builder.build(true);
+        EmbeddedCacheManager cacheManager = new DefaultCacheManager(config);
+        cache = cacheManager.getCache();
+
+        cache.put("A1", 0);
+        cache.put("A2", 0);
+    }
 
     @Override
     public Boolean registerStudent(String email, String password, String firstName, String lastName,
@@ -198,6 +221,10 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 int[] questionsArray = ArrayUtils.toPrimitive(arr);
 
                 student.setQuestions(questionsArray);
+
+                String timeslot = assignTimeslot(student.getCountry());
+                student.setTimeslot(convertTimeSlot(timeslot));
+
                 student.setVerified(true);
 
                 session.update(student);
@@ -208,6 +235,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 newSession.delete(tokens);
                 newSession.getTransaction().commit();
 
+                cache.replace(timeslot, cache.get(timeslot)+1);
                 return true;
             }
 
@@ -373,5 +401,57 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
         }
 
         return listOfQuestions;
+    }
+
+    /**
+     * Assigns time slot based on the country
+     *
+     * @param country  Input country
+     * @return  Assigned time slot. Null if none available
+     */
+    private String assignTimeslot(String country) {
+
+        if(country.substring(0,5).equalsIgnoreCase("china")) {
+            return null;
+        }
+
+        else {
+            if(cache.get("A1") <=300) {
+                return "A1";
+            }
+
+            else if(cache.get("A2") <= 300) {
+                return "A2";
+            }
+
+            else {
+                return null;
+            }
+        }
+    }
+
+    /**
+     * Converts assigned time slot into an actual time value.
+     *
+     * @param timeslot  Timeslot to be converted
+     * @return  Actual time value in millisecond format
+     */
+    private long convertTimeSlot(String timeslot) {
+
+        DateTimeZone.setDefault(DateTimeZone.UTC);
+
+        if(timeslot == null) {
+            return 0;
+        }
+
+        if(timeslot.equalsIgnoreCase("A1")) {
+            DateTime a1Time = new DateTime(2013, 12, 07, 14, 0);
+            return a1Time.toInstant().getMillis();
+        }
+
+        else {
+            DateTime a2Time = new DateTime(2013, 12, 07, 16, 0);
+            return a2Time.toInstant().getMillis();
+        }
     }
 }
