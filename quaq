@@ -1,0 +1,107 @@
+commit 1d5059cf896f1a93ee8893561b0d64ac001fe595
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Tue Aug 13 10:05:15 2013 +0800
+
+    Added the phone number formats for the various countries.
+
+commit 7e3e5c02d7cab019dc30cff43c5774cbcfef76a7
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Mon Aug 12 17:50:59 2013 +0800
+
+    Added WatermarkedTextBox class
+
+commit aa2771365dcb37365b5920b6193d919deacca8fd
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Mon Aug 12 16:12:16 2013 +0800
+
+    Added in code to assign timeslots upon confirmation
+    
+    * Timeslot is assigned upon confirmation of the account through
+      email.
+    * If the account is from any country besides China, a timeslot will
+      be assigned based on a first come, first serve basis.
+    * Timeslot will be stored in the database using a millisecond format.
+      Any part of the application that needs to display a nicely formatted
+      time has to parse this millisecond format. This is made easy using
+      the joda-time library.
+
+commit 956a2119c01b0651d3a93433bb45351faad81ef3
+Merge: bdaef91 44c1c74
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Sun Aug 11 20:23:10 2013 -0700
+
+    Merge pull request #1 from Ayrx/master
+    
+    Local Storage // History Tokens // Bug fix
+
+commit 44c1c74ee17106d57479af442a367e337fd4e939
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Mon Aug 12 11:03:08 2013 +0800
+
+    Fixed a bug that occurs when email is changed twice in a single session.
+    
+    The bug was caused due to Shiro using the email address as the primary
+    pricipal of the authenticated session. This causes issues if the email
+    address is changed as Shiro offers no avenue for updating the pricipal.
+    
+    The bug is fixed by changing the authentication process to use the
+    never-changing contestant_id primary key of the Student class.
+
+commit 0b6936c45b3b319b08c19377fca46abc19e775e6
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Mon Aug 12 10:17:18 2013 +0800
+
+    Added history tokens for most of the links.
+
+commit 3f5836d6b3b0b738333517de27f1b4ce23aff8a6
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Wed Aug 7 16:21:44 2013 +0800
+
+    Added in basic support for history tokens.
+    
+    TODO: Go through every single instance of setContent() and ensure
+    that history tokens are set.
+    
+    I also added a new class containing some basic field validations.
+
+commit af02819860683d379c6b7e363f392dca46ffe663
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Wed Aug 7 13:08:39 2013 +0800
+
+    Removed the LocalStorage class as it isn't needed.
+
+commit af006d07b6be7f6660fcd42c7e96bc9a2ff98064
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Wed Aug 7 11:32:42 2013 +0800
+
+    Modified the update profile code to update the local storage as well
+    
+    Modified the update profile functionality to modify the profile data
+    stored in the local storage in addition to the database. This ensures
+    that the user experience is as seamless as possible.
+
+commit bfe86172439c90128351201b591841d5f85c9fbb
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Wed Aug 7 10:46:24 2013 +0800
+
+    Introduces the use of local storage into the application
+    
+    This commit is an attempt to reduce the number of RPC calls to the
+    server. By caching the user's profile data locally using the storage
+    space introduced with HTML 5, the number of RPC calls to retrieve
+    the profile data is reduced.
+    
+    The code has been introduced in two screens, the ContestDetailsScreen
+    as well as the ProfileScreen.
+
+commit 50f224ea16ca43c2af73c9a8dc3f64f4ff9c7529
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Tue Aug 6 17:31:17 2013 +0800
+
+    Updated file header
+
+commit bdaef915c3bbe1ad3209684a0c47c654a17d7ceb
+Author: Ayrx <terrycwk1994@gmail.com>
+Date:   Tue Aug 6 17:20:10 2013 +0800
+
+    Initial Commit

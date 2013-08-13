@@ -112,3 +112,8 @@ a, a:link, a:active, a:visited {
 a:hover {
     text-decoration: underline;
 }
+
+.watermarkInput {
+    font-style: italic;
+    color: #a9a9a9;
+}

@@ -5,26 +5,26 @@
          version="2.5"
          xmlns="http://java.sun.com/xml/ns/javaee">
     <servlet>
-        <servlet-name>org.ayrx.rhchallenge.registration AuthenticationService</servlet-name>
-        <servlet-class>org.ayrx.rhchallenge.server.AuthenticationServiceImpl</servlet-class>
+        <servlet-name>org.redhatchallenge.rhc2013 AuthenticationService</servlet-name>
+        <servlet-class>org.redhatchallenge.rhc2013.server.AuthenticationServiceImpl</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>org.ayrx.rhchallenge.registration ProfileService</servlet-name>
-        <servlet-class>org.ayrx.rhchallenge.server.ProfileServiceImpl</servlet-class>
+        <servlet-name>org.redhatchallenge.rhc2013 ProfileService</servlet-name>
+        <servlet-class>org.redhatchallenge.rhc2013.server.ProfileServiceImpl</servlet-class>
     </servlet>
     <servlet-mapping>
-        <servlet-name>org.ayrx.rhchallenge.registration AuthenticationService</servlet-name>
+        <servlet-name>org.redhatchallenge.rhc2013 AuthenticationService</servlet-name>
         <url-pattern>/registration/AuthenticationService</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>org.ayrx.rhchallenge.registration ProfileService</servlet-name>
+        <servlet-name>org.redhatchallenge.rhc2013 ProfileService</servlet-name>
         <url-pattern>/registration/ProfileService</url-pattern>
     </servlet-mapping>
 
     <!-- Servlets -->
     <!--<servlet>-->
         <!--<servlet-name>greetServlet</servlet-name>-->
-        <!--<servlet-class>org.ayrx.rhchallenge.server.GreetingServiceImpl</servlet-class>-->
+        <!--<servlet-class>org.redhatchallengeatchallenge.rhc2013.server.GreetingServiceImpl</servlet-class>-->
     <!--</servlet>-->
   <!---->
     <!--<servlet-mapping>-->
