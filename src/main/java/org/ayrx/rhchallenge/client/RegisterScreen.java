@@ -46,7 +46,7 @@ public class RegisterScreen extends Composite {
     @UiField PasswordTextBox confirmPasswordField;
     @UiField TextBox firstNameField;
     @UiField TextBox lastNameField;
-    @UiField TextBox contactField;
+    @UiField WatermarkedTextBox contactField;
     @UiField ListBox countryField;
     @UiField ListBox regionField;
     @UiField ListBox countryCodeField;
@@ -81,6 +81,8 @@ public class RegisterScreen extends Composite {
         table.setBorder(0);
 
         registerButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
+
+        contactField.setWatermark("XXXXXXXX");
     }
 
     @UiHandler("countryField")
@@ -91,36 +93,48 @@ public class RegisterScreen extends Composite {
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(0);
                 regionField.setVisible(false);
+                contactField.setText("");
+                contactField.setWatermark("XXXXXXXX");
                 break;
             // Malaysia
             case 1:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(1);
                 regionField.setVisible(false);
+                contactField.setText("");
+                contactField.setWatermark("0XXXXXXXXX");
                 break;
             // Thailand
             case 2:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(2);
                 regionField.setVisible(false);
+                contactField.setText("");
+                contactField.setWatermark("0XXXXXXXXX");
                 break;
             // China
             case 3:
                 languageField.setSelectedIndex(1);
                 countryCodeField.setSelectedIndex(3);
                 regionField.setVisible(true);
+                contactField.setText("");
+                contactField.setWatermark("1XX-XXXX-XXXX");
                 break;
             // Hong Kong
             case 4:
                 languageField.setSelectedIndex(0);
                 countryCodeField.setSelectedIndex(4);
                 regionField.setVisible(false);
+                contactField.setText("");
+                contactField.setWatermark("XXXXXXXX");
                 break;
             // Taiwan
             case 5:
                 languageField.setSelectedIndex(2);
                 countryCodeField.setSelectedIndex(5);
                 regionField.setVisible(false);
+                contactField.setText("");
+                contactField.setWatermark("9XXXXXXXX");
                 break;
         }
     }
