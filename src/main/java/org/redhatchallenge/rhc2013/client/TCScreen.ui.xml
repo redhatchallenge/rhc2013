@@ -1,6 +1,9 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
+             ui:generateLocales="en">
     <g:HTMLPanel>
-        <p>This should be the T&amp;C Page</p>
+        <p><ui:msg description="TC Content"> This should be the T&amp;C Page</ui:msg></p>
     </g:HTMLPanel>
 </ui:UiBinder>

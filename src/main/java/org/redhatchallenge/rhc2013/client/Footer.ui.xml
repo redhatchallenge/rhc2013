@@ -1,7 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
+             ui:generateLocales="en">
 
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
@@ -11,15 +14,15 @@
             <div id="footer-nav">
 
                 <ul class="{res.main.footerNavList}">
-                    <li><a target="_blank" href="http://www.redhat.com/legal/privacy_statement.html">Privacy Policy</a></li>
-                    <li><a target="_blank" href="http://www.redhat.com/legal/legal_statement.html">Terms of Use</a></li>
-                    <li><a target="_blank" href="http://www.redhat.com/about/contact/">Contact Us</a></li>
-                    <li><a target="_blank" href="http://www.redhat.com/about/">About Red Hat</a></li>
+                    <li><a target="_blank" href="http://www.redhat.com/legal/privacy_statement.html"><ui:msg description="Footer Private Policy">Privacy Policy</ui:msg></a></li>
+                    <li><a target="_blank" href="http://www.redhat.com/legal/legal_statement.html"><ui:msg description="Footer TOC">Terms of Use</ui:msg></a></li>
+                    <li><a target="_blank" href="http://www.redhat.com/about/contact/"><ui:msg description="Footer Contact Us">Contact Us</ui:msg></a></li>
+                    <li><a target="_blank" href="http://www.redhat.com/about/"><ui:msg description="Footer About">About Red Hat</ui:msg></a></li>
                 </ul>
 
                 <div class="{res.grid.clear}"/>
 
-                <p>Copyright  &copy;2013 Red Hat, Inc.</p>
+                <p><ui:msg description="Copyright">Copyright  &copy;2013 Red Hat, Inc.</ui:msg></p>
 
             </div><!-- /#footer-nav -->
 

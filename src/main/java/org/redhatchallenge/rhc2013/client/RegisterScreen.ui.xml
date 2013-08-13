@@ -2,7 +2,10 @@
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
-             xmlns:my='urn:import:org.redhatchallenge.rhc2013.client'>
+             xmlns:my='urn:import:org.redhatchallenge.rhc2013.client'
+             ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
+             ui:generateKeys="com.google.gwt.i18n.rebind.keygen.MD5KeyGenerator"
+             ui:generateLocales="default">
 
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
@@ -13,7 +16,7 @@
                 <div class="{res.grid.grid_12}">
                     <div id="sidebar" style="float: right">
                         <ul class="{res.main.socialIcons}">
-                            <li><span style="position: relative; top: 4px; left: -2px;"><strong>Connect:</strong></span></li>
+                            <li><span style="position: relative; top: 4px; left: -2px;"><strong><ui:msg description="Register Screen Connect">Connect:</ui:msg></strong></span></li>
                             <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
                         </ul>
                     </div>
@@ -23,8 +26,8 @@
                             <table ui:field="table" style="width: 563px">
                                 <tr>
                                     <td colspan="2">
-                                        <h1>REGISTRATION</h1>
-                                        <h5>*Please fill in all the required fields below.</h5>
+                                        <h1><ui:msg description="RegisterScreen Header1">REGISTRATION</ui:msg></h1>
+                                        <h5><ui:msg description="RegisterScreen Header1">*Please fill in all the required fields below.</ui:msg></h5>
                                     </td>
                                 </tr>
                                 <tr>
@@ -35,41 +38,41 @@
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <font color="#CC0000">PERSONAL DETAILS</font><div class="border2" style="width:360px; color: #CC0000; border-bottom: solid 3px"/>
+                                        <font color="#CC0000"><ui:msg description="RegisterScreen Personal Details">PERSONAL DETAILS</ui:msg></font><div class="border2" style="width:360px; color: #CC0000; border-bottom: solid 3px"/>
                                     </td>
                                 </tr>
                                 <tr><td colspan="2">&nbsp;</td></tr>
                                 <tr>
-                                    <td style="width: 174px" class="{res.main.rowform}">Email Address:</td>
+                                    <td style="width: 174px" class="{res.main.rowform}"><ui:msg description="RegisterScreen Email Address">Email Address:</ui:msg></td>
                                     <td style="width: 268px" class="{res.main.rowform}"><g:TextBox ui:field="emailField" maxLength="120" visibleLength="33"/></td>
                                     <td class="{res.main.rowform}"><g:Label ui:field="emailLabel"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Password:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Password">Password:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="passwordField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Confirm Password:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Confirm Password">Confirm Password:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="confirmPasswordField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">First Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen First Name">First Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="firstNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Last Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Last Name">Last Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lastNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Country:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Country">Country:</ui:msg></td>
                                     <td class="{res.main.rowform}">
                                         <g:ListBox ui:field="countryField" visibleItemCount="1">
-                                            <g:item value="1">Singapore</g:item>
-                                            <g:item value="2">Malaysia</g:item>
-                                            <g:item value="3">Thailand</g:item>
-                                            <g:item value="4">China</g:item>
-                                            <g:item value="5">Hong Kong</g:item>
-                                            <g:item value="6">Taiwan</g:item>
+                                            <g:item value="1"><ui:msg description="RegisterScreen Singapore">Singapore</ui:msg></g:item>
+                                            <g:item value="2"><ui:msg description="RegisterScreen Malaysia">Malaysia</ui:msg></g:item>
+                                            <g:item value="3"><ui:msg description="RegisterScreen Thailand">Thailand</ui:msg></g:item>
+                                            <g:item value="4"><ui:msg description="RegisterScreen China">China</ui:msg></g:item>
+                                            <g:item value="5"><ui:msg description="RegisterScreen Hong Kong">Hong Kong</ui:msg></g:item>
+                                            <g:item value="6"><ui:msg description="RegisterScreen Taiwan">Taiwan</ui:msg></g:item>
                                         </g:ListBox>
 
                                         <g:ListBox ui:field="regionField" visibleItemCount="1" visible="false">
@@ -84,7 +87,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Contact:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Contact">Contact:</ui:msg></td>
                                     <td class="{res.main.rowform}">
                                         <g:ListBox ui:field="countryCodeField" visibleItemCount="1">
                                             <g:item value="1">65</g:item>
@@ -98,28 +101,28 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">School:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen School">School:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="schoolField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Lecturer's First Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Lecturer's First Name">Lecturer's First Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lecturerFirstNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Lecturer's Last Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Lecturer's Last Name">Lecturer's Last Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lecturerLastNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Lecturer's Email:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Lecturer's Email">Lecturer's Email:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lecturerEmailField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Preferred Language:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="RegisterScreen Preferred Languages">Preferred Language:</ui:msg></td>
                                     <td class="{res.main.rowform}">
                                         <g:ListBox ui:field="languageField" visibleItemCount="1">
-                                            <g:item value="1">English</g:item>
-                                            <g:item value="2">Chinese (Simplified)</g:item>
-                                            <g:item value="3">Chinese (Traditional)</g:item>
+                                            <g:item value="1"><ui:msg description="RegisterScreen English">English</ui:msg></g:item>
+                                            <g:item value="2"><ui:msg description="RegisterScreen Chinese (Simplified)">Chinese (Simplified)</ui:msg></g:item>
+                                            <g:item value="3"><ui:msg description="RegisterScreen (Traditonal)">Chinese (Traditional)</ui:msg></g:item>
                                         </g:ListBox>
                                     </td>
                                 </tr>
@@ -127,12 +130,12 @@
                                     <td colspan="2"><g:VerticalPanel ui:field="recaptchaPanel"/></td>
                                 </tr>
                                 <tr>
-                                    <td><g:Image ui:field="registerButton" url="images/submit_button.png"/></td>
+                                    <td><ui:msg description="RegisterScreen registerbuttonImage"><g:Image ui:field="registerButton" url="images/submit_button.png"/></ui:msg></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <h2>To ensure that our messages get to you (and don't go to your junk or bulk email folders),
-                                        please add registration@redhatchallenge.rhc-rhcloud.com to your address book</h2>
+                                        <h2><ui:msg description="RegisterScreen Add our email">To ensure that our messages get to you (and don't go to your junk or bulk email folders),
+                                        please add registration@redhatchallenge.rhc-rhcloud.com to your address book</ui:msg></h2>
                                     </td>
                                 </tr>
                             </table>

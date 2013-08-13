@@ -1,6 +1,7 @@
-package org.redhatchallenge.rhc2013.client;
+package org.ayrx.rhchallenge.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -29,7 +30,7 @@ public class ResetPasswordScreen extends Composite {
     @UiField Label emailLabel;
     @UiField PasswordTextBox passwordField;
     @UiField PasswordTextBox confirmPasswordField;
-    @UiField Button resetPasswordButton;
+    @UiField Image resetPasswordButton;
     @UiField Label errorLabel;
     @UiField Hyperlink loginLink;
 
@@ -65,24 +66,18 @@ public class ResetPasswordScreen extends Composite {
         }
     }
 
-    @UiHandler("loginLink")
-    public void handleLoginLinkClick(ClickEvent event) {
-        ContentContainer.INSTANCE.setContent(new LoginScreen());
-    }
 
     private void resetPassword() {
 
         final String email = emailLabel.getText();
         final String password = passwordField.getText();
 
-        resetPasswordButton.setEnabled(false);
         authenticationService = AuthenticationService.Util.getInstance();
 
         authenticationService.resetPassword(password, email, new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
                 errorLabel.setText("An unexpected error has occurred, please try again later!");
-                resetPasswordButton.setEnabled(true);
             }
 
             @Override
@@ -93,7 +88,6 @@ public class ResetPasswordScreen extends Composite {
 
                 else {
                     errorLabel.setText("<h1>An unexpected error has occurred, please try resetting your password again.</h1>");
-                    resetPasswordButton.setEnabled(true);
                 }
             }
         });
