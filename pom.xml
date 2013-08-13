@@ -4,11 +4,11 @@
 
     <!-- POM file generated with GWT webAppCreator -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.ayrx.rhchallenge</groupId>
+    <groupId>org.redhatchallenge.rhc2013</groupId>
     <artifactId>registration</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>org.ayrx.rhchallenge.registration</name>
+    <name>org.redhatchallenge.rhc2013.registration</name>
   
     <properties>
         <!-- Convenience property to set the GWT version -->
@@ -111,6 +111,16 @@
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>1.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-core</artifactId>
+            <version>5.3.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.2</version>
         </dependency>
     </dependencies>
   

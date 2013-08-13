@@ -1,0 +1,58 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+
+    <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
+
+    <g:HTMLPanel>
+        <div class="{res.grid.clear}"/>
+        <div class="{res.grid.container_12} {res.grid.clearfix}">
+            <div id="main">
+                <div class="{res.grid.grid_12}">
+                    <div id="sidebar" style="float: right">
+                        <ul class="{res.main.socialIcons}">
+                            <li><span style="position: relative; top: 4px; left: -2px;"><strong>Connect:</strong></span></li>
+                            <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="{res.grid.grid_8} {res.grid.alpha}" style="margin-right: 40px">
+                        <div id="table2">
+                            <table>
+                                <tr>
+                                    <td><h1>LOGIN</h1></td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 100" class="{res.main.rowform}">Email Address:</td>
+                                    <td class="{res.main.rowform}"><g:TextBox ui:field="emailField" maxLength="120" visibleLength="33"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="{res.main.rowform}">Password:</td>
+                                    <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="passwordField" maxLength="120" visibleLength="33"/></td>
+                                </tr>
+                                <tr>
+                                    <td class="{res.main.rowform}">&nbsp;</td>
+                                    <td class="{res.main.rowform}"><g:CheckBox ui:field="rememberMeField"/>Keep me logged in</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td><g:Image ui:field="loginButton" url="images/login_button.png"/></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td><g:Hyperlink ui:field="resetPasswordLink" text="*Forgot your password?"/></td>
+                                </tr>
+                                <tr>
+                                    <td><g:Label ui:field="errorLabel"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="{res.main.panel02} {res.grid.clearfix}" style="margin-top: 1em;"/>
+                    </div>
+                    <div class="{res.grid.clear}"/>
+                </div>
+            </div>
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>
