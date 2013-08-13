@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.ayrx.rhchallenge.shared.Student" table="contestant">
+    <class name="org.redhatchallenge.rhc2013.shared.Student" table="contestant">
         <id name="contestantId" column="contestant_id">
             <generator class="identity"/>
         </id>
@@ -22,6 +22,7 @@
         <property name="language" column="language" type="string"/>
         <property name="verified" column="verified" type="boolean"/>
         <property name="status" column="status" type="boolean"/>
-        <property name="questions" column="questions" type="org.ayrx.rhchallenge.server.IntegerArrayType"/>
+        <property name="questions" column="questions" type="org.redhatchallenge.rhc2013.server.IntegerArrayType"/>
+        <property name="timeslot" column="timeslot" type="long"/>
     </class>
 </hibernate-mapping>
