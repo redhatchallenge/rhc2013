@@ -4,7 +4,7 @@
         "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="org.ayrx.rhchallenge.shared.Student" table="contestant">
+    <class name="org.redhatchallenge.rhc2013.shared.Student" table="contestant">
         <id name="contestantId" column="contestant_id">
             <generator class="identity"/>
         </id>
