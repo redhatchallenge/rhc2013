@@ -1,10 +1,13 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
+             ui:generateLocales="en">
 
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
     <g:HTMLPanel>
-        <div id="sm-logo"><a href="index.html">Red Hat</a></div><!-- /#sm-logo -->
+        <div id="sm-logo"></div><!-- /#sm-logo -->
 
         <div id="header-links">
 
@@ -26,10 +29,12 @@
         <div class="{res.main.navBand}">
             <div class="{res.main.primaryNav}">
                 <ul class="{res.main.sfMenu}">
-                    <li class="{res.main.navFirst}"><g:Hyperlink ui:field="indexLink" text="Home" styleName="{res.main.link}"/></li>
+                    <ui:msg description="Header Options">
+                    <li class="{res.main.navFirst}"><g:Hyperlink ui:field="indexLink" text="Home" styleName="{res.main.link}" /></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="tcLink" text="Terms &amp; Conditions" styleName="{res.main.link}" targetHistoryToken="tc"/> </li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="registrationLink" text="Registration" styleName="{res.main.link}" targetHistoryToken="registration"/></li>
                     <li class="{res.main.navLink}" style="margin-left: 490px"><g:Hyperlink ui:field="loginLink" text="Login" styleName="{res.main.link}" targetHistoryToken="login"/></li>
+                    </ui:msg>
                 </ul><!-- /#nav -->
             </div><!-- /#primary-nav -->
         </div>

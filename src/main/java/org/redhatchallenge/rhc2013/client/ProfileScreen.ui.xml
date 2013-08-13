@@ -1,7 +1,10 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
+             ui:generateLocales="en">
 
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
@@ -12,7 +15,7 @@
                 <div class="{res.grid.grid_12}">
                     <div id="sidebar" style="float: right">
                         <ul class="{res.main.socialIcons}">
-                            <li><span style="position: relative; top: 4px; left: -2px;"><strong>Connect:</strong></span></li>
+                            <li><span style="position: relative; top: 4px; left: -2px;"><strong><ui:msg description="Connect">Connect:</ui:msg></strong></span></li>
                             <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
                         </ul>
                     </div>
@@ -22,50 +25,50 @@
                             <table ui:field="table" style="width: 463px">
                                 <tr>
                                     <td colspan="2">
-                                        <h1>EDIT PROFILE</h1>
+                                        <h1><ui:msg description="Edit Profile header"> EDIT PROFILE</ui:msg></h1>
                                     </td>
                                 </tr>
                                 <tr><td colspan="2">&nbsp;</td></tr>
                                 <tr>
                                     <td colspan="2">
-                                        <font color="#CC0000">PERSONAL DETAILS</font><div class="border2" style="width:360px; color: #CC0000; border-bottom: solid 3px"/>
+                                        <font color="#CC0000"><ui:msg description="Personal Details">PERSONAL DETAILS</ui:msg></font><div class="border2" style="width:360px; color: #CC0000; border-bottom: solid 3px"/>
                                     </td>
                                 </tr>
                                 <tr><td colspan="2">&nbsp;</td></tr>
                                 <tr>
-                                    <td style="width: 174px" class="{res.main.rowform}">Email Address:</td>
+                                    <td style="width: 174px" class="{res.main.rowform}"><ui:msg description="Email Address">Email Address:</ui:msg></td>
                                     <td style="width: 268px" class="{res.main.rowform}"><g:TextBox ui:field="emailField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Current Password:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Current Password">Current Password:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="currentPasswordField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Password:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="New password">New Password:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="passwordField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Confirm Password:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Confirm password">Confirm Password:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="confirmPasswordField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">First Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="First name">First Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="firstNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Last Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Last name">Last Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lastNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Country:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Country">Country:</ui:msg></td>
                                     <td class="{res.main.rowform}">
                                         <g:ListBox ui:field="countryField" visibleItemCount="1">
-                                            <g:item value="1">Singapore</g:item>
-                                            <g:item value="2">Malaysia</g:item>
-                                            <g:item value="3">Thailand</g:item>
-                                            <g:item value="4">China</g:item>
-                                            <g:item value="5">Hong Kong</g:item>
-                                            <g:item value="6">Taiwan</g:item>
+                                            <g:item value="1"><ui:msg description="Singapore">Singapore</ui:msg></g:item>
+                                            <g:item value="2"><ui:msg description="Malaysia">Malaysia</ui:msg></g:item>
+                                            <g:item value="3"><ui:msg description="Thailand">Thailand</ui:msg></g:item>
+                                            <g:item value="4"><ui:msg description="China">China</ui:msg></g:item>
+                                            <g:item value="5"><ui:msg description="Hong Kong">Hong Kong</ui:msg></g:item>
+                                            <g:item value="6"><ui:msg description="Taiwan">Taiwan</ui:msg></g:item>
                                         </g:ListBox>
 
                                         <g:ListBox ui:field="regionField" visibleItemCount="1" visible="false">
@@ -80,7 +83,7 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Contact:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Contact">Contact:</ui:msg></td>
                                     <td class="{res.main.rowform}">
                                         <g:ListBox ui:field="countryCodeField" visibleItemCount="1">
                                             <g:item value="1">65</g:item>
@@ -94,28 +97,28 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">School:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="School">School:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="schoolField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Lecturer's First Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Lecturer's First Name">Lecturer's First Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lecturerFirstNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Lecturer's Last Name:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Lecturer's Last Name">Lecturer's Last Name:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lecturerLastNameField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Lecturer's Email:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="Lecturer's Email">Lecturer's Email:</ui:msg></td>
                                     <td class="{res.main.rowform}"><g:TextBox ui:field="lecturerEmailField" maxLength="120" visibleLength="33"/></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}">Preferred Language:</td>
+                                    <td class="{res.main.rowform}"><ui:msg description="preferred language">Preferred Language:</ui:msg></td>
                                     <td class="{res.main.rowform}">
                                         <g:ListBox ui:field="languageField" visibleItemCount="1">
-                                            <g:item value="1">English</g:item>
-                                            <g:item value="2">Chinese (Simplified)</g:item>
-                                            <g:item value="3">Chinese (Traditional)</g:item>
+                                            <g:item value="1"><ui:msg description="English">English</ui:msg></g:item>
+                                            <g:item value="2"><ui:msg description="Chinese Simplified">Chinese (Simplified)</ui:msg></g:item>
+                                            <g:item value="3"><ui:msg description="Chinese Traditional">Chinese (Traditional)</ui:msg></g:item>
                                         </g:ListBox>
                                     </td>
                                 </tr>
@@ -124,7 +127,7 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><g:Image ui:field="updateButton" url="images/saveprofile_button.png"/></td>
+                                    <td><g:Image resource="{res.saveButton}" ui:field="updateButton"/></td>
                                 </tr>
                                 <tr>
                                     <td><g:Label ui:field="errorLabel"/></td>
