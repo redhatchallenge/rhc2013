@@ -4,11 +4,11 @@
 
     <!-- POM file generated with GWT webAppCreator -->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.ayrx.rhchallenge</groupId>
+    <groupId>org.redhatchallenge.rhc2013</groupId>
     <artifactId>registration</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>org.ayrx.rhchallenge.registration</name>
+    <name>org.redhatchallenge.rhc2013.registration</name>
   
     <properties>
         <!-- Convenience property to set the GWT version -->
