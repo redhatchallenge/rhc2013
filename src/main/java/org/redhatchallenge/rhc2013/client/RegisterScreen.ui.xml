@@ -73,11 +73,11 @@
                                         </g:ListBox>
 
                                         <g:ListBox ui:field="regionField" visibleItemCount="1" visible="false">
-                                            <g:item value="1">Region 1</g:item>
-                                            <g:item value="2">Region 2</g:item>
-                                            <g:item value="3">Region 3</g:item>
-                                            <g:item value="4">Region 4</g:item>
-                                            <g:item value="5">Region 5</g:item>
+                                            <g:item value="1">Beijing</g:item>
+                                            <g:item value="2">Shanghai</g:item>
+                                            <g:item value="3">Guangzhou</g:item>
+                                            <g:item value="4">Shenzhen</g:item>
+                                            <g:item value="5">Hangzhou</g:item>
                                             <g:item value="6">Region 6</g:item>
                                             <g:item value="7">Others</g:item>
                                         </g:ListBox>
