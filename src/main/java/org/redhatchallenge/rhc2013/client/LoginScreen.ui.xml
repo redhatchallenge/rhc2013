@@ -40,11 +40,11 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><g:Image ui:field="loginButton" url="images/login_button.png"/></td>
+                                    <td><g:Image resource="{res.loginButton}" ui:field="loginButton"/></td>
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><ui:msg description="ResetPassword"><g:Hyperlink ui:field="resetPasswordLink" text="*Forgot your password?"/></ui:msg></td>
+                                    <td><ui:msg description="ResetPassword"><g:Hyperlink ui:field="resetPasswordLink" text="*Forgot your password?" styleName="{res.main.link}" targetHistoryToken="forget-password"/></ui:msg></td>
                                 </tr>
                                 <tr>
                                     <td><g:Label ui:field="errorLabel"/></td>

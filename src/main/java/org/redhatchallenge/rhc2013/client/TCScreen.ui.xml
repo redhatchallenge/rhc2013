@@ -1,9 +1,143 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
              ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
              ui:generateLocales="en">
+
+    <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
+
     <g:HTMLPanel>
-        <p><ui:msg description="TC Content"> This should be the T&amp;C Page</ui:msg></p>
+        <div class="{res.grid.clear}"/>
+        <div class="{res.grid.container_12}">
+            <div id="main">
+                <div class="{res.grid.grid_12}">
+                    <div class="{res.grid.grid_8} {res.grid.alpha}" style="margin-right: 40px">
+
+                        <h1><ui:msg description="TC Content">RED HAT CHALLENGE 2013</ui:msg></h1>
+
+                        <h1><ui:msg description="Official Rules">Official Rules</ui:msg></h1>
+
+                        <!--<li><span class="red"><b>Over 50%</b></span> of the world's trading volume, powered by <span class="nowrap">Red Hat</span></li>-->
+                        <p><ui:msg description="1st sentence">OPEN ONLY TO INDIVIDUALS WHO ARE FULL-TIME STUDENTS AND WHO OTHERWISE MEET THE ELIGIBILITY CRITERIA. VOID WHERE PROHIBITED.</ui:msg></p>
+
+                        <p><ui:msg description="2nd sentence">Note - the Finalists of this Contest will be asked to travel to Beijing, China in December 2013. If you cannot travel at that time, please do not enter this Contest. If a Finalist is selected who cannot travel on these dates, the Sponsor will select an alternative Finalist.</ui:msg></p>
+
+                        <!--<p class="gray" style="font-size: 85%; text-align: right;">&#42; Source: WFE 2010 Market Highlights<br>
+                        </p>-->
+
+                        <h1><ui:msg description="Contest Description">Contest Description</ui:msg> </h1>
+
+                        <p><ui:msg description="3rd sentence">NO PURCHASE NECESSARY TO ENTER OR WIN. Red Hat Asia Pacific Pte Ltd ("Sponsor") is sponsoring the 2013 Red Hat Challenge ("Contest"), a skill contest in which participants compete to receive the Prize (defined below) by demonstrating their Linux skill through various Red Hat Linux System Administration, Network Administration, Security Administration and Virtualization tasks. The Contest begins on 23 October 2013 at 9.00am Singapore Time ("SGT") and ends on 14 December 2012 at 6.00pm SGT ("Term"). VOID WHERE PROHIBITED.</ui:msg> </p>
+
+                        <h1><ui:msg description="Eligibility">Eligibility</ui:msg></h1>
+
+                        <p><ui:msg description="4th sentence">To be eligible to enter the Contest, you must be: (1) a full-time student currently attending a university, polytechnic institution or private school; (2) a legal resident of China, Hong Kong, Malaysia, Singapore, Taiwan, or Thailand ("Eligible Countries"); and (3) above the age of majority in your country, province, and/or state of legal residence at the time of entry or at least twenty years of age in Taiwan (“Participant”). You must also have access to the Internet and a valid student email address to enter the Contest.  You will also be required to provide the name of a lecturer contact from your school ("sponsor lecturer") so that Sponsor can obtain information about the school. Employees, officers, and directors of Red Hat, Inc., its subsidiaries and affiliated companies, Red Hat partners, distributors, system integrators and independent software vendors, and their immediate families and those living in their households are not eligible to enter. Government employees and contractors are not eligible to enter. The top three (3) Finalists from the 2012 Red Hat Challenge are not eligible to enter.</ui:msg> </p>
+
+                        <p><ui:msg description="5th sentence">If you are entering as part of a company or on behalf of your employer, these rules are binding on you, individually, and/or your employer. If you are acting within the scope of your employment, as an employee, contractor, or agent of another party, you warrant that such party has full knowledge of your actions and has consented thereto, including your potential receipt of a Prize. You further warrant that your actions do not violate your employer's or company's policies and procedures.</ui:msg> </p>
+
+                        <p><ui:msg description="6th sentence"><b>LIMIT ONE (1) ENTRY PER PERSON. Subsequent entries will be disqualified.</b> All Entries become the property of Sponsor and will not be returned or acknowledged. Entries are void if they are in whole or part illegible, incomplete, damaged, altered, counterfeit, manipulated or obtained through fraud. Sponsor is not responsible for lost, late, misdirected, mutilated, incomplete, or illegible entries or email, or for any computer related, online, telephonic, or technical malfunctions that may occur, regardless of whether or not such occurrences are within Sponsor's control. </ui:msg></p>
+
+                        <h1><ui:msg description="Privacy">1. Privacy</ui:msg></h1>
+
+                        <p><ui:msg description="7th sentence">To enter, you must provide personal information in order for Red Hat to process your contest application. Your personal information will be transferred to servers located in the U.S. By registering for the Contest, you consent to the transfer of your personal information to servers in the U.S. Further, you agree to be bound by Sponsor's privacy policy located at: www.redhat.com/legal/privacy_statement.html and you understand that your personal information will be used in accordance with this policy. </ui:msg></p>
+
+                        <h1><ui:msg description="sponsor">2. Sponsor</ui:msg></h1>
+
+                        <p><ui:msg description="8th sentence">2. Red Hat Asia Pacific Pte Ltd, located at 8 Shenton Way #10-00 Singapore 068811, is the sponsor of the Contest.</ui:msg></p>
+
+                        <h1><ui:msg description="judging">Judging</ui:msg></h1>
+
+                        <p><ui:msg description="9th sentence">Judging will occur in three rounds. In the First Round, twenty (20) Contestants from each Eligible Country will be selected (the "Semi-Finalists"). In the Second Round, six (6) Semi-Finalists from China and two (2) Semi-Finalists from each other Eligible Country will be selected (the “Finalists”). In the Final Round, one (1) winner will be selected from among the sixteen (16) Finalists to receive the Prize (the “Winner”).</ui:msg></p>
+
+                        <h1><ui:msg description="first round">First Round</ui:msg></h1>
+
+                        <p><ui:msg description="10th sentence">The First Round of the Contest will take place on 23 and 24 October 2013 (“First Round”). The First Round consists of an online, multiple-choice test ("Test"). Contestants have one hour to complete the Test.</ui:msg></p>
+
+                        <p><ui:msg description="11th sentence">Twenty (20) Semi-Finalists will be selected from China, twenty (20) Semi-Finalists will be selected from Hong Kong, twenty (20) Semi-Finalists will be selected from Malaysia, twenty (20) Semi-Finalists will be selected from Singapore, twenty (20) Semi-Finalists will be selected from Taiwan, and twenty (20) Semi-Finalists will be selected from Thailand for a total of 120 Semi-Finalists overall. In the event of a tie for twentieth place, the Contestant who completed the Test in the shortest amount of time will advance to the Second Round of judging as a potential semi-finalist. In the event of a further tie for twentieth place, all tied Contestants with the highest Test score and identical times for completion of the Test will advance to the Second Round of judging.  The Contestants selected as potential semi-finalists will be notified by e-mail that they have been selected as potential semi-finalists in the Contest on or about 5 November 2013. If the e-mail notification is ignored or returned as undeliverable, the potential semi-finalist will be disqualified.</ui:msg></p>
+
+                        <h1><ui:msg description="second round">Second Round</ui:msg></h1>
+
+                        <p><ui:msg description="12 sentence">The Second Round of judging will take place between 11 November 2012 and 15 November 2013 ("Second Round"). The Second Round consists of an interview between Semi-Finalist and a Red Hat certified instructor or examiner, during which Semi-Finalist will be tasked to provide solutions to problems faced in a Linux/Virtualization environment ("Interview"). The Interview will be held in person at the Red Hat office closest to Semi-Finalist's residence. Alternatively, the interview may take place via video conference.</ui:msg></p>
+
+                        <p><ui:msg description="13th sentence">In the Second Round, Semi-Finalists will be evaluated based on the following criteria:</ui:msg></p>
+
+                        <p><ui:msg description="14th sentence">Each Semi-Finalist will be given (three) 3 problems - one Simple Level 1 problem, one Intermediate Level 2 problem and one Advance Level 3 problem in a Linux/Virtualization environment. The Semi-Finalist will have thirty (30) minutes to answer as many of these problems as possible. Solutions provided by each Semi-finalist to the three (3) problems will be scored.</ui:msg></p>
+
+                        <p><ui:msg description="15th sentence">The six (6) Semi-Finalists from China who receive the highest scores during the Second Round, and the two (2) Semi-Finalists from each of the other Eligible Countries who receive the highest scores during the Second Round, will be selected to proceed to the Final Round, for a total of sixteen (16) Finalists overall. In order to qualify to move on to the Final Round, a Semi-Finalist must receive a minimum score of 50% during Round Two. In the event of a tie, of the tied Semi-Finalists the one who completed the First Round Test in the shortest amount of time will advance to the Final Round of judging as a potential finalist. The Semi-Finalists selected as potential finalists will be notified by e-mail that they have been selected as potential finalists in the Contest on or about 21 November 2012. Except where prohibited by law, the potential finalists may be asked to sign an Affidavit of Eligibility, Release of Liability and/or Publicity Release (“Affidavit”).  If an Affidavit is provided to a potential finalist, the potential finalist must fully execute and return the Affidavit within five (5) days of attempted notification by Sponsor in order to proceed to the Final Round of judging. If the e-mail notification is ignored or returned as undeliverable, or the Sponsor does not timely receive the Affidavit when asked to provide it, the potential finalist will be disqualified and an alternate potential finalist will be selected based on the Second Round evaluation criteria listed herein. If a potential finalist is unable to travel to Beijing, China for the Final Round, that potential finalists will be disqualified and an alternate potential finalist will be selected based on the second Round evaluation criteria listed herein.</ui:msg></p>
+
+                        <h1><ui:msg description="final round">Final Round</ui:msg></h1>
+
+                        <p><ui:msg description="16th sentence">The final round of judging will take place on 14 December 2013 (“Final Round”). The Final Round will be held in Beijing, China. The Finalists will travel to Beijing, China, where they will compete against one another in a live Red Hat environment ("Live Competition").</ui:msg></p>
+
+                        <p><ui:msg description="17th sentence">During the Live Competition, Finalists will receive points for completing tasks correctly within the allocated time. The Finalist with the most points at the end of the Live Competition will be the Winner. In the event of a tie, the Finalist who completed all of the tasks within the shortest amount of time will be the Winner.</ui:msg></p>
+
+                        <p><ui:msg description="18th sentence">Sponsor will provide the Finalists from Hong Kong, Malaysia, Singapore, Taiwan, and Thailand with round-trip airfare to, and lodging and accommodations for one (1) day in Beijing, China. The Finalists from China will be provided round-trip train ticket and accommodations for one (1) day in Beijing, China if the candidate is not living in Beijing. Finalists are responsible for all required travel documents, including Passports and/or Visa requirements. Finalists are responsible for obtaining all forms of insurance including, but not limited to, travel insurance, and Finalists acknowledge that Sponsor has no obligation to obtain or provide travel insurance or any other form of insurance.</ui:msg></p>
+
+                        <h1><ui:msg description="Prizes">Prizes</ui:msg></h1>
+
+                        <p><ui:msg description="19th sentence">Winner will receive one (1) Samsung Galaxy S4 smartphone with an Approximate Retail Value ("ARV") of RMB4688 ("Prize").  </ui:msg></p>
+
+                        <p><ui:msg description="20th sentence">No substitution, cash substitution, or assignment or transfer of the Prize is permitted, except by Sponsor for reason of unavailability, in which case a prize of equal or greater value will be awarded. The Prize consists of only those items specifically listed above as part of the Prize. Prize is awarded without warranty of any kind from Sponsor, express or implied, without limitation, except where this would be contrary to federal, state, provincial, or local laws or regulations. Expenses not specifically stated above, together with the reporting and payment of all applicable taxes, fees, duties, and/or surcharges, if any, arising out of, or resulting from, acceptance or use of the Prize, are the sole responsibility of the Winner. Restrictions, conditions, and limitations apply.</ui:msg></p>
+
+                        <p><ui:msg description="21th sentence">Any trademarks associated with the Prize awarded under this Contest are registered or unregistered trademarks of their owners, who are not affiliated nor have endorsed this Contest. Prize awarded under this Contest may be subject to restrictions and licenses from its manufacturers and may require additional hardware, software, service, or maintenance to use. The Winner shall bear all responsibility for use of the Prize in compliance with the conditions imposed by the manufacturer, and any additional costs associated with its use, service, or maintenance. Odds of winning depend on the number of eligible Entries received and the skill of the Participants.</ui:msg></p>
+
+                        <h1><ui:msg description="condition">Condition of Participation</ui:msg></h1>
+
+                        <p><ui:msg description="22nd sentence">By entering the Contest, you agree to be bound by the terms of these Official Rules and you confirm that you meet all eligibility requirements listed herein. You agree that all federal, state, provincial and local laws and regulations apply. By registering for the Contest, you agree that these Official Rules and the decisions of Sponsor are final and binding on all matters pertaining to this Contest.</ui:msg></p>
+
+                        <p><ui:msg description="23rd sentence">Except where prohibited by law, the Winner's acceptance of the Prize constitutes permission for the Sponsor and its agencies to use the Winner's Entry, name and/or likeness for advertising and promotional purposes, in any media now known or hereafter devised, without further notice, compensation, consideration, review, or consent, and without regard to moral rights.</ui:msg></p>
+
+                        <p><ui:msg description="24th sentence">If, in its sole judgment, Sponsor determines at any stage of the Contest that there are an inadequate number of Contestants available to participate, Sponsor may discontinue or cancel the Contest and no Prize will be awarded.</ui:msg></p>
+
+                        <p><ui:msg description="25th sentence">To the extent permitted by law, all Participants of the Contest agree to hold Sponsor, its respective directors, officers, employees and assigns harmless for any injury or damage caused or claimed to be caused by participation in the Contest and/or use or acceptance of the Prize. Sponsor is not responsible for any typographical or other error in the printing of the offer, administration of the Contest, or announcement of the Prize. If, in Sponsor's opinion, there is any suspected or actual evidence of electronic or non-electronic tampering with any portion of the Contest, or if technical difficulties compromise the integrity of the Contest, the Sponsor reserves the right, in its sole discretion, to cancel, terminate, modify or suspend the Contest. Any attempt to deliberately damage the content or operation of this Contest is unlawful and subject to legal action by Sponsor or its agents. You may be prohibited from participating in this Contest if Sponsor, in its sole discretion, reasonably believes that you have attempted to undermine the legitimate operation of the Contest by cheating, deception, or other unfair playing practices, or have annoyed, abused, threatened, or harassed any other participants, Sponsor, or associated agencies. In the event a potential winner's employer has a policy that prohibits the awarding of a prize to an employee, the Prize will be forfeited.</ui:msg></p>
+
+                        <h1><ui:msg description="liability">Release of Liability</ui:msg></h1>
+
+                        <p><ui:msg description="26th sentence">By participating, all entrants release Sponsor, its affiliates, parent, and subsidiary companies, its employees, agents and officers, advertising and promotion agencies, licensees, as well as all others associated with the development and execution of this Contest, from and against any and all liability with respect to or in any way arising from the Contest. Sponsor assumes no responsibility for any error, omission, interruption, deletion, defect, or delay in operation or transmission; communications line failure; theft or destruction of or unauthorized access to Contest entries or entry forms; or alteration of entries or entry forms.</ui:msg></p>
+
+                        <h1><ui:msg description="law">Governing Law</ui:msg></h1>
+
+                        <p><ui:msg description="27th sentence">This Contest is subject to all federal, state, provincial, and local laws. This Contest and Official Rules are governed and interpreted by the laws of Singapore, without regard to its conflict of law provisions.</ui:msg></p>
+
+
+                    </div>
+                    <!-- /.grid_7 -->
+
+                    <div id="sidebar" class="{res.grid.grid_4} {res.grid.omega}">
+
+                        <ul class="{res.main.socialIcons}">
+                            <li><span style="position: relative; top: 4px; left: -2px;"><strong><ui:msg description="Connect">Connect:</ui:msg></strong></span></li>
+                            <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
+
+                        </ul><!-- /.panel02 --><!-- /.panel01 --><!-- /.panel02 -->
+
+                        <div class="{res.main.panel02}" style="margin-top: 1.5em;">
+
+                            <div id="countdown"/>
+
+                            <p id="note"/><br />
+
+                            <!--<a href="registration.html" target="_blank"><img src="images/reg_english_button.png"/></a>-->
+
+                            <g:Image resource="{res.registrationIcon}" ui:field="registerImage"/>
+
+                            <br />
+
+                            <h2><ui:msg description="Recap">Recap of Red Hat Challenge</ui:msg></h2>
+                            <div class="border2" style="color: #7D7E81; border-bottom: solid 1px"/><br />
+                            <p><a href="http://www.youtube.com/watch?v=35ZKmL4OfeI&amp;list=PLbMP1JcGBmSET6j9onKMUUqCCSJlA11DA" target="_blank"><img src="images/home_video_21.jpg" /></a><br /><br />
+                                <a href="https://www.facebook.com/photo.php?v=10150591836889283&amp;set=vb.172855169064&amp;type=3" target="_blank"><img src="images/home_video_22.jpg" /></a><br /><br />
+                                <a href="https://www.facebook.com/photo.php?v=10151393170889283&amp;set=vb.172855169064&amp;type=3" target="_blank"><img src="images/home_video_23.jpg" /></a><br /><br />
+                            </p>
+                        </div>
+                        <div class="{res.main.panel02} {res.grid.clearfix}" style="margin-top: 1em;"/><!-- /.panel02 -->
+
+                    </div><!-- /.grid_5 -->
+                    <div class="{res.grid.clear}"/>
+                </div><!-- /.grid_12 -->
+            </div><!-- /#main -->
+        </div>
     </g:HTMLPanel>
 </ui:UiBinder>

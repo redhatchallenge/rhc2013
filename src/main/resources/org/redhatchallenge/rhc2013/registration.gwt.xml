@@ -23,15 +23,11 @@
     <!-- Other module inherits                                      -->
 
     <!-- Specify the app entry point class.                         -->
-<<<<<<< HEAD
     <entry-point class='org.redhatchallenge.rhc2013.client.Entry'/>
-=======
-    <entry-point class='org.ayrx.rhchallenge.client.Entry'/>
     <!--Defines all possible locales we have-->
     <extend-property name="locale" values="en,ch,zh"/>
     <!--Defines default locale-->
     <set-property-fallback name="locale" value="en"/>
->>>>>>> ret
 
     <!-- Specify the paths for translatable code                    -->
     <source path='client'/>

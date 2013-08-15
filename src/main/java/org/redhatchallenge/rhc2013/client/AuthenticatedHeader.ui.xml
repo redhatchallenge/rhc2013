@@ -7,7 +7,7 @@
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
     <g:HTMLPanel>
-        <div id="sm-logo"><a href="index.html"><ui:msg description="Red Hat">Red Hat</ui:msg></a></div><!-- /#sm-logo -->
+        <div id="sm-logo"></div><!-- /#sm-logo -->
 
         <div id="header-links">
 
@@ -31,7 +31,7 @@
                 <ul class="{res.main.sfMenu}">
                     <ui:msg description="Navigation panel">
                     <li class="{res.main.navFirst}"><g:Hyperlink ui:field="indexLink" text="Home" styleName="{res.main.link}"/></li>
-                    <li class="{res.main.navLink}"><g:Hyperlink ui:field="tcLink" text="Terms &amp; Conditions" styleName="{res.main.link}" targetHistoryToken="tc"/> </li>
+                    <li class="{res.main.navLink}"><g:Hyperlink ui:field="tcLink" text="Terms &amp; Conditions" styleName="{res.main.link}" targetHistoryToken="tc"/></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="contestDetailsLink" text="Details" styleName="{res.main.link}" targetHistoryToken="details"/></li>
                     <li class="{res.main.navFirst}" style="margin-left: 400px"><g:Hyperlink ui:field="profileLink" text="edit profile" styleName="{res.main.link}" targetHistoryToken="profile"/></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="logoutLink" text="logout" styleName="{res.main.link}"/></li>

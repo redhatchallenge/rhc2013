@@ -9,6 +9,8 @@
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
     <g:HTMLPanel>
+        <title><ui:msg description="title"> Red Hat Challenge 2013</ui:msg></title>
+
         <div class="{res.grid.grid_12}">
 
             <div id="footer-nav">

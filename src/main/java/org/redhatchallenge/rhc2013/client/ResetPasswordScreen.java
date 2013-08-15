@@ -1,4 +1,4 @@
-package org.ayrx.rhchallenge.client;
+package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
@@ -10,12 +10,11 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Hyperlink;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
+import org.redhatchallenge.rhc2013.client.AuthenticationService;
+import org.redhatchallenge.rhc2013.client.AuthenticationServiceAsync;
+import org.redhatchallenge.rhc2013.client.ContentContainer;
+import org.redhatchallenge.rhc2013.client.MessageScreen;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
@@ -26,13 +25,13 @@ public class ResetPasswordScreen extends Composite {
     }
 
     private static ResetPasswordScreenUiBinder UiBinder = GWT.create(ResetPasswordScreenUiBinder.class);
+    private static MessageMessages messages = GWT.create(MessageMessages.class);
 
     @UiField Label emailLabel;
     @UiField PasswordTextBox passwordField;
     @UiField PasswordTextBox confirmPasswordField;
     @UiField Image resetPasswordButton;
     @UiField Label errorLabel;
-    @UiField Hyperlink loginLink;
 
     private String token = Window.Location.getParameter("resetToken");
     private AuthenticationServiceAsync authenticationService = null;
@@ -44,7 +43,7 @@ public class ResetPasswordScreen extends Composite {
         authenticationService.lookupEmailFromToken(token, new AsyncCallback<String>() {
             @Override
             public void onFailure(Throwable caught) {
-                ContentContainer.INSTANCE.setContent(new MessageScreen("Error with password reset token"));
+                ContentContainer.INSTANCE.setContent(new MessageScreen(messages.passwordTokenError()));
             }
 
             @Override
@@ -77,17 +76,17 @@ public class ResetPasswordScreen extends Composite {
         authenticationService.resetPassword(password, email, new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
-                errorLabel.setText("An unexpected error has occurred, please try again later!");
+                errorLabel.setText(messages.unexpectedError());
             }
 
             @Override
             public void onSuccess(Boolean result) {
                 if(result) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Password reset is successful!</h1>"));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen(messages.passwordResetSuccess()));
                 }
 
                 else {
-                    errorLabel.setText("<h1>An unexpected error has occurred, please try resetting your password again.</h1>");
+                    errorLabel.setText(messages.errorResetPassword());
                 }
             }
         });

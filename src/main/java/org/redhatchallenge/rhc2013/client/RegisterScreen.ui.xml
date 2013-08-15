@@ -130,7 +130,7 @@
                                     <td colspan="2"><g:VerticalPanel ui:field="recaptchaPanel"/></td>
                                 </tr>
                                 <tr>
-                                    <td><ui:msg description="RegisterScreen registerbuttonImage"><g:Image ui:field="registerButton" url="images/submit_button.png"/></ui:msg></td>
+                                    <td><g:Image resource="{res.submitButton}" ui:field="registerButton"/></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">

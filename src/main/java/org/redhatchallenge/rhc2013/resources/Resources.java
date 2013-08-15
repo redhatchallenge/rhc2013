@@ -3,6 +3,7 @@ package org.redhatchallenge.rhc2013.resources;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.resources.client.ClientBundle;
 import com.google.gwt.resources.client.CssResource;
+import com.google.gwt.resources.client.ImageResource;
 
 /**
  * @author: Terry Chia (Ayrx)
@@ -31,6 +32,18 @@ public interface Resources extends ClientBundle {
 
     @Source("assets/css/styles.css")
     AssetStyles assetStyles();
+
+    @Source("image/login_button.png")
+    ImageResource loginButton();
+
+    @Source("image/reg_button.png")
+    ImageResource registrationIcon();
+
+    @Source("image/submit_button.png")
+    ImageResource submitButton();
+
+    @Source("image/saveprofile_button.png")
+    ImageResource saveButton();
 
     public interface Grid extends CssResource {
 
@@ -362,5 +375,6 @@ public interface Resources extends ClientBundle {
 
         String note();
     }
+
 
 }

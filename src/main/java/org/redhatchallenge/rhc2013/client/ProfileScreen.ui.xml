@@ -127,7 +127,7 @@
                                 </tr>
                                 <tr>
                                     <td>&nbsp;</td>
-                                    <td><ui:msg description="update picture image"><g:Image ui:field="updateButton" url="images/saveprofile_button.png"/></ui:msg></td>
+                                    <td><g:Image resource="{res.saveButton}" ui:field="updateButton"/></td>
                                 </tr>
                                 <tr>
                                     <td><g:Label ui:field="errorLabel"/></td>
