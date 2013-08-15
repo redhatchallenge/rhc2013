@@ -15,7 +15,7 @@
     verified boolean DEFAULT false NOT NULL,
     status boolean DEFAULT true NOT NULL,
     questions int[] DEFAULT '{}',
-    timeslot bigint DEFAULT NULL
+    timeslot bigint DEFAULT 0 
 );
 
 CREATE TABLE reset_tokens (

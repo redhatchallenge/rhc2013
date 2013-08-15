@@ -20,6 +20,10 @@ import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.Student;
 
+import static org.redhatchallenge.rhc2013.client.LocaleUtil.getCountryFromIndex;
+import static org.redhatchallenge.rhc2013.client.LocaleUtil.getLanguageFromIndex;
+import static org.redhatchallenge.rhc2013.client.LocaleUtil.getRegionFromIndex;
+
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
@@ -237,19 +241,19 @@ public class ProfileScreen extends Composite {
         final String lecturerFirstName = lecturerFirstNameField.getText();
         final String lecturerLastName = lecturerLastNameField.getText();
         final String lecturerEmail = lecturerEmailField.getText();
-        final String language = languageField.getItemText(languageField.getSelectedIndex());
+        final String language = getLanguageFromIndex(languageField.getSelectedIndex());
         final String country;
 
         /**
          * If country is China, append the region.
          */
-        if(countryField.getItemText(countryField.getSelectedIndex()).equalsIgnoreCase("china")) {
-            country = countryField.getItemText(countryField.getSelectedIndex()) + "/" +
-                    regionField.getItemText(regionField.getSelectedIndex());
+        if(getCountryFromIndex(countryField.getSelectedIndex()).equalsIgnoreCase("china")) {
+            country = getCountryFromIndex(countryField.getSelectedIndex()) + "/" +
+                    getRegionFromIndex(regionField.getSelectedIndex());
         }
 
         else {
-            country = countryField.getItemText(countryField.getSelectedIndex());
+            country = getCountryFromIndex(countryField.getSelectedIndex());
         }
 
         profileService = ProfileService.Util.getInstance();
