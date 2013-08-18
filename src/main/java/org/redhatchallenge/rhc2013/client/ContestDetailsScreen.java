@@ -2,6 +2,7 @@ package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.storage.client.StorageMap;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -22,6 +23,7 @@ public class ContestDetailsScreen extends Composite {
     private static ContestDetailsScreenUiBinder UiBinder = GWT.create(ContestDetailsScreenUiBinder.class);
 
     private ProfileServiceAsync profileService = null;
+    private MessageMessages messages = GWT.create(MessageMessages.class);
 
     @UiField HTML welcomeLabel;
 
@@ -49,11 +51,11 @@ public class ContestDetailsScreen extends Composite {
                 @Override
                 public void onSuccess(Student result) {
                     if(result == null) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Oops, are you sure you are logged in?</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.loginError() +"?</h1>"));
                     }
 
                     else {
-                        welcomeLabel.setHTML("<h1>Hello,"+result.getFirstName()+"</h1>");
+                        welcomeLabel.setHTML("<h1>"+ messages.hello() + "," +result.getFirstName()+"</h1>");
                         /**
                          * If browser supports HTML5 storage, stores the authenticated user's
                          * profile data.
@@ -77,7 +79,7 @@ public class ContestDetailsScreen extends Composite {
         }
 
         else {
-            welcomeLabel.setHTML("<h1>Hello,"+ localStorage.getItem("firstName") +"</h1>");
+            welcomeLabel.setHTML("<h1>"+ messages.hello() + ","+ localStorage.getItem("firstName") +"</h1>");
         }
     }
 
@@ -85,6 +87,15 @@ public class ContestDetailsScreen extends Composite {
     protected void onAttach() {
         super.onAttach();
         Jquery.countdown();
-        Jquery.bind(10*24*60*60*1000);
+        if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
+            Jquery.bindEn(5*24*60*60*1000);
+        }
+
+        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+            Jquery.bindCh(5*24*60*60*1000);
+        }
+        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
+            Jquery.bindCh(5*24*60*60*1000);
+        }
     }
 }

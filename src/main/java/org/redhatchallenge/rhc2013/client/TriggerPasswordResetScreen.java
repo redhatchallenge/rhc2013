@@ -23,6 +23,7 @@ public class TriggerPasswordResetScreen extends Composite {
     }
 
     private static ResetPasswordScreenUiBinder UiBinder = GWT.create(ResetPasswordScreenUiBinder.class);
+    private static MessageMessages messages = GWT.create(MessageMessages.class);
 
     @UiField TextBox emailField;
     @UiField TextBox contactField;
@@ -57,18 +58,17 @@ public class TriggerPasswordResetScreen extends Composite {
         authenticationService.triggerResetPassword(email, contact, new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
-                errorLabel.setText("An unexpected error has occurred, please try again later!");
+                errorLabel.setText(messages.unexpectedError());
             }
 
             @Override
             public void onSuccess(Boolean result) {
                 if(result) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("Please check your email for instructions to" +
-                            "reset your password."));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen(messages.passwordResetInstruction()));
                 }
 
                 else {
-                    errorLabel.setText("Error with password reset, please check that your email and contact is correct.");
+                    errorLabel.setText(messages.passwordResetError());
                 }
             }
         });
