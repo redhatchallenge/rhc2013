@@ -28,6 +28,7 @@ public class LoginScreen extends Composite {
     }
 
     private static LoginScreenUiBinder UiBinder = GWT.create(LoginScreenUiBinder.class);
+    private MessageMessages messages = GWT.create(MessageMessages.class);
 
     @UiField TextBox emailField;
     @UiField PasswordTextBox passwordField;
@@ -75,7 +76,7 @@ public class LoginScreen extends Composite {
         authenticationService.authenticateStudent(email, password, rememberMe, new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable throwable) {
-                errorLabel.setText("An unexpected error has occurred, please try again later!");
+                errorLabel.setText(messages.unexpectedError());
             }
 
             @Override
@@ -87,7 +88,7 @@ public class LoginScreen extends Composite {
                 }
 
                 else {
-                    errorLabel.setText("Your login attempt was a unsuccessful, please double check your inputs.");
+                    errorLabel.setText(messages.loginUnsuccessful());
                 }
 
             }

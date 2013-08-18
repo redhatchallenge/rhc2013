@@ -1,5 +1,8 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
-             xmlns:g='urn:import:com.google.gwt.user.client.ui'>
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
+             ui:generateLocales="en">
 
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
@@ -10,51 +13,51 @@
                 <div class="{res.grid.grid_12}">
                     <div class="{res.grid.grid_8} {res.grid.alpha}" style="margin-right: 40px">
 
-                        <h1>Red Hat Challenge 2013</h1>
+                        <h1><ui:msg description="Red Hat Challenge">Red Hat Challenge 2013</ui:msg></h1>
 
                         <!--<li><span class="red"><b>Over 50%</b></span> of the world's trading volume, powered by <span class="nowrap">Red Hat</span></li>-->
-                        <p>Looking for a stage to showcase your knowledge on cloud computing, operating systems and virtualization? <b>Red Hat Challenge 2013</b>, the ultimate regional knowledge based competition is here again.</p>
+                        <p><ui:msg description="1st sentence">Looking for a stage to showcase your knowledge on cloud computing, operating systems and virtualization? <b>Red Hat Challenge 2013</b>, the ultimate regional knowledge based competition is here again.</ui:msg></p>
 
-                        <p> The theme for this year’s competition is <b>‘Building the Next Cloud Generation’</b>. This exciting competition is open to students from China, Hong Kong, Malaysia, Singapore, Taiwan and Thailand. </p>
+                        <p><ui:msg description="2nd sentence"> The theme for this year’s competition is <b>‘Building the Next Cloud Generation’</b>. This exciting competition is open to students from China, Hong Kong, Malaysia, Singapore, Taiwan and Thailand. </ui:msg></p>
 
                         <!--<p class="gray" style="font-size: 85%; text-align: right;">&#42; Source: WFE 2010 Market Highlights<br>
                         </p>-->
 
-                        <h1>How to win</h1>
+                        <h1><ui:msg description="How to Win">How to win</ui:msg></h1>
 
-                        <p>Only 3 rounds to be crowned the winner!</p>
+                        <p><ui:msg description="3rd sentence">Only 3 rounds to be crowned the winner!</ui:msg></p>
 
-                        <p>Contestants will face off against each other in a multiple choice questions in the first round in October.</p>
+                        <p><ui:msg description="4th sentence">Contestants will face off against each other in a multiple choice questions in the first round in October.</ui:msg></p>
 
-                        <p>The top 20 students from each country will go through a face-to-face or virtual interview in the second round in November. Two students from Hong Kong, Malaysia, Singapore, Taiwan and Thailand and six students from China will be selected to represent their country and compete in the finals held in Beijing in December.</p>
+                        <p><ui:msg description="5th sentence">The top 20 students from each country will go through a face-to-face or virtual interview in the second round in November. Two students from Hong Kong, Malaysia, Singapore, Taiwan and Thailand and six students from China will be selected to represent their country and compete in the finals held in Beijing in December.</ui:msg></p>
 
-                        <h1>Eligibility</h1>
+                        <h1><ui:msg description="Eligibility">Eligibility</ui:msg></h1>
 
-                        <p>If you are an undergraduate / full-time student attending a university, polytechnic or private school in China, Hong Kong, Malaysia, Singapore, Taiwan and Thailand, you can take part in this challenge.</p>
+                        <p><ui:msg description="6th sentence">If you are an undergraduate / full-time student attending a university, polytechnic or private school in China, Hong Kong, Malaysia, Singapore, Taiwan and Thailand, you can take part in this challenge.</ui:msg></p>
 
-                        <h1>Important Dates</h1>
+                        <h1><ui:msg description="Important Dates">Important Dates</ui:msg></h1>
 
-                        <p>Registration: 23rd August 2013 to 23rd September 2013<br />
-                            First Round: 23rd / 24th October 2013<br />
-                            Second Round: 11th to 15th November 2013<br />
-                            Red Hat Challenge 2013 Finals : 14th December 2013</p>
+                        <p><ui:msg description="Registration 23rd">Registration: 23rd August 2013 to 23rd September 2013</ui:msg><br />
+                            <ui:msg description="First Round">First Round: 23rd / 24th October 2013</ui:msg><br />
+                            <ui:msg description="Second Recond">Second Round: 11th to 15th November 2013</ui:msg><br />
+                            <ui:msg description="Finals">Red Hat Challenge 2013 Finals : 14th December 2013</ui:msg></p>
 
-                        <h1>Prizes</h1>
+                        <h1><ui:msg description="Prizes">Prizes</ui:msg></h1>
 
-                        <p>Emerge from thousands of your peers to become the winner of Red Hat Challenge 2013. Enjoy the honor as well as great prizes from Red Hat!</p>
+                        <p><ui:msg description="7th sentence">Emerge from thousands of your peers to become the winner of Red Hat Challenge 2013. Enjoy the honor as well as great prizes from Red Hat!</ui:msg></p>
 
-                        <p><b>The champion will be awarded:</b><br />
+                        <p><b><ui:msg description="The champion">The champion will be awarded:</ui:msg></b><br />
 
-                            - Samsung Galaxy S4 mobile phone*<br />
-                            - Internship opportunity in Red Hat**<br />
-                            - Winner’s trophy and certificate</p>
+                            <ui:msg description="Samsung Galaxy">- Samsung Galaxy S4 mobile phone*</ui:msg><br />
+                            <ui:msg description="Internship">- Internship opportunity in Red Hat**</ui:msg><br />
+                            <ui:msg description="Winner">- Winner’s trophy and certificate</ui:msg></p>
 
-                        <p><b>Finalists will each receive:</b><br />
-                            - Internship Opportunity**<br />
-                            - Certification of Participation</p>
+                        <p><b><ui:msg description="Finalist">Finalists will each receive:</ui:msg></b><br />
+                            <ui:msg description="Internship Opportunity">- Internship Opportunity**</ui:msg><br />
+                            <ui:msg description="Certification">- Certification of Participation</ui:msg></p>
 
-                        <p><font size="-3" color="#999999">*Red Hat reserved the right to replace this with a prize of the same value.<br />
-                            **Internship does not include travelling and accommodation expenses.</font></p> <br />
+                        <p><font size="-3" color="#999999"><ui:msg description="8th sentence">*Red Hat reserved the right to replace this with a prize of the same value.</ui:msg><br />
+                            <ui:msg description="Travelling and Accomdation">**Internship does not include travelling and accommodation expenses.</ui:msg></font></p> <br />
 
                         <!--<p><h1><font color="#CC0000">Take the Challenge now!</font></h1></p>-->
                         <p><g:HTML ui:field="challengeLink"/> </p>
@@ -64,7 +67,7 @@
                     <div id="sidebar" class="{res.grid.grid_4} {res.grid.omega}">
 
                         <ul class="{res.main.socialIcons}">
-                            <li><span style="position: relative; top: 4px; left: -2px;"><strong>Connect:</strong></span></li>
+                            <li><span style="position: relative; top: 4px; left: -2px;"><strong><ui:msg description="Connect">Connect:</ui:msg></strong></span></li>
                             <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
 
                         </ul><!-- /.panel02 --><!-- /.panel01 --><!-- /.panel02 -->
@@ -77,11 +80,11 @@
 
                             <!--<a href="registration.html" target="_blank"><img src="images/reg_english_button.png"/></a>-->
 
-                            <g:Image ui:field="registerImage" url="images/reg_english_button.png"/>
+                            <g:Image resource="{res.registrationIcon}" ui:field="registerImage"/>
 
                             <br />
 
-                            <h2>Recap of Red Hat Challenge</h2>
+                            <h2><ui:msg description="Recap">Recap of Red Hat Challenge</ui:msg></h2>
                             <div class="border2" style="color: #7D7E81; border-bottom: solid 1px"/><br />
                             <p><a href="http://www.youtube.com/watch?v=35ZKmL4OfeI&amp;list=PLbMP1JcGBmSET6j9onKMUUqCCSJlA11DA" target="_blank"><img src="images/home_video_21.jpg" /></a><br /><br />
                                 <a href="https://www.facebook.com/photo.php?v=10150591836889283&amp;set=vb.172855169064&amp;type=3" target="_blank"><img src="images/home_video_22.jpg" /></a><br /><br />
