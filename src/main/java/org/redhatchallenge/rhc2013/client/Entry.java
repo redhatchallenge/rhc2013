@@ -19,16 +19,18 @@ import java.util.Map;
 public class Entry implements EntryPoint {
 
     private AuthenticationServiceAsync authenticationService = AuthenticationService.Util.getInstance();
+    private MessageMessages messages = GWT.create(MessageMessages.class);
 
     @Override
     public void onModuleLoad() {
 
         ScriptInjector.fromUrl(GWT.getHostPageBaseURL() + "js/jquery-1.7.1.min.js").inject();
 
+
         authenticationService.isRemembered(new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
-                ContentContainer.INSTANCE.setContent(new MessageScreen("Oops, something went wrong..."));
+                ContentContainer.INSTANCE.setContent(new MessageScreen(messages.somethingWrong()));
             }
 
             @Override
@@ -71,6 +73,9 @@ public class Entry implements EntryPoint {
                 else if(historyToken.equalsIgnoreCase("details")) {
                     ContentContainer.INSTANCE.setContent(new ContestDetailsScreen());
                 }
+                else if(historyToken.equalsIgnoreCase("forget-password")){
+                    ContentContainer.INSTANCE.setContent(new TriggerPasswordResetScreen());
+                }
             }
         });
 
@@ -94,17 +99,17 @@ public class Entry implements EntryPoint {
             authenticationService.setConfirmationStatus(params.get(CONFIRM_TOKEN).get(0), new AsyncCallback<Boolean>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Error with your confirmation token</h1>"));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmationTokenError() +"</h1>"));
                 }
 
                 @Override
                 public void onSuccess(Boolean result) {
                     if(result) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Thank you for confirming your account!</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmedAccount() +"</h1>"));
                     }
 
                     else {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Error with your confirmation token</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmationTokenError() +"</h1>"));
                     }
                 }
             });
