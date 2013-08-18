@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -22,7 +23,7 @@ public class IndexScreen extends Composite {
     }
 
     private static IndexScreenUiBinder UiBinder = GWT.create(IndexScreenUiBinder.class);
-
+    private MessageMessages messages = GWT.create(MessageMessages.class);
     @UiField Image registerImage;
     @UiField HTML challengeLink;
 
@@ -40,7 +41,7 @@ public class IndexScreen extends Composite {
         // Sets cursor to indicate the image is clickable
         registerImage.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
-        challengeLink.setHTML("<h1><font color=\"#CC0000\">Take the Challenge Now!</font></h1>");
+        challengeLink.setHTML("<h1><font color=\"#CC0000\">"+ messages.takeChallenge() +"!</font></h1>");
         challengeLink.getElement().getStyle().setCursor(Style.Cursor.POINTER);
     }
 
@@ -53,6 +54,15 @@ public class IndexScreen extends Composite {
     protected void onAttach() {
         super.onAttach();
         Jquery.countdown();
-        Jquery.bind(5*24*60*60*1000);
+        if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
+            Jquery.bindEn(5*24*60*60*1000);
+        }
+
+        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+            Jquery.bindCh(5*24*60*60*1000);
+        }
+        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
+            Jquery.bindCh(5*24*60*60*1000);
+        }
     }
 }

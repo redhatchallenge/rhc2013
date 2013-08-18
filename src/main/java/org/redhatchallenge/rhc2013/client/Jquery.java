@@ -1,11 +1,13 @@
 package org.redhatchallenge.rhc2013.client;
 
+import com.google.gwt.core.client.GWT;
+
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class Jquery {
 
-    public static native void bind(int time) /*-{
+    public static native void bindEn(int time) /*-{
 
         $wnd.jQuery(function(){
 
@@ -32,10 +34,90 @@ public class Jquery {
                     message += seconds + " second" + ( seconds==1 ? '':'s' ) + " <br />";
 
                     if(newYear){
-                        message += "left until the new year!";
+                        message += "Congrats!";
                     }
                     else {
-                        message += "left to 10 days from now!";
+                        message += "left from now!";
+                    }
+
+                    note.html(message);
+                }
+            });
+
+        });
+    }-*/;
+
+    public static native void bindCh(int time) /*-{
+
+        $wnd.jQuery(function(){
+
+            var note = $wnd.$('#note'),
+                ts = new Date(2012, 0, 1),
+                newYear = true;
+
+            if((new Date()) > ts){
+                // The new year is here! Count towards something else.
+                // Notice the *1000 at the end - time must be in milliseconds
+                ts = (new Date()).getTime() + time;
+                newYear = false;
+            }
+
+            $wnd.$('#countdown').countdown({
+                timestamp	: ts,
+                callback	: function(days, hours, minutes, seconds){
+
+                    var message = "";
+
+                    message += days + "天" + ( days==1 ? '':'' ) + ", ";
+                    message += hours + " 小时" + ( hours==1 ? '':'' ) + ", ";
+                    message += minutes + " 分钟" + ( minutes==1 ? '':'' ) + ", ";
+                    message += seconds + " 秒" + ( seconds==1 ? '':'' ) + " <br />";
+
+                    if(newYear){
+                        message += "Congrats";
+                    }
+                    else {
+                        message += "left from now!";
+                    }
+
+                    note.html(message);
+                }
+            });
+
+        });
+    }-*/;
+
+    public static native void bindZh(int time) /*-{
+
+        $wnd.jQuery(function(){
+
+            var note = $wnd.$('#note'),
+                ts = new Date(2012, 0, 1),
+                newYear = true;
+
+            if((new Date()) > ts){
+                // The new year is here! Count towards something else.
+                // Notice the *1000 at the end - time must be in milliseconds
+                ts = (new Date()).getTime() + time;
+                newYear = false;
+            }
+
+            $wnd.$('#countdown').countdown({
+                timestamp	: ts,
+                callback	: function(days, hours, minutes, seconds){
+
+                    var message = "";
+
+                    message += days + "天" + ( days==1 ? '':'' ) + ", ";
+                    message += hours + " 小時" + ( hours==1 ? '':'' ) + ", ";
+                    message += minutes + " 分鐘" + ( minutes==1 ? '':'' ) + ", ";
+                    message += seconds + " 秒" + ( seconds==1 ? '':'' ) + " <br />";
+
+                    if(newYear){
+                        message += "Congrats";
+                    }
+                    else {
+                        message += "left from now!";
                     }
 
                     note.html(message);
