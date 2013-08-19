@@ -163,13 +163,24 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
             Student student = (Student)criteria.uniqueResult();
             session.close();
 
-            UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
-            token.setRememberMe(rememberMe);
+            /**
+             * If the supplied username does not exist, the query will return
+             * a null Student object. Return false in this case.
+             */
+            if(student == null) {
+                return false;
+            }
 
-            currentUser.login(token);
-            return true;
+            else {
+
+                UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
+                token.setRememberMe(rememberMe);
+
+                currentUser.login(token);
+                return true;
+            }
+
         }   catch (AuthenticationException e) {
-            session.close();
             return false;
         }
     }
