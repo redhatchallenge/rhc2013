@@ -15,18 +15,21 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
 
     @Override
     public Student getProfileData() throws IllegalArgumentException {
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
         try {
             String contestant_id = SecurityUtils.getSubject().getPrincipal().toString();
 
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            session.beginTransaction();
-            Student student = (Student)session.get(Student.class, Integer.parseInt(contestant_id));
-            session.close();
 
-            return student;
+            session.beginTransaction();
+
+            return (Student)session.get(Student.class, Integer.parseInt(contestant_id));
         } catch (HibernateException e) {
             log("Failed to retrieve profile information from the database", e);
             throw new RuntimeException("Failed to retrieve profile information from the database");
+        } finally {
+            session.close();
         }
     }
 
@@ -48,10 +51,11 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
         lecturerEmail = SecurityUtil.escapeInput(lecturerEmail);
         language = SecurityUtil.escapeInput(language);
 
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
         try {
             String contestant_id = SecurityUtils.getSubject().getPrincipal().toString();
 
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(contestant_id));
 
@@ -63,6 +67,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
                 }
 
                 else {
+                    session.getTransaction().rollback();
                     return false;
                 }
             }
@@ -84,6 +89,7 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
             return true;
         } catch (HibernateException e) {
             log("Profile update failed", e);
+            session.getTransaction().rollback();
             return false;
         }
     }

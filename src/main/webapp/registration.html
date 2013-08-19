@@ -23,6 +23,10 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300" />
         <link rel="stylesheet" type="text/css" media="all" href="assets/css/styles.css" />
         <link rel="stylesheet" type="test/css" media="all" href="assets/countdown/jquery.countdown.css" />
+
+        <link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen" charset="utf-8" />
+        <script src="js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
+
         <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
         <!--                                           -->
@@ -58,7 +62,6 @@
 
                     <!-- /#header -->
                     <div class="clear"></div>
-
                     <div id="content">
 
                     </div><!-- /#content -->
@@ -69,5 +72,10 @@
             </div><!-- /#page -->
 
         </div><!-- /#wrapper -->
+        <script type="text/javascript" charset="utf-8">
+            $(document).ready(function(){
+                $("a[rel^='prettyPhoto']").prettyPhoto();
+            });
+        </script>
     </body>
 </html>

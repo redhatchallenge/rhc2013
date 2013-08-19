@@ -37,7 +37,7 @@ public class Jquery {
                         message += "Congrats!";
                     }
                     else {
-                        message += "left from now!";
+                        message += "Left to Round 1 of Red Hat Challenge 2013!";
                     }
 
                     note.html(message);
@@ -74,10 +74,10 @@ public class Jquery {
                     message += seconds + " 秒" + ( seconds==1 ? '':'' ) + " <br />";
 
                     if(newYear){
-                        message += "Congrats";
+                        message += "红帽挑战赛2013";
                     }
                     else {
-                        message += "left from now!";
+                        message += "倒计时到红帽挑战赛2013第一轮比赛!";
                     }
 
                     note.html(message);
@@ -114,10 +114,10 @@ public class Jquery {
                     message += seconds + " 秒" + ( seconds==1 ? '':'' ) + " <br />";
 
                     if(newYear){
-                        message += "Congrats";
+                        message += "紅帽挑戰賽2013";
                     }
                     else {
-                        message += "left from now!";
+                        message += "倒計時到紅帽挑戰賽2013第一輪比賽!";
                     }
 
                     note.html(message);
@@ -260,4 +260,11 @@ public class Jquery {
         })($wnd.jQuery);
     }-*/;
 
+    public static native void prettyPhoto() /*-{
+        $wnd.$(document).ready(function(){
+            $wnd.$("a[rel^='prettyPhoto']").prettyPhoto({
+                allow_resize: true
+            });
+        });
+    }-*/;
 }
