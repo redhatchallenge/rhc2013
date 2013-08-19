@@ -78,7 +78,6 @@ body {
     min-height: 725px;
     overflow: hidden;
 }
-body.lp #page { background: #fff url("../images/masthead_microsite_1003x370.jpg") 0 0 no-repeat; } /* replace with landing page image */
 
 #header {
     color: #fff;
@@ -89,12 +88,11 @@ body.msi #header { height: 168px; }
 body.lp #header {height: 370px;
 }
 #sm-logo {
-    background: transparent url("../images/redhathome_logo.png") 0 30px no-repeat;
+    /*background: transparent url("../images/redhathome_logo.png") 0 30px no-repeat;*/
     left: 30px;
     top: 30px;
     width: 300px;
     height: 100px;
-    *height: 100px;
 }
 #sm-logo a {
     height: 69px;
