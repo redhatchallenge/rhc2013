@@ -41,7 +41,7 @@ public class IndexScreen extends Composite {
         // Sets cursor to indicate the image is clickable
         registerImage.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
-        challengeLink.setHTML("<h1><font color=\"#CC0000\">"+ messages.takeChallenge() +"!</font></h1>");
+        challengeLink.setHTML("<h1><font color=\"#CC0000\">" + messages.takeChallenge() + "!</font></h1>");
         challengeLink.getElement().getStyle().setCursor(Style.Cursor.POINTER);
     }
 
@@ -55,7 +55,7 @@ public class IndexScreen extends Composite {
         super.onAttach();
         Jquery.countdown();
         if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
-            Jquery.bindEn(5*24*60*60*1000);
+            Jquery.bindEn(5 * 24 * 60 * 60 * 1000);
         }
 
         else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
@@ -64,5 +64,6 @@ public class IndexScreen extends Composite {
         else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
             Jquery.bindCh(5*24*60*60*1000);
         }
+        Jquery.prettyPhoto();
     }
 }

@@ -15,7 +15,7 @@
 			opacity: 0.80, /* Value between 0 and 1 */
 			show_title: false, /* true/false */
 			allow_resize: true, /* Resize the photos bigger than viewport. true/false */
-			default_width: 300,
+			default_width: 500,
 			default_height: 344,
 			counter_separator_label: '/', /* The separator for the gallery counter 1 "of" 2 */
 			theme: 'light_square', /* light_rounded / dark_rounded / light_square / dark_square / facebook */
@@ -197,7 +197,7 @@
 
 			// Rebuild Facebook Like Button with updated href
 			if(settings.social_tools){
-				facebook_like_link = settings.social_tools.replace('{location_href}', encodeURIComponent(location.href)); 
+				facebook_like_link = settings.social_tools.replace('{location_href}', encodeURIComponent(location.href));
 				$pp_pic_holder.find('.pp_social').html(facebook_like_link);
 			}
 
@@ -433,7 +433,7 @@
 				});
 				pp_slideshow = setInterval($.prettyPhoto.startSlideshow,settings.slideshow);
 			}else{
-				$.prettyPhoto.changePage('next');	
+				$.prettyPhoto.changePage('next');
 			};
 		}
 
@@ -648,7 +648,7 @@
 				return 'youtube';
 			}else if (itemSrc.match(/vimeo\.com/i)) {
 				return 'vimeo';
-			}else if(itemSrc.match(/\b.mov\b/i)){ 
+			}else if(itemSrc.match(/\b.mov\b/i)){
 				return 'quicktime';
 			}else if(itemSrc.match(/\b.swf\b/i)){
 				return 'flash';
@@ -740,9 +740,9 @@
 		function _build_overlay(caller){
 			// Inject Social Tool markup into General markup
 			if(settings.social_tools)
-				facebook_like_link = settings.social_tools.replace('{location_href}', encodeURIComponent(location.href)); 
+				facebook_like_link = settings.social_tools.replace('{location_href}', encodeURIComponent(location.href));
 
-			settings.markup=settings.markup.replace('{pp_social}',(settings.social_tools)?facebook_like_link:''); 
+			settings.markup=settings.markup.replace('{pp_social}',(settings.social_tools)?facebook_like_link:'');
 
 			$('body').append(settings.markup); // Inject the markup
 
@@ -886,8 +886,8 @@
 	function clearHashtag(){url=location.href;hashtag=(url.indexOf('#!prettyPhoto'));if(hashtag > 0)location.hash="!prettyPhoto";}
 
 
-	
-	
+
+
 
 	function getParam(name,url){
 	  name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");

@@ -260,4 +260,11 @@ public class Jquery {
         })($wnd.jQuery);
     }-*/;
 
+    public static native void prettyPhoto() /*-{
+        $wnd.$(document).ready(function(){
+            $wnd.$("a[rel^='prettyPhoto']").prettyPhoto({
+                allow_resize: true
+            });
+        });
+    }-*/;
 }
