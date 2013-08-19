@@ -16,11 +16,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.infinispan.Cache;
-import org.infinispan.configuration.cache.Configuration;
-import org.infinispan.configuration.cache.ConfigurationBuilder;
-import org.infinispan.configuration.global.GlobalConfigurationBuilder;
-import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -36,13 +31,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     private Cache<String, Integer> cache;
 
     public AuthenticationServiceImpl() {
-        GlobalConfigurationBuilder global = new GlobalConfigurationBuilder();
-        global.globalJmxStatistics()
-                .allowDuplicateDomains(true).jmxDomain("org.redhatchallenge.rhc2013");
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-        Configuration config = builder.build(true);
-        EmbeddedCacheManager cacheManager = new DefaultCacheManager(config);
-        cache = cacheManager.getCache();
+        cache = InfinispanCache.getCacheManager().getCache();
 
         cache.put("A1", 0);
         cache.put("A2", 0);
@@ -138,6 +127,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
         } catch (ConstraintViolationException e) {
             session.getTransaction().rollback();
             return false;
+
         } catch (HibernateException e) {
             session.getTransaction().rollback();
             return false;
@@ -161,16 +151,28 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
             Criteria criteria = session.createCriteria(Student.class);
             criteria.add(Restrictions.eq("email", email));
             Student student = (Student)criteria.uniqueResult();
-            session.close();
 
-            UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
-            token.setRememberMe(rememberMe);
+            /**
+             * If the supplied username does not exist, the query will return
+             * a null Student object. Return false in this case.
+             */
+            if(student == null) {
+                return false;
+            }
 
-            currentUser.login(token);
-            return true;
-        }   catch (AuthenticationException e) {
-            session.close();
+            else {
+
+                UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
+                token.setRememberMe(rememberMe);
+
+                currentUser.login(token);
+                return true;
+            }
+
+        } catch (AuthenticationException e) {
             return false;
+        } finally {
+            session.close();
         }
     }
 
@@ -207,10 +209,11 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     @Override
     public boolean setConfirmationStatus(String token) throws IllegalArgumentException {
 
+        ConfirmationTokens tokens = lookUpConfirmationToken(token);
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
         try {
-            ConfirmationTokens tokens = lookUpConfirmationToken(token);
             if(tokens!=null) {
-                Session session = HibernateUtil.getSessionFactory().getCurrentSession();
                 session.beginTransaction();
                 Criteria criteria = session.createCriteria(Student.class);
                 criteria.add(Restrictions.eq("email", tokens.getEmail()));
@@ -228,12 +231,9 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 student.setVerified(true);
 
                 session.update(student);
-                session.getTransaction().commit();
 
-                Session newSession = HibernateUtil.getSessionFactory().getCurrentSession();
-                newSession.beginTransaction();
-                newSession.delete(tokens);
-                newSession.getTransaction().commit();
+                session.delete(tokens);
+                session.getTransaction().commit();
 
                 cache.replace(timeslot, cache.get(timeslot)+1);
                 return true;
@@ -243,6 +243,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 return false;
             }
         } catch (HibernateException e) {
+            session.getTransaction().rollback();
             return false;
         }
     }
@@ -287,7 +288,6 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
             Criteria criteria = session.createCriteria(Student.class);
             criteria.add(Restrictions.eq("email", email));
             Student student = (Student)criteria.uniqueResult();
-            session.close();
 
             if(student.getContact().equals(contact)) {
                 Thread t = new Thread(new SendPasswordResetEmail(email));
@@ -300,8 +300,9 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 return false;
             }
         } catch (HibernateException e) {
-            session.close();
             return false;
+        } finally {
+            session.close();
         }
     }
 
@@ -309,18 +310,17 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     public String lookupEmailFromToken(String token) throws IllegalArgumentException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
-        session.beginTransaction();
-        ResetPasswordTokens tokens = (ResetPasswordTokens)session.get(ResetPasswordTokens.class, token);
+        try {
+            session.beginTransaction();
+            ResetPasswordTokens tokens = (ResetPasswordTokens)session.get(ResetPasswordTokens.class, token);
 
-        if(tokens!=null) {
             session.delete(tokens);
             session.getTransaction().commit();
 
             return tokens.getEmail();
-        }
 
-        else {
-            session.close();
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
             return null;
         }
     }
@@ -357,11 +357,15 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     private ConfirmationTokens lookUpConfirmationToken(String token) {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        ConfirmationTokens tokens = (ConfirmationTokens)session.get(ConfirmationTokens.class, token);
-        session.getTransaction().commit();
-        return tokens;
-
+        try {
+            session.beginTransaction();
+            ConfirmationTokens tokens = (ConfirmationTokens)session.get(ConfirmationTokens.class, token);
+            session.getTransaction().commit();
+            return tokens;
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            return null;
+        }
     }
 
     /**

@@ -2,6 +2,7 @@ package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.DivElement;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
@@ -51,6 +52,9 @@ public class ResetPasswordScreen extends Composite {
                 emailLabel.setText(result);
             }
         });
+
+        resetPasswordButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
+
     }
 
     @UiHandler("resetPasswordButton")
