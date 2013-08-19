@@ -16,11 +16,6 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
 import org.infinispan.Cache;
-import org.infinispan.configuration.cache.Configuration;
-import org.infinispan.configuration.cache.ConfigurationBuilder;
-import org.infinispan.configuration.global.GlobalConfigurationBuilder;
-import org.infinispan.manager.DefaultCacheManager;
-import org.infinispan.manager.EmbeddedCacheManager;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -36,13 +31,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     private Cache<String, Integer> cache;
 
     public AuthenticationServiceImpl() {
-        GlobalConfigurationBuilder global = new GlobalConfigurationBuilder();
-        global.globalJmxStatistics()
-                .allowDuplicateDomains(true).jmxDomain("org.redhatchallenge.rhc2013");
-        ConfigurationBuilder builder = new ConfigurationBuilder();
-        Configuration config = builder.build(true);
-        EmbeddedCacheManager cacheManager = new DefaultCacheManager(config);
-        cache = cacheManager.getCache();
+        cache = InfinispanCache.getCacheManager().getCache();
 
         cache.put("A1", 0);
         cache.put("A2", 0);
