@@ -13,9 +13,12 @@ public interface ProfileService extends RemoteService {
 
     public Student getProfileData() throws IllegalArgumentException;
 
-    public Boolean updateProfileData(String email, String oldPassword, String newPassword, String firstName, String lastName, String contact,
+    public Boolean updateProfileData(String email, String firstName, String lastName, String contact,
                                      String country, String countryCode, String school, String lecturerFirstName, String lecturerLastName,
                                      String lecturerEmail, String language) throws IllegalArgumentException;
+
+    public Boolean changePassword(String oldPassword, String newPassword) throws IllegalArgumentException;
+
     public static class Util {
         private static final ProfileServiceAsync Instance= (ProfileServiceAsync) GWT.create(ProfileService.class);
 

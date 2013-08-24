@@ -10,7 +10,6 @@ public class Jquery {
     public static native void bindEn(int time) /*-{
 
         $wnd.jQuery(function(){
-
             var note = $wnd.$('#note'),
                 ts = new Date(2012, 0, 1),
                 newYear = true;
@@ -18,7 +17,7 @@ public class Jquery {
             if((new Date()) > ts){
                 // The new year is here! Count towards something else.
                 // Notice the *1000 at the end - time must be in milliseconds
-                ts = (new Date()).getTime() + time;
+                ts = (new Date()).getTime() + time*1000;
                 newYear = false;
             }
 
@@ -58,7 +57,7 @@ public class Jquery {
             if((new Date()) > ts){
                 // The new year is here! Count towards something else.
                 // Notice the *1000 at the end - time must be in milliseconds
-                ts = (new Date()).getTime() + time;
+                ts = (new Date()).getTime() + time*1000;
                 newYear = false;
             }
 
@@ -77,7 +76,7 @@ public class Jquery {
                         message += "红帽挑战赛2013";
                     }
                     else {
-                        message += "倒计时到红帽挑战赛2013第一轮比赛!";
+                        message += "红帽挑战赛2013第一轮比赛倒数!";
                     }
 
                     note.html(message);
@@ -98,7 +97,7 @@ public class Jquery {
             if((new Date()) > ts){
                 // The new year is here! Count towards something else.
                 // Notice the *1000 at the end - time must be in milliseconds
-                ts = (new Date()).getTime() + time;
+                ts = (new Date()).getTime() + time*1000;
                 newYear = false;
             }
 
@@ -117,7 +116,7 @@ public class Jquery {
                         message += "紅帽挑戰賽2013";
                     }
                     else {
-                        message += "倒計時到紅帽挑戰賽2013第一輪比賽!";
+                        message += "紅帽挑戰賽2013第一輪比賽倒数!";
                     }
 
                     note.html(message);
@@ -266,5 +265,36 @@ public class Jquery {
                 allow_resize: true
             });
         });
+    }-*/;
+
+    public static native void facebookShareEn() /*-{
+        $wnd.FB.ui({
+            method: 'feed',
+            link: 'redhatchallenge2013-rhc2013.rhcloud.com/?locale=en#registration',
+            picture: 'https://redhatchallenge2013-rhc2013.rhcloud.com/images/redhathome_logo_thumbnail.png',
+            name: 'Red Hat Challenge 2013',
+            caption: 'Join Red Hat Challenge 2013 Now!!',
+            message: 'Facebook%20Dialogs%20are%20so%20easy!',
+            description: 'Looking for a stage to showcase your knowledge on cloud computing, operating systems and virtualization? Join the Red Hat Challenge 2013!.'
+        }, function(response){});
+    }-*/;
+
+    public static native void facebookShareZh() /*-{
+        $wnd.FB.ui({
+            method: 'feed',
+             link: 'redhatchallenge2013-rhc2013.rhcloud.com/?locale=zh#registration',
+            picture: 'https://redhatchallenge2013-rhc2013.rhcloud.com/images/redhathome_logo_thumbnail.png',
+            name: 'Red Hat Challenge 2013',
+            caption: 'Join Red Hat Challenge 2013 Now!!',
+            description: 'Looking for a stage to showcase your knowledge on cloud computing, operating systems and virtualization? Join the Red Hat Challenge 2013!.'
+        }, function(response){});
+    }-*/;
+
+    public static native boolean checkIfTwitterWidgetIsLoaded() /*-{
+        if(!(typeof $wnd.twtrr === "undefined") && !(null===$wnd.twtrr)) {
+            return true;
+        }
+
+        return false;
     }-*/;
 }

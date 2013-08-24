@@ -1,3 +1,5 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
              ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
@@ -13,22 +15,51 @@
                 <div class="{res.grid.grid_12}">
                     <div>
                         <div >
+                            <g:HTML ui:field="welcomeLabel"/>
+
                             <div id="countdown"/>
 
                             <p id="note"/><br />
 
+                            <div class="{res.grid.grid_8} {res.grid.alpha}" style="margin-right: 40px">
+                                <div id="table">
+                                    <table ui:field="table" style="width: 563px">
 
-                            <g:HTML ui:field="welcomeLabel"/>
+                                        <td colspan="2"><h2><ui:msg description="Official Rules">Basic Information</ui:msg></h2></td>
+                                        <tr>
+                                            <td style="width: 174px" class="{res.main.rowform}"><ui:msg description="RegisterScreen Email Address">Email Address:</ui:msg></td>
+                                            <td style="width: 268px" class="{res.main.rowform}"><g:TextBox ui:field="emailField" maxLength="120" visibleLength="33"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="{res.main.rowform}"><ui:msg description="TimeSlot">Time Slot:</ui:msg></td>
+                                            <td class="{res.main.rowform}"><g:TextBox ui:field="timeSlotField" maxLength="120" visibleLength="33"/></td>
+                                        </tr>
 
-                            <!--<li><span class="red"><b>Over 50%</b></span> of the world's trading volume, powered by <span class="nowrap">Red Hat</span></li>-->
-                            <p><ui:msg description="1st para">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</ui:msg></p>
+                                        <tr>
+                                            <td class="{res.main.rowform}"><ui:msg description="TimeSlot">Selected Lanaguage for Test:</ui:msg></td>
+                                            <td class="{res.main.rowform}"><g:TextBox ui:field="languageField" maxLength="120" visibleLength="33"/></td>
+                                        </tr>
 
-
-                            <p><ui:msg description="2nd para"> It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</ui:msg></p>
-
-
-                            <p><ui:msg description="3rd para">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</ui:msg></p>
-
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <h2><ui:msg description="Official Rules">Round 1 Rules</ui:msg></h2>
+                                                <p><ui:msg description="Test Rule 1 sentence">1) There will be a total of 150 MCQ (Multiple Choice Question) to be completed in 60min.</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 2 sentence">2) There will be 1 question per page and it will be marked after you have submitted the answer.</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 3 sentence">3) You will not be able to return to the previous question once you have submit your answer.</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 4 sentence">4) For every correct answer, you will be awarded 2 marks and for every wrong answer 1 mark will be deducted from your score</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 5 sentence">5) In any event of 2 or more contestant have the same score, the contestant with the quickest time to complete the Test will proceed to Round 2</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 6 sentence">6) You will be able to view your score only after the test have completed or ended.</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 7 sentence">7) You will be tested on RHEL(Red Hat Enterprise Linux), Virtualization and Cloud Computing.</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 8 sentence">8) You will be notify via Email/Mobile if you are selected to process to Round 2 of Red Hat Challenge 2013</ui:msg></p>
+                                                <p><ui:msg description="Test Rule 9 sentence">9) For more information, please view the <a href="javascript:window.open('https://redhatchallenge2013-rhc2013.rhcloud.com/#tc', 'Terms of Use and Privacy Policy');" >Terms of Use and Privacy Policy</a></ui:msg></p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="{res.grid.clear}"/>
