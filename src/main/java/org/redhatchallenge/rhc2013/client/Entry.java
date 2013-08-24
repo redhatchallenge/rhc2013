@@ -51,8 +51,8 @@ public class Entry implements EntryPoint {
             public void onValueChange(ValueChangeEvent<String> event) {
                 String historyToken = event.getValue();
 
-                if(historyToken.isEmpty()) {
-                    parseTokens();
+                if (historyToken.isEmpty()) {
+                    ContentContainer.INSTANCE.setContent(new IndexScreen());
                 }
 
                 else if(historyToken.equalsIgnoreCase("registration")) {
@@ -77,6 +77,35 @@ public class Entry implements EntryPoint {
                 else if(historyToken.equalsIgnoreCase("forget-password")){
                     ContentContainer.INSTANCE.setContent(new TriggerPasswordResetScreen());
                 }
+
+
+                else if(historyToken.substring(0, 10).equalsIgnoreCase("resetToken")) {
+                    ContentContainer.INSTANCE.setContent(new ResetPasswordScreen(historyToken.substring(11)));
+                }
+
+                else if(historyToken.substring(0, 12).equalsIgnoreCase("confirmToken")) {
+                    authenticationService.setConfirmationStatus(historyToken.substring(13), new AsyncCallback<Boolean>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmationTokenError() +"</h1>"));
+                        }
+
+                        @Override
+                        public void onSuccess(Boolean result) {
+                            if(result) {
+                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h2>"+ messages.confirmedAccount() +"</h2>"));
+                            }
+
+                            else {
+                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h2>"+ messages.confirmationTokenError() +"</h2>"));
+                            }
+                        }
+                    });
+                }
+
+                else {
+                    ContentContainer.INSTANCE.setContent(new IndexScreen());
+                }
             }
         });
 
@@ -95,43 +124,6 @@ public class Entry implements EntryPoint {
         else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
             StyleInjector.inject("body.lp #page { background: #fff url(\"../images/masthead_microsite_1003x370_zh.jpg\") 0 0 no-repeat; }");
             StyleInjector.inject("#sm-logo { background: transparent url(\"../images/redhathome_logo_zh.png\") 0 30px no-repeat; }");
-        }
-
-    }
-
-    private void parseTokens() {
-        String CONFIRM_TOKEN = "confirmToken";
-        String RESET_TOKEN = "resetToken";
-
-        AuthenticationServiceAsync authenticationService = AuthenticationService.Util.getInstance();
-
-        Map<String, List<String>> params = Window.Location.getParameterMap();
-        if(params.containsKey(RESET_TOKEN)) {
-            ContentContainer.INSTANCE.setContent(new ResetPasswordScreen());
-        }
-
-        else if(params.containsKey(CONFIRM_TOKEN)) {
-            authenticationService.setConfirmationStatus(params.get(CONFIRM_TOKEN).get(0), new AsyncCallback<Boolean>() {
-                @Override
-                public void onFailure(Throwable caught) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmationTokenError() +"</h1>"));
-                }
-
-                @Override
-                public void onSuccess(Boolean result) {
-                    if(result) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmedAccount() +"</h1>"));
-                    }
-
-                    else {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmationTokenError() +"</h1>"));
-                    }
-                }
-            });
-        }
-
-        else {
-            ContentContainer.INSTANCE.setContent(new IndexScreen());
         }
     }
 }

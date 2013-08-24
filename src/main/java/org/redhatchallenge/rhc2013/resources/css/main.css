@@ -549,3 +549,23 @@
         cursor: pointer;
     }
 
+    .gwt-Label {
+        color:#fff;
+        display: block;
+        float: left;
+        text-transform: uppercase;
+        font-family: Interstate,'Liberation Sans',Helvetica,Arial,sans-serif;
+        text-shadow: 1px 1px 0 #000000;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 11px 8px 2px 0px;
+        width: inherit;
+        font-weight: bold;
+        position: relative;
+
+        -moz-transition: color 0.15s linear 0s, background-color 0.15s linear 0s;
+        -webkit-transition-property: background-color, color;
+        -webkit-transition-duration: 0.25s;
+
+    }
+

@@ -9,7 +9,9 @@ import org.redhatchallenge.rhc2013.shared.Student;
 public interface ProfileServiceAsync {
     void getProfileData(AsyncCallback<Student> async);
 
-    void updateProfileData(String email, String oldPassword, String newPassword, String firstName, String lastName, String contact,
+    void updateProfileData(String email, String firstName, String lastName, String contact,
                            String country, String countryCode, String school, String lecturerFirstName, String lecturerLastName,
                            String lecturerEmail, String language, AsyncCallback<Boolean> async);
+
+    void changePassword(String oldPassword, String newPassword, AsyncCallback<Boolean> async);
 }

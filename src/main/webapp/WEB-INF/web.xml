@@ -20,7 +20,14 @@
         <servlet-name>org.redhatchallenge.rhc2013 ProfileService</servlet-name>
         <url-pattern>/registration/ProfileService</url-pattern>
     </servlet-mapping>
-
+    <servlet>
+        <servlet-name>captchaServiceImpl</servlet-name>
+        <servlet-class>org.redhatchallenge.rhc2013.server.CaptchaServiceImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>captchaServiceImpl</servlet-name>
+        <url-pattern>/registration/CaptchaService</url-pattern>
+    </servlet-mapping>
     <!-- Servlets -->
     <!--<servlet>-->
         <!--<servlet-name>greetServlet</servlet-name>-->

@@ -1,4 +1,8 @@
-﻿CREATE TABLE contestant (
+DROP TABLE reset_tokens;
+DROP TABLE confirm_tokens;
+DROP TABLE contestant;
+
+CREATE TABLE contestant (
     contestant_id serial primary key,
     email character varying(50) NOT NULL UNIQUE,
     password character varying(72) NOT NULL,
