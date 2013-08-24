@@ -54,7 +54,7 @@ public class verifyMessageScreen extends Composite {
 
             Document doc = Document.get();
             ScriptElement script = doc.createScriptElement();
-            script.setSrc("http://platform.twitter.com/widgets.js");
+            script.setSrc("https://platform.twitter.com/widgets.js");
             script.setType("text/javascript");
             script.setLang("javascript");
             doc.getBody().appendChild(script);
@@ -96,7 +96,7 @@ public class verifyMessageScreen extends Composite {
 
             Document doc = Document.get();
             ScriptElement script = doc.createScriptElement();
-            script.setSrc("http://platform.twitter.com/widgets.js");
+            script.setSrc("https://platform.twitter.com/widgets.js");
             script.setType("text/javascript");
             script.setLang("javascript");
             doc.getBody().appendChild(script);
