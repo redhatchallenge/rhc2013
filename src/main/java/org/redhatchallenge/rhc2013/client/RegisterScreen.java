@@ -4,23 +4,13 @@ import com.claudiushauptmann.gwt.recaptcha.client.RecaptchaWidget;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.TableElement;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.KeyCodes;
-import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.*;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.FieldVerifier;
 
@@ -40,7 +30,6 @@ public class RegisterScreen extends Composite {
 
     @UiField HTMLPanel htmlPanel;
     @UiField TextBox emailField;
-    @UiField Label emailLabel;
     @UiField PasswordTextBox passwordField;
     @UiField PasswordTextBox confirmPasswordField;
     @UiField TextBox firstNameField;
@@ -54,15 +43,27 @@ public class RegisterScreen extends Composite {
     @UiField TextBox lecturerLastNameField;
     @UiField TextBox lecturerEmailField;
     @UiField ListBox languageField;
-    @UiField VerticalPanel recaptchaPanel;
     @UiField Image registerButton;
-    @UiField Label errorLabel;
-
+    @UiField CheckBox termsCheck;
     @UiField TableElement table;
+    @UiField Anchor socialButton1;
+    @UiField Anchor socialButton2;
 
-    private RecaptchaWidget recaptchaWidget;
+    //Validation Error Labels
+    @UiField Label errorLabel;
+    @UiField Label emailLabel;
+    @UiField Label passwordLabel;
+    @UiField Label confirmPasswordLabel;
+    @UiField Label firstNameLabel;
+    @UiField Label lastNameLabel;
+    @UiField Label contactLabel;
+    @UiField Label schoolLabel;
+    @UiField Label termsLabel;
+
 
     private AuthenticationServiceAsync authenticationService = null;
+
+    DecoratedPopupPanel popupPanel = new DecoratedPopupPanel(true);
 
     public RegisterScreen() {
 
@@ -72,9 +73,6 @@ public class RegisterScreen extends Composite {
 
         initWidget(UiBinder.createAndBindUi(this));
 
-        recaptchaWidget = new RecaptchaWidget("6LfzBeUSAAAAAOvz40gsWXHN3TGp2oyB862qQeGl");
-        recaptchaPanel.add(recaptchaWidget);
-
         table.setCellPadding(3);
         table.setCellSpacing(3);
         table.setBorder(0);
@@ -82,6 +80,18 @@ public class RegisterScreen extends Composite {
         registerButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
         contactField.setWatermark("XXXXXXXX");
+
+        if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+            socialButton1.setVisible(false);
+            socialButton2.setTarget("_blank");
+            socialButton2.setHref("http://e.weibo.com/redhatchina");
+        }
+        else {
+            socialButton1.setTarget("_blank");
+            socialButton1.setHref("https://www.facebook.com/redhatinc?fref=ts");
+            socialButton2.setTarget("_blank");
+            socialButton2.setHref("https://twitter.com/red_hat_apac");
+        }
     }
 
     @UiHandler("countryField")
@@ -101,7 +111,7 @@ public class RegisterScreen extends Composite {
                 countryCodeField.setSelectedIndex(1);
                 regionField.setVisible(false);
                 contactField.setText("");
-                contactField.setWatermark("0XXXXXXXXX");
+                contactField.setWatermark("XXXXXXXXX");
                 break;
             // Thailand
             case 2:
@@ -140,13 +150,81 @@ public class RegisterScreen extends Composite {
 
     @UiHandler("registerButton")
     public void handleRegisterButtonClick(ClickEvent event) {
-        if(!FieldVerifier.isValidEmail(emailField.getText())) {
-            emailLabel.setText(messages.invalidEmailFormat());
-        }
 
-        else {
+        int successCounter = 0;
+
+        if(FieldVerifier.emailIsNull(emailField.getText())){
+            emailLabel.setText(messages.emailEmpty());
+        }
+            else if(!FieldVerifier.isValidEmail(emailField.getText())){
+                emailLabel.setText(messages.emailInvalidFormat());
+            }
+                else{
+                    emailLabel.setText("");
+                    successCounter++;
+                }
+
+        if(FieldVerifier.passwordIsNull(passwordField.getText())){
+            passwordLabel.setText(messages.emptyPassword());
+        }
+            else if((passwordField.getText() != null) && (!FieldVerifier.isValidPassword(passwordField.getText()))){
+                 passwordLabel.setText(messages.passwordInvalidFormat());
+            }
+                else{
+                    passwordLabel.setText("");
+                    successCounter++;
+                }
+
+        if(FieldVerifier.passwordIsNull(confirmPasswordField.getText())){
+            confirmPasswordLabel.setText(messages.emptyConfirmPassword());
+        }
+            else if(!confirmPasswordField.getText().equals(passwordField.getText())){
+                confirmPasswordLabel.setText(messages.passwordNotMatch());
+            }
+                else{
+                    confirmPasswordLabel.setText("");
+                    successCounter++;
+                }
+
+        if(FieldVerifier.fnIsNull(firstNameField.getText())){
+            firstNameLabel.setText(messages.emptyFirstName());
+        }
+            else{
+                firstNameLabel.setText("");
+                successCounter++;
+            }
+
+        if(FieldVerifier.lnIsNull(lastNameField.getText())){
+            lastNameLabel.setText(messages.emptyLastName());
+        }
+            else{
+                lastNameLabel.setText("");
+                successCounter++;
+            }
+
+        if(FieldVerifier.contactIsNull(contactField.getText())){
+            contactLabel.setText(messages.emptyContact());
+        }
+            else if(!FieldVerifier.isValidContact(contactField.getText())){
+                contactLabel.setText(messages.contactInvalid());
+            }
+                else{
+                    contactLabel.setText("");
+                    successCounter++;
+                }
+
+        if(FieldVerifier.schoolIsNull(schoolField.getText())){
+            schoolLabel.setText(messages.emptySchool());
+        }
+            else{
+                schoolLabel.setText("");
+                successCounter++;
+            }
+
+        if(successCounter == 7){
             registerStudent();
         }
+
     }
 
     @UiHandler({"emailField", "passwordField", "confirmPasswordField", "firstNameField",
@@ -159,7 +237,36 @@ public class RegisterScreen extends Composite {
         }
     }
 
+    @UiHandler("passwordField")
+    public void handleMouseOver(MouseOverEvent event) {
+        popupPanel.setWidth("150px");
+        popupPanel.setWidget(new HTML(messages.passwordPopup()));
+        popupPanel.setPopupPosition(passwordField.getAbsoluteLeft() + passwordField.getOffsetWidth(), passwordField.getAbsoluteTop());
+        popupPanel.show();
+    }
+
+    @UiHandler("passwordField")
+    public void handleMouseOut(MouseOutEvent event) {
+        popupPanel.hide();
+    }
+
+    @UiHandler("passwordField")
+    public void handleFocus(FocusEvent event) {
+        popupPanel.setWidth("150px");
+        popupPanel.setWidget(new HTML(messages.passwordPopup()));
+        popupPanel.setPopupPosition(passwordField.getAbsoluteLeft() + passwordField.getOffsetWidth(), passwordField.getAbsoluteTop());
+        popupPanel.show();
+    }
+
+    @UiHandler("passwordField")
+    public void handleBlur(BlurEvent event) {
+        popupPanel.hide();
+    }
+
     private void registerStudent() {
+
+        clearAllLabels();
+        registerButton.setResource(Resources.INSTANCE.submitButtonGrey());
 
         final String email = emailField.getText();
         final String password = passwordField.getText();
@@ -173,6 +280,7 @@ public class RegisterScreen extends Composite {
         final String lecturerEmail = lecturerEmailField.getText();
         final String language = getLanguageFromIndex(languageField.getSelectedIndex());
         final String country;
+        final Boolean termsConCheck = termsCheck.getValue();
 
         /**
          * If country is China, append the region.
@@ -186,26 +294,48 @@ public class RegisterScreen extends Composite {
             country = getCountryFromIndex(countryField.getSelectedIndex());
         }
 
-        authenticationService = AuthenticationService.Util.getInstance();
+        if(termsConCheck){
+            authenticationService = AuthenticationService.Util.getInstance();
 
-        authenticationService.registerStudent(email, password, firstName, lastName, contact,
-                country, countryCode, school, lecturerFirstName, lecturerLastName,
-                lecturerEmail, language, new AsyncCallback<Boolean>() {
-            @Override
-            public void onFailure(Throwable throwable) {
-                errorLabel.setText(messages.unexpectedError());
-            }
-
-            @Override
-            public void onSuccess(Boolean bool) {
-                if(bool) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen(messages.verifyMailMessage(firstName, email)));
+            authenticationService.registerStudent(email, password, firstName, lastName, contact,
+                    country, countryCode, school, lecturerFirstName, lecturerLastName,
+                    lecturerEmail, language, new AsyncCallback<Boolean>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    errorLabel.setText(messages.unexpectedError());
+                    registerButton.setResource(Resources.INSTANCE.submitButton());
                 }
 
-                else {
-                    errorLabel.setText(messages.emailTaken());
+                @Override
+                public void onSuccess(Boolean bool) {
+                    if(bool) {
+                        ContentContainer.INSTANCE.setContent(new verifyMessageScreen(messages.verifyMailMessage(firstName, email)));
+                    }
+
+                    else {
+                        errorLabel.setText(messages.emailTaken());
+                        registerButton.setResource(Resources.INSTANCE.submitButton());
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        else {
+            termsLabel.setText(messages.termsCheck());
+            registerButton.setResource(Resources.INSTANCE.submitButton());
+
+        }
+    }
+
+    private void clearAllLabels() {
+        errorLabel.setText("");
+        emailLabel.setText("");
+        passwordLabel.setText("");
+        confirmPasswordLabel.setText("");
+        firstNameLabel.setText("");
+        lastNameLabel.setText("");
+        contactLabel.setText("");
+        schoolLabel.setText("");
+        termsLabel.setText("");
     }
 }

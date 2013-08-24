@@ -1,5 +1,6 @@
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:rw='urn:import:org.redhatchallenge.rhc2013.client'
              ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
              ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
              ui:generateLocales="en">
@@ -27,7 +28,7 @@
 
                         <p><ui:msg description="3rd sentence">Only 3 rounds to be crowned the winner!</ui:msg></p>
 
-                        <p><ui:msg description="4th sentence">Contestants will face off against each other in a multiple choice questions in the first round in October.</ui:msg></p>
+                        <p><ui:msg description="4th sentence">Contestants will face off against each other through multiple choice questions in the first round in October.</ui:msg></p>
 
                         <p><ui:msg description="5th sentence">The top 20 students from each country will go through a face-to-face or virtual interview in the second round in November. Two students from Hong Kong, Malaysia, Singapore, Taiwan and Thailand and six students from China will be selected to represent their country and compete in the finals held in Beijing in December.</ui:msg></p>
 
@@ -56,7 +57,7 @@
                             <ui:msg description="Internship Opportunity">- Internship Opportunity**</ui:msg><br />
                             <ui:msg description="Certification">- Certification of Participation</ui:msg></p>
 
-                        <p><font size="-3" color="#999999"><ui:msg description="8th sentence">*Red Hat reserved the right to replace this with a prize of the same value.</ui:msg><br />
+                        <p><font size="-3" color="#999999"><ui:msg description="8th sentence">*Red Hat reserves the right to replace this with a prize of the same value.</ui:msg><br />
                             <ui:msg description="Travelling and Accomdation">**Internship does not include travelling and accommodation expenses.</ui:msg></font></p> <br />
 
                         <!--<p><h1><font color="#CC0000">Take the Challenge now!</font></h1></p>-->
@@ -68,8 +69,8 @@
 
                         <ul class="{res.main.socialIcons}">
                             <li><span style="position: relative; top: 4px; left: -2px;"><strong><ui:msg description="Connect">Connect:</ui:msg></strong></span></li>
-                            <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
-
+                            <li><rw:ImageAnchor resource="{res.socialButton1}" ui:field="socialButton1"/></li>
+                            <li><rw:ImageAnchor resource="{res.socialButton2}" ui:field="socialButton2"/></li>
                         </ul><!-- /.panel02 --><!-- /.panel01 --><!-- /.panel02 -->
 
                         <div class="{res.main.panel02}" style="margin-top: 1.5em;">
@@ -87,9 +88,9 @@
                             <h2><ui:msg description="Recap">Recap of Red Hat Challenge</ui:msg></h2>
                             <div class="border2" style="color: #7D7E81; border-bottom: solid 1px"/><br />
                             <!--<p><a href="http://www.youtube.com/watch?v=35ZKmL4OfeI" rel="prettyPhoto" title=""><img src="images/home_video_21.jpg" /></a><br /><br />-->
-                            <p><a href="http://www.youtube.com/watch?v=35ZKmL4OfeI" rel="prettyPhoto" title=""><img src="images/home_video_21.jpg" /></a><br /><br />
-                                <a href="https://www.facebook.com/video/embed?video_id=10150591836889283&amp;iframe=true" rel="prettyPhoto"><img src="images/home_video_22.jpg" /></a><br /><br />
-                                <a href="https://www.facebook.com/video/embed?video_id=10151393170889283&amp;iframe=true" rel="prettyPhoto"><img src="images/home_video_23.jpg" /></a><br /><br />
+                            <p><g:HTML ui:field="videoOne"/><br /><br />
+                               <g:HTML ui:field="videoTwo"/> <br /><br />
+                               <g:HTML ui:field="videoThree"/><br /><br />
                             </p>
                         </div>
                         <div class="{res.main.panel02} {res.grid.clearfix}" style="margin-top: 1em;"/><!-- /.panel02 -->

@@ -35,4 +35,5 @@
     <source path='shared'/>
     <servlet path="/AuthenticationService" class="org.redhatchallenge.rhc2013.server.AuthenticationServiceImpl"/>
     <servlet path="/ProfileService" class="org.redhatchallenge.rhc2013.server.ProfileServiceImpl"/>
+    <servlet path="/CaptchaService" class="org.redhatchallenge.rhc2013.server.CaptchaServiceImpl"/>
 </module>
