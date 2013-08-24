@@ -2,6 +2,7 @@
 
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             xmlns:rw='urn:import:org.redhatchallenge.rhc2013.client'
              ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
              ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
              ui:generateLocales="en">
@@ -16,7 +17,8 @@
                     <div id="sidebar" style="float: right">
                         <ul class="{res.main.socialIcons}">
                             <li><span style="position: relative; top: 4px; left: -2px;"><strong><ui:msg description="Connect">Connect:</ui:msg></strong></span></li>
-                            <li><a target="_blank" href="http://www.facebook.com/redhatinc?fref=ts"><img src="images/social_media_icons-16.png" alt="Facebook" /></a></li><li><a target="_blank" href="http://www.twitter.com/red_hat_apac"><img src="images/social_media_icons-17.png" alt="Twitter" /></a></li>
+                            <li><rw:ImageAnchor resource="{res.socialButton1}" ui:field="socialButton1"/></li>
+                            <li><rw:ImageAnchor resource="{res.socialButton2}" ui:field="socialButton2"/></li>
                         </ul>
                     </div>
 
@@ -24,16 +26,30 @@
                         <div id="table2" style="width: 360px">
                             <table>
                                 <tr>
-                                    <td><h1><ui:msg description="Login Header">LOGIN</ui:msg></h1></td>
+                                    <p><FONT SIZE="5"><B><ui:msg description="Login Header">LOGIN</ui:msg></B></FONT></p>
+                                </tr>
+                                <td width="174">&nbsp;</td>
+                                <tr>
+                                    <td colspan="2"><FONT COLOR="red"><g:Label ui:field="errorLabel"/></FONT></td>
+                                </tr>
+                                <tr><td width="174">&nbsp;</td></tr>
+                                <tr>
+                                    <td width="100"><ui:msg description="LoginScreen Email Address">Email Address:</ui:msg></td>
+                                    <td width="268"><span class="rowform"><g:TextBox ui:field="emailField" maxLength="50" visibleLength="33"/></span></td>
                                 </tr>
                                 <tr>
-                                    <td style="width: 100" class="{res.main.rowform}"><ui:msg description="Email Address">Email Address:</ui:msg></td>
-                                    <td class="{res.main.rowform}"><g:TextBox ui:field="emailField" maxLength="120" visibleLength="33"/></td>
+                                    <td width="174">&nbsp;</td>
+                                    <td class="{res.main.rowform}"><FONT COLOR="red"><g:Label ui:field="loginEmailLabel"/></FONT></td>
                                 </tr>
                                 <tr>
-                                    <td class="{res.main.rowform}"><ui:msg description="Password">Password:</ui:msg></td>
-                                    <td class="{res.main.rowform}"><g:PasswordTextBox ui:field="passwordField" maxLength="120" visibleLength="33"/></td>
+                                    <td width="100"><ui:msg description="LoginScreen Password">Password:</ui:msg></td>
+                                    <td width="268"><span class="rowform"><g:PasswordTextBox ui:field="passwordField" maxLength="72" visibleLength="33"/></span></td>
                                 </tr>
+                                <tr>
+                                    <td width="174">&nbsp;</td>
+                                    <td class="{res.main.rowform}"><FONT COLOR="red"><g:Label ui:field="loginPasswordLabel"/></FONT></td>
+                                </tr>
+                                <tr><td width="174">&nbsp;</td></tr>
                                 <tr>
                                     <td class="{res.main.rowform}">&nbsp;</td>
                                     <td class="{res.main.rowform}"><g:CheckBox ui:field="rememberMeField"/><ui:msg description="Keep me login">Keep me logged in</ui:msg></td>
@@ -45,9 +61,6 @@
                                 <tr>
                                     <td>&nbsp;</td>
                                     <td><ui:msg description="ResetPassword"><g:Hyperlink ui:field="resetPasswordLink" text="*Forgot your password?" styleName="{res.main.link}" targetHistoryToken="forget-password"/></ui:msg></td>
-                                </tr>
-                                <tr>
-                                    <td><g:Label ui:field="errorLabel"/></td>
                                 </tr>
                             </table>
                         </div>

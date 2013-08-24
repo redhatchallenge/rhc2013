@@ -33,8 +33,9 @@
                     <li class="{res.main.navFirst}"><g:Hyperlink ui:field="indexLink" text="Home" styleName="{res.main.link}"/></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="tcLink" text="Terms &amp; Conditions" styleName="{res.main.link}" targetHistoryToken="tc"/></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="contestDetailsLink" text="Details" styleName="{res.main.link}" targetHistoryToken="details"/></li>
-                    <li class="{res.main.navFirst}" style="margin-left: 500px"><g:Hyperlink ui:field="profileLink" text="edit profile" styleName="{res.main.link}" targetHistoryToken="profile"/></li>
+                    <li class="{res.main.navFirst}" style="margin-left: 400px"><g:Hyperlink ui:field="profileLink" text="edit profile" styleName="{res.main.link}" targetHistoryToken="profile"/></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="logoutLink" text="logout" styleName="{res.main.link}"/></li>
+                    <li class="{res.main.navLink}"><g:Label ui:field="welcomeLabel" styleName="{res.main.gwtLabel}"/></li>
                     </ui:msg>
                 </ul><!-- /#nav -->
             </div><!-- /#primary-nav -->

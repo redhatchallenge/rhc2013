@@ -4,23 +4,23 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.KeyPressEvent;
+import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.storage.client.StorageMap;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.PasswordTextBox;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import org.redhatchallenge.rhc2013.resources.Resources;
+import org.redhatchallenge.rhc2013.shared.FieldVerifier;
 import org.redhatchallenge.rhc2013.shared.Student;
 
 import static org.redhatchallenge.rhc2013.client.LocaleUtil.getCountryFromIndex;
+import static org.redhatchallenge.rhc2013.client.LocaleUtil.getIndexFromCountry;
+import static org.redhatchallenge.rhc2013.client.LocaleUtil.getIndexFromLanguage;
+import static org.redhatchallenge.rhc2013.client.LocaleUtil.getIndexFromRegion;
 import static org.redhatchallenge.rhc2013.client.LocaleUtil.getLanguageFromIndex;
 import static org.redhatchallenge.rhc2013.client.LocaleUtil.getRegionFromIndex;
 
@@ -52,7 +52,21 @@ public class ProfileScreen extends Composite {
     @UiField TextBox lecturerEmailField;
     @UiField ListBox languageField;
     @UiField Image updateButton;
+    @UiField Image changePwdButton;
+    @UiField Anchor socialButton1;
+    @UiField Anchor socialButton2;
+
+    //Validation Error Labels
     @UiField Label errorLabel;
+    @UiField Label updateStatusLabel;
+    @UiField Label emailLabel;
+    @UiField Label currentPasswordLabel;
+    @UiField Label passwordLabel;
+    @UiField Label confirmPasswordLabel;
+    @UiField Label firstNameLabel;
+    @UiField Label lastNameLabel;
+    @UiField Label contactLabel;
+    @UiField Label schoolLabel;
 
     private ProfileServiceAsync profileService = null;
 
@@ -65,6 +79,19 @@ public class ProfileScreen extends Composite {
 
         updateButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
+        if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+            socialButton1.setVisible(false);
+            socialButton2.setTarget("_blank");
+            socialButton2.setHref("http://e.weibo.com/redhatchina");
+        }
+        else {
+            socialButton1.setTarget("_blank");
+            socialButton1.setHref("https://www.facebook.com/redhatinc?fref=ts");
+            socialButton2.setTarget("_blank");
+            socialButton2.setHref("https://twitter.com/red_hat_apac");
+        }
+
+
         /**
          * If HTML5 storage does not contain the profile data, retrieves the data
          * from the server through a RPC call. Else retrieves first name from the
@@ -72,7 +99,7 @@ public class ProfileScreen extends Composite {
          */
         final Storage localStorage = Storage.getLocalStorageIfSupported();
         StorageMap localStorageMap = new StorageMap(localStorage);
-        if(localStorageMap.size() != 11) {
+        if(localStorageMap.size() != 12) {
             profileService.getProfileData(new AsyncCallback<Student>() {
                 @Override
                 public void onFailure(Throwable throwable) {
@@ -102,19 +129,19 @@ public class ProfileScreen extends Composite {
                     lecturerFirstNameField.setText(lecturerFirstName);
                     lecturerLastNameField.setText(lecturerLastName);
                     lecturerEmailField.setText(lecturerEmail);
-                    languageField.setSelectedIndex(getIndexFromValue(language, languageField));
+                    languageField.setSelectedIndex(getIndexFromLanguage(language));
 
                     /**
                      * Populates both the country and region field if country is China.
                      */
                     if(country.substring(0,5).equalsIgnoreCase("china")) {
                         regionField.setVisible(true);
-                        countryField.setSelectedIndex(getIndexFromValue("China", countryField));
-                        regionField.setSelectedIndex(getIndexFromValue(country.substring(6), regionField));
+                        countryField.setSelectedIndex(getIndexFromCountry("china"));
+                        regionField.setSelectedIndex(getIndexFromRegion(country.substring(6)));
                     }
 
                     else {
-                        countryField.setSelectedIndex(getIndexFromValue(country, countryField));
+                        countryField.setSelectedIndex(getIndexFromCountry(country));
                     }
 
                     /**
@@ -148,25 +175,83 @@ public class ProfileScreen extends Composite {
             lecturerFirstNameField.setText(localStorageMap.get("lecturerFirstName"));
             lecturerLastNameField.setText(localStorageMap.get("lecturerLastName"));
             lecturerEmailField.setText(localStorageMap.get("lecturerEmail"));
-            languageField.setSelectedIndex(getIndexFromValue(localStorageMap.get("language"), languageField));
+            languageField.setSelectedIndex(getIndexFromLanguage(localStorageMap.get("language")));
 
             /**
              * Populates both the country and region field if country is China.
              */
             if(localStorageMap.get("country").substring(0,5).equalsIgnoreCase("china")) {
                 regionField.setVisible(true);
-                countryField.setSelectedIndex(getIndexFromValue("China", countryField));
-                regionField.setSelectedIndex(getIndexFromValue(localStorageMap.get("country").substring(6), regionField));
+                countryField.setSelectedIndex(getIndexFromCountry("china"));
+                regionField.setSelectedIndex(getIndexFromRegion(localStorageMap.get("country").substring(6)));
             }
 
             else {
-                countryField.setSelectedIndex(getIndexFromValue(localStorageMap.get("country"), countryField));
+                countryField.setSelectedIndex(getIndexFromCountry(localStorageMap.get("country")));
             }
         }
     }
 
+
+    @UiHandler("emailField")
+    public void handleEmailFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("firstNameField")
+    public void handleFNFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("lastNameField")
+    public void handleLNFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("contactField")
+    public void handleContactFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("schoolField")
+    public void handleSchoolFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("lecturerFirstNameField")
+    public void handlelecturerFirstNameFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("lecturerLastNameField")
+    public void handlelecturerLastNameFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("lecturerEmailField")
+    public void handlelecturerEmailFieldClick(ClickEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("countryCodeField")
+    public void handleCountryCodeChange(ChangeEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("languageField")
+    public void handleLanguageChange(ChangeEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+    @UiHandler("regionField")
+    public void handleRegionFieldChange(ChangeEvent event) {
+        updateStatusLabel.setText("");
+    }
+
+
     @UiHandler("countryField")
     public void handleChange(ChangeEvent event) {
+        updateStatusLabel.setText("");
         switch (countryField.getSelectedIndex()) {
             // Singapore
             case 0:
@@ -209,8 +294,171 @@ public class ProfileScreen extends Composite {
 
     @UiHandler("updateButton")
     public void handleUpdateButtonClick(ClickEvent event) {
-        updateProfile();
+        updateStatusLabel.setText("");
+        int successCounter = 0;
+
+        if(FieldVerifier.emailIsNull(emailField.getText())){
+              emailLabel.setText(messages.emailEmpty());
+        }
+            else if(!FieldVerifier.isValidEmail(emailField.getText())){
+                 emailLabel.setText(messages.emailInvalidFormat());
+            }
+                else{
+                    emailLabel.setText("");
+                    successCounter++;
+                }
+
+        if(FieldVerifier.fnIsNull(firstNameField.getText())){
+            firstNameLabel.setText(messages.emptyFirstName());
+        }
+            else{
+                firstNameLabel.setText("");
+                successCounter++;
+            }
+
+        if(FieldVerifier.lnIsNull(lastNameField.getText())){
+            lastNameLabel.setText(messages.emptyLastName());
+        }
+            else{
+                lastNameLabel.setText("");
+                successCounter++;
+            }
+
+        if(FieldVerifier.contactIsNull(contactField.getText())){
+            contactLabel.setText(messages.emptyContact());
+        }
+            else if(!FieldVerifier.isValidContact(contactField.getText())){
+                contactLabel.setText(messages.contactInvalid());
+            }
+                else{
+                    contactLabel.setText("");
+                    successCounter++;
+                }
+
+        if(FieldVerifier.schoolIsNull(schoolField.getText())){
+            schoolLabel.setText(messages.emptySchool());
+        }
+            else{
+                schoolLabel.setText("");
+                successCounter++;
+            }
+
+        if(successCounter == 5){
+            updateProfile();
+        }
     }
+
+    @UiHandler("changePwdButton")
+    public void handleChangePwdButtonClick(ClickEvent event) {
+        errorLabel.setText("");
+        if (!FieldVerifier.passwordIsNull(currentPasswordField.getText())){
+            currentPasswordLabel.setText("");
+            int successCounter = 0;
+            if(FieldVerifier.passwordIsNull(passwordField.getText())){
+                passwordLabel.setText(messages.enterNewPassword());
+            }
+            else if(!FieldVerifier.passwordIsNull(passwordField.getText()))
+            {
+                if(FieldVerifier.passwordIsNull(confirmPasswordField.getText())){
+                    confirmPasswordLabel.setText(messages.emptyConfirmPassword());
+                }
+                else if(!FieldVerifier.passwordIsNull(confirmPasswordField.getText())){
+                    if(!confirmPasswordField.getText().equals(passwordField.getText())){
+                        confirmPasswordLabel.setText(messages.passwordNotMatch());
+                    }
+                    else{
+                        confirmPasswordLabel.setText("");
+                        successCounter++;
+                    }
+                }
+                else{
+                    confirmPasswordLabel.setText("");
+                    successCounter++;
+                }
+
+                if(!FieldVerifier.isValidPassword(passwordField.getText())){
+                    passwordLabel.setText(messages.passwordInvalidFormat());
+                }
+                else{
+                    passwordLabel.setText("");
+                    successCounter++;
+                }
+
+            }
+            if(successCounter == 2){
+                changePassword();
+            }
+        }
+
+        else if(FieldVerifier.passwordIsNull(currentPasswordField.getText())){
+
+            if(!FieldVerifier.passwordIsNull(passwordField.getText())){
+
+                if(FieldVerifier.passwordIsNull(currentPasswordField.getText())){
+                    currentPasswordLabel.setText(messages.currentPasswordEmpty());
+                }
+
+                if (FieldVerifier.passwordIsNull(confirmPasswordField.getText())){
+                    confirmPasswordLabel.setText(messages.emptyConfirmPassword());
+                }
+                else if(!FieldVerifier.passwordIsNull(confirmPasswordField.getText())){
+                    if(!confirmPasswordField.getText().equals(passwordField.getText())){
+                        confirmPasswordLabel.setText(messages.passwordNotMatch());
+                    }
+                    else{
+                        confirmPasswordLabel.setText("");
+                    }
+                }
+                else{
+                    confirmPasswordLabel.setText("");
+                }
+
+                if(!FieldVerifier.isValidPassword(passwordField.getText())){
+                    passwordLabel.setText(messages.passwordInvalidFormat());
+                }
+                else{
+                    passwordLabel.setText("");
+                }
+
+            }
+
+            else if(!FieldVerifier.passwordIsNull(confirmPasswordField.getText())){
+
+                if(FieldVerifier.passwordIsNull(currentPasswordField.getText())){
+                    currentPasswordLabel.setText(messages.currentPasswordEmpty());
+                }
+
+                if (FieldVerifier.passwordIsNull(passwordField.getText())){
+                    passwordLabel.setText(messages.emptyPassword());
+                }
+                else if(!FieldVerifier.passwordIsNull(passwordField.getText())){
+                    if(!passwordField.getText().equals(confirmPasswordField.getText())){
+                        confirmPasswordLabel.setText(messages.passwordNotMatch());
+                    }
+                    else{
+                        confirmPasswordLabel.setText("");
+                    }
+                    if(!FieldVerifier.isValidPassword(passwordField.getText())){
+                        passwordLabel.setText(messages.passwordInvalidFormat());
+                    }
+                    else{
+                        passwordLabel.setText("");
+                    }
+                }
+            }
+            else{
+                currentPasswordLabel.setText("");
+                passwordLabel.setText("");
+                confirmPasswordLabel.setText("");
+            }
+        }
+        else{
+            currentPasswordLabel.setText("");
+            passwordLabel.setText("");
+            confirmPasswordLabel.setText("");
+        }
+
+   }
 
     /**
      * This function iterates over the values of a listbox and compares it
@@ -229,11 +477,40 @@ public class ProfileScreen extends Composite {
         return -1;
     }
 
-    private void updateProfile() {
+    private void changePassword(){
 
-        final String email = emailField.getText();
+        changePwdButton.setResource(Resources.INSTANCE.changePwdButton());
+
         final String oldPassword = currentPasswordField.getText();
         final String newPassword = passwordField.getText();
+
+        profileService = ProfileService.Util.getInstance();
+
+        profileService.changePassword(oldPassword,newPassword, new AsyncCallback<Boolean>() {
+            @Override
+            public void onFailure(Throwable throwable) {
+                errorLabel.setText(messages.unexpectedError());
+            }
+
+            @Override
+            public void onSuccess(Boolean aBoolean) {
+                if(aBoolean){
+                    errorLabel.setText(messages.passwordChangeSuccessful());
+                    changePwdButton.setResource(Resources.INSTANCE.changePwdButton());
+                }
+                else { 
+                    currentPasswordLabel.setText(messages.invalidPassword());
+                    changePwdButton.setResource(Resources.INSTANCE.changePwdButton());
+                }
+            }
+        });
+    }
+
+    private void updateProfile() {
+
+        updateButton.setResource(Resources.INSTANCE.saveButtonGrey());
+
+        final String email = emailField.getText();
         final String firstName = firstNameField.getText();
         final String lastName = lastNameField.getText();
         final String contact = contactField.getText();
@@ -259,18 +536,19 @@ public class ProfileScreen extends Composite {
 
         profileService = ProfileService.Util.getInstance();
 
-        profileService.updateProfileData(email, oldPassword, newPassword, firstName, lastName, contact,
+        profileService.updateProfileData(email, firstName, lastName, contact,
                 country, countryCode, school, lecturerFirstName, lecturerLastName,
                 lecturerEmail, language, new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable throwable) {
-                errorLabel.setText(messages.unexpectedError());
+                updateStatusLabel.setText(messages.unexpectedError());
+                updateButton.setResource(Resources.INSTANCE.saveButton());
             }
 
             @Override
             public void onSuccess(Boolean bool) {
                 if(bool) {
-                    errorLabel.setText(messages.profileUpdated());
+                    updateStatusLabel.setText(messages.profileUpdated());
                     final Storage localStorage = Storage.getLocalStorageIfSupported();
                     /**
                      * If browser supports HTML5 storage, stores the authenticated user's
@@ -289,12 +567,19 @@ public class ProfileScreen extends Composite {
                         localStorage.setItem("lecturerEmail", lecturerEmail);
                         localStorage.setItem("language", language);
                     }
+
+                    RootPanel.get("header").clear();
+                    RootPanel.get("header").add(new AuthenticatedHeader());
+                    updateButton.setResource(Resources.INSTANCE.saveButton());
                 }
 
                 else {
-                    errorLabel.setText(messages.profileUpdateFail());
+                    updateStatusLabel.setText(messages.profileUpdateFail());
+                    updateButton.setResource(Resources.INSTANCE.saveButton());
                 }
             }
         });
+        updateButton.setResource(Resources.INSTANCE.saveButton());
+
     }
 }

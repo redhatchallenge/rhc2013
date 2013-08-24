@@ -18,7 +18,12 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.infinispan.Cache;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
+import org.redhatchallenge.rhc2013.shared.UnconfirmedStudentException;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
@@ -50,7 +55,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
          * it won't be affected by XSS is any way.
          */
 
-        email = SecurityUtil.escapeInput(email);
+        email = SecurityUtil.escapeInput(email.toLowerCase());
         firstName = SecurityUtil.escapeInput(firstName);
         lastName = SecurityUtil.escapeInput(lastName);
         contact = SecurityUtil.escapeInput(contact);
@@ -96,13 +101,42 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 ConfirmationTokens token = new ConfirmationTokens();
                 token.setToken(EmailUtil.generateToken(32));
                 token.setEmail(email);
-                EmailUtil.sendEmail("Confirmation of account",
-                        "<html>Click here to confirm your account: " + "http://register-redhatchallenge.rhcloud.com/register/?confirmToken=" + token.getToken() + "</html>",
-                        "Your client does not support HTML messages, your token is " + token.getToken(),
-                        email);
+
+                String html = null;
+
 
                 Session currentSession = HibernateUtil.getSessionFactory().getCurrentSession();
                 currentSession.beginTransaction();
+
+                Criteria criteria = currentSession.createCriteria(Student.class);
+                criteria.add(Restrictions.eq("email", email));
+                Student student = (Student)criteria.uniqueResult();
+
+                try {
+                    if(student.getLanguage().equalsIgnoreCase("English")) {
+                        String path = getServletContext().getRealPath("emails/confirm_en.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=en#confirmToken/" + token.getToken());
+                    }
+
+                    else if(student.getLanguage().equalsIgnoreCase("Chinese (Simplified)")) {
+                        String path = getServletContext().getRealPath("emails/confirm_ch.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=ch#confirmToken/" + token.getToken());
+                    }
+
+                    else if(student.getLanguage().equals("Chinese (Traditional)")) {
+                        String path = getServletContext().getRealPath("emails/confirm_zh.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=zh#confirmToken/" + token.getToken());
+                    }
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+                EmailUtil.sendEmail("Confirmation of account", html, "Your client does not support HTML messages, your token is " + token.getToken(),
+                        email);
+
                 currentSession.save(token);
                 currentSession.getTransaction().commit();
             }
@@ -135,7 +169,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     }
 
     @Override
-    public Boolean authenticateStudent(String email, String password, Boolean rememberMe) throws IllegalArgumentException {
+    public Boolean authenticateStudent(String email, String password, Boolean rememberMe) throws IllegalArgumentException, UnconfirmedStudentException {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Subject currentUser = SecurityUtils.getSubject();
@@ -149,7 +183,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
              */
             session.beginTransaction();
             Criteria criteria = session.createCriteria(Student.class);
-            criteria.add(Restrictions.eq("email", email));
+            criteria.add(Restrictions.eq("email", email.toLowerCase()));
             Student student = (Student)criteria.uniqueResult();
 
             /**
@@ -162,11 +196,19 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 
             else {
 
+
                 UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
                 token.setRememberMe(rememberMe);
 
                 currentUser.login(token);
-                return true;
+                if(student.getVerified()) {
+                    return true;
+                }
+
+                else {
+                    currentUser.logout();
+                    throw new UnconfirmedStudentException();
+                }
             }
 
         } catch (AuthenticationException e) {
@@ -235,7 +277,10 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 session.delete(tokens);
                 session.getTransaction().commit();
 
-                cache.replace(timeslot, cache.get(timeslot)+1);
+                if(timeslot != null) {
+                    cache.replace(timeslot, cache.get(timeslot)+1);
+                }
+
                 return true;
             }
 
@@ -249,7 +294,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     }
 
     @Override
-    public boolean triggerResetPassword(String email, String contact) throws IllegalArgumentException {
+    public boolean triggerResetPassword(String email, String contact, String countryCode) throws IllegalArgumentException {
 
         /**
          * Runnable class to allow sending of email to be
@@ -269,13 +314,41 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 ResetPasswordTokens token = new ResetPasswordTokens();
                 token.setToken(EmailUtil.generateToken(32));
                 token.setEmail(email);
-                EmailUtil.sendEmail("Password Reset",
-                        "<html>Reset your password here: " + "http://register-redhatchallenge.rhcloud.com/register/?resetToken=" + token.getToken() + "</html>",
-                        "Your client does not support HTML messages, your token is " + token.getToken(),
-                        email);
 
+                String html = null;
                 Session currentSession = HibernateUtil.getSessionFactory().getCurrentSession();
                 currentSession.beginTransaction();
+
+                Criteria criteria = currentSession.createCriteria(Student.class);
+                criteria.add(Restrictions.eq("email", email));
+                Student student = (Student)criteria.uniqueResult();
+
+                try {
+                    if(student.getLanguage().equalsIgnoreCase("English")) {
+                        String path = getServletContext().getRealPath("emails/reset_en.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com#/?locale=enresetToken/" + token.getToken());
+                    }
+
+                    else if(student.getLanguage().equalsIgnoreCase("Chinese (Simplified)")) {
+                        String path = getServletContext().getRealPath("emails/reset_ch.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=ch#resetToken/" + token.getToken());
+                    }
+
+                    else if(student.getLanguage().equals("Chinese (Traditional)")) {
+                        String path = getServletContext().getRealPath("emails/reset_zh.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=zh#resetToken/" + token.getToken());
+                    }
+
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+                EmailUtil.sendEmail("Password Reset", html, "Your client does not support HTML messages, your token is " + token.getToken(),
+                        email);
+
                 currentSession.save(token);
                 currentSession.getTransaction().commit();
             }
@@ -286,10 +359,10 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
         try {
             session.beginTransaction();
             Criteria criteria = session.createCriteria(Student.class);
-            criteria.add(Restrictions.eq("email", email));
+            criteria.add(Restrictions.eq("email", email.toLowerCase()));
             Student student = (Student)criteria.uniqueResult();
 
-            if(student.getContact().equals(contact)) {
+            if(student.getContact().equals(contact) && student.getCountryCode().equals(countryCode)) {
                 Thread t = new Thread(new SendPasswordResetEmail(email));
                 t.start();
 
@@ -334,7 +407,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
             session.beginTransaction();
 
             Criteria criteria = session.createCriteria(Student.class);
-            criteria.add(Restrictions.eq("email", email));
+            criteria.add(Restrictions.eq("email", email.toLowerCase()));
             Student student = (Student)criteria.uniqueResult();
 
             student.setPassword(SecurityUtil.hashPassword(password));
@@ -346,6 +419,65 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
             session.getTransaction().rollback();
             return false;
         }
+    }
+
+    @Override
+    public void resendVerificationEmail(String email) throws IllegalArgumentException {
+        class SendConfirmationEmail implements Runnable {
+            String email;
+
+            SendConfirmationEmail(String email) {
+                this.email = email;
+            }
+
+            @Override
+            public void run() {
+
+                ConfirmationTokens token = new ConfirmationTokens();
+                token.setToken(EmailUtil.generateToken(32));
+                token.setEmail(email);
+                String html = null;
+
+                Session currentSession = HibernateUtil.getSessionFactory().getCurrentSession();
+                currentSession.beginTransaction();
+
+                Criteria criteria = currentSession.createCriteria(Student.class);
+                criteria.add(Restrictions.eq("email", email));
+                Student student = (Student)criteria.uniqueResult();
+
+                try {
+                    if(student.getLanguage().equalsIgnoreCase("English")) {
+                        String path = getServletContext().getRealPath("emails/confirm_en.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=en#confirmToken/" + token.getToken());
+                    }
+
+                    else if(student.getLanguage().equalsIgnoreCase("Chinese (Simplified)")) {
+                        String path = getServletContext().getRealPath("emails/confirm_ch.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=ch#confirmToken/" + token.getToken());
+                    }
+
+                    else if(student.getLanguage().equals("Chinese (Traditional)")) {
+                        String path = getServletContext().getRealPath("emails/confirm_zh.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=zh#confirmToken/" + token.getToken());
+                    }
+
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+                EmailUtil.sendEmail("Confirmation of account", html, "Your client does not support HTML messages, your token is " + token.getToken(),
+                        email);
+
+                currentSession.save(token);
+                currentSession.getTransaction().commit();
+            }
+        }
+
+        Thread t = new Thread(new SendConfirmationEmail(email));
+        t.start();
     }
 
     /**
@@ -449,12 +581,12 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
         }
 
         if(timeslot.equalsIgnoreCase("A1")) {
-            DateTime a1Time = new DateTime(2013, 12, 07, 14, 0);
+            DateTime a1Time = new DateTime(2013, 10, 24, 6, 0);
             return a1Time.toInstant().getMillis();
         }
 
         else {
-            DateTime a2Time = new DateTime(2013, 12, 07, 16, 0);
+            DateTime a2Time = new DateTime(2013, 10, 24, 8, 0);
             return a2Time.toInstant().getMillis();
         }
     }

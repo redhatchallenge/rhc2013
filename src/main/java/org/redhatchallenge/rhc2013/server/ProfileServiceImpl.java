@@ -34,12 +34,12 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
     }
 
     @Override
-    public Boolean updateProfileData(String email, String oldPassword, String newPassword, String firstName,
+    public Boolean updateProfileData(String email, String firstName,
                                      String lastName, String contact, String country, String countryCode,
                                      String school, String lecturerFirstName, String lecturerLastName,
                                      String lecturerEmail, String language) throws IllegalArgumentException {
 
-        email = SecurityUtil.escapeInput(email);
+        email = SecurityUtil.escapeInput(email.toLowerCase());
         firstName = SecurityUtil.escapeInput(firstName);
         lastName = SecurityUtil.escapeInput(lastName);
         contact = SecurityUtil.escapeInput(contact);
@@ -60,18 +60,6 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
             Student student = (Student)session.get(Student.class, Integer.parseInt(contestant_id));
 
             student.setEmail(email);
-
-            if(!newPassword.isEmpty()) {
-                if(BCrypt.checkpw(oldPassword, student.getPassword())) {
-                    student.setPassword(SecurityUtil.hashPassword(newPassword));
-                }
-
-                else {
-                    session.getTransaction().rollback();
-                    return false;
-                }
-            }
-
             student.setFirstName(firstName);
             student.setLastName(lastName);
             student.setContact(contact);
@@ -93,4 +81,42 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
             return false;
         }
     }
+
+    @Override
+    public Boolean changePassword(String oldPassword, String newPassword) throws IllegalArgumentException {
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        try{
+            String contestant_id = SecurityUtils.getSubject().getPrincipal().toString();
+
+            session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(contestant_id));
+
+            if (!newPassword.isEmpty()){
+                if(BCrypt.checkpw(oldPassword, student.getPassword())){
+                    student.setPassword(SecurityUtil.hashPassword(newPassword));
+                }
+
+                else{
+                    session.getTransaction().rollback();
+                    return false;
+                }
+            }
+
+            session.update(student);
+            session.getTransaction().commit();
+
+            return true;
+        }
+        catch(HibernateException e){
+            log("Change password failed", e);
+            session.getTransaction().rollback();
+            return false;
+        }
+
+
+    }
+
+
 }
