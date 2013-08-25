@@ -1,7 +1,3 @@
-DROP TABLE reset_tokens;
-DROP TABLE confirm_tokens;
-DROP TABLE contestant;
-
 CREATE TABLE contestant (
     contestant_id serial primary key,
     email character varying(50) NOT NULL UNIQUE,
@@ -19,8 +15,25 @@ CREATE TABLE contestant (
     verified boolean DEFAULT false NOT NULL,
     status boolean DEFAULT true NOT NULL,
     questions int[] DEFAULT '{}',
-    timeslot bigint DEFAULT 0 
+    timeslot bigint DEFAULT 0,
+    create_date timestamp DEFAULT current_timestamp,
+    last_modified timestamp
 );
+
+CREATE OR REPLACE FUNCTION update_last_modified_column()
+  RETURNS TRIGGER AS $$
+  BEGIN
+    NEW.last_modified = current_timestamp;
+    RETURN NEW;
+  END;
+
+  $$ LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER update_last_modified BEFORE UPDATE
+  ON contestant FOR EACH ROW EXECUTE PROCEDURE
+  update_last_modified_column();
+
 
 CREATE TABLE reset_tokens (
     email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
