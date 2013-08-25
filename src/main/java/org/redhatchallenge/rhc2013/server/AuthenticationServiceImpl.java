@@ -6,6 +6,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.hibernate.Query;
 import org.redhatchallenge.rhc2013.client.AuthenticationService;
 import org.redhatchallenge.rhc2013.shared.ConfirmationTokens;
 import org.redhatchallenge.rhc2013.shared.ResetPasswordTokens;
@@ -32,15 +33,6 @@ import java.util.Set;
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class AuthenticationServiceImpl extends RemoteServiceServlet implements AuthenticationService {
-
-    private Cache<String, Integer> cache;
-
-    public AuthenticationServiceImpl() {
-        cache = InfinispanCache.getCacheManager().getCache();
-
-        cache.put("A1", 0);
-        cache.put("A2", 0);
-    }
 
     @Override
     public Boolean registerStudent(String email, String password, String firstName, String lastName,
@@ -276,10 +268,6 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 
                 session.delete(tokens);
                 session.getTransaction().commit();
-
-                if(timeslot != null) {
-                    cache.replace(timeslot, cache.get(timeslot)+1);
-                }
 
                 return true;
             }
@@ -552,11 +540,15 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
         }
 
         else {
-            if(cache.get("A1") <=300) {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            Query query = session.createSQLQuery("select count(*) from contestant where country not like 'China%'");
+            int result = (Integer) query.iterate().next();
+
+            if(result <=300) {
                 return "A1";
             }
 
-            else if(cache.get("A2") <= 300) {
+            else if(result <= 600) {
                 return "A2";
             }
 
