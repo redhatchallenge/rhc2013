@@ -289,12 +289,4 @@ public class Jquery {
             description: 'Looking for a stage to showcase your knowledge on cloud computing, operating systems and virtualization? Join the Red Hat Challenge 2013!.'
         }, function(response){});
     }-*/;
-
-    public static native boolean checkIfTwitterWidgetIsLoaded() /*-{
-        if(!(typeof $wnd.twtrr === "undefined") && !(null===$wnd.twtrr)) {
-            return true;
-        }
-
-        return false;
-    }-*/;
 }

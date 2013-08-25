@@ -2,20 +2,13 @@ package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.ScriptInjector;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.StyleInjector;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
-import org.redhatchallenge.rhc2013.resources.Resources;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author  Terry Chia (terrycwk1994@gmail.com)
