@@ -403,6 +403,4 @@ public interface Resources extends ClientBundle {
 
         String note();
     }
-
-
 }

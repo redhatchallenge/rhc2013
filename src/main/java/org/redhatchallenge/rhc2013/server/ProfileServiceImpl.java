@@ -114,9 +114,5 @@ public class ProfileServiceImpl extends RemoteServiceServlet implements ProfileS
             session.getTransaction().rollback();
             return false;
         }
-
-
     }
-
-
 }
