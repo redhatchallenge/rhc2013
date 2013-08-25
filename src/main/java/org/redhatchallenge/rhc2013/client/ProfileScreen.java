@@ -4,7 +4,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.storage.client.StorageMap;
@@ -12,7 +11,15 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.client.ui.Anchor;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
+import com.google.gwt.user.client.ui.PasswordTextBox;
+import com.google.gwt.user.client.ui.RootPanel;
+import com.google.gwt.user.client.ui.TextBox;
+import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.FieldVerifier;
 import org.redhatchallenge.rhc2013.shared.Student;
@@ -78,6 +85,7 @@ public class ProfileScreen extends Composite {
         Resources.INSTANCE.main().ensureInjected();
 
         updateButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
+        changePwdButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
         if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
             socialButton1.setVisible(false);
@@ -192,65 +200,20 @@ public class ProfileScreen extends Composite {
         }
     }
 
-
-    @UiHandler("emailField")
-    public void handleEmailFieldClick(ClickEvent event) {
+    @UiHandler({"emailField", "firstNameField", "lastNameField", "contactField",
+            "schoolField", "lecturerFirstNameField", "lecturerLastNameField", "lecturerEmailField"})
+    public void handleFieldClick(ClickEvent event) {
         updateStatusLabel.setText("");
+
     }
 
-    @UiHandler("firstNameField")
-    public void handleFNFieldClick(ClickEvent event) {
+    @UiHandler({"countryField", "regionField", "languageField", "countryCodeField"})
+    public void handleChange(ChangeEvent event) {
         updateStatusLabel.setText("");
     }
-
-    @UiHandler("lastNameField")
-    public void handleLNFieldClick(ClickEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("contactField")
-    public void handleContactFieldClick(ClickEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("schoolField")
-    public void handleSchoolFieldClick(ClickEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("lecturerFirstNameField")
-    public void handlelecturerFirstNameFieldClick(ClickEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("lecturerLastNameField")
-    public void handlelecturerLastNameFieldClick(ClickEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("lecturerEmailField")
-    public void handlelecturerEmailFieldClick(ClickEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("countryCodeField")
-    public void handleCountryCodeChange(ChangeEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("languageField")
-    public void handleLanguageChange(ChangeEvent event) {
-        updateStatusLabel.setText("");
-    }
-
-    @UiHandler("regionField")
-    public void handleRegionFieldChange(ChangeEvent event) {
-        updateStatusLabel.setText("");
-    }
-
 
     @UiHandler("countryField")
-    public void handleChange(ChangeEvent event) {
+    public void handleCountryChangeChange(ChangeEvent event) {
         updateStatusLabel.setText("");
         switch (countryField.getSelectedIndex()) {
             // Singapore
