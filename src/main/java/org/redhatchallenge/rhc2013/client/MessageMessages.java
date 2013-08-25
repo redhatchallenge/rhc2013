@@ -9,6 +9,10 @@ import javax.mail.Message;
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public interface MessageMessages extends Messages {
+
+    @DefaultMessage("You are not logged in, please log in.")
+    String errorLogin();
+
     @Messages.DefaultMessage("Hello")
     String hello();
 
