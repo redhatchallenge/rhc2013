@@ -6,7 +6,10 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.hibernate.Hibernate;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
+import org.hibernate.type.StandardBasicTypes;
 import org.redhatchallenge.rhc2013.client.AuthenticationService;
 import org.redhatchallenge.rhc2013.shared.ConfirmationTokens;
 import org.redhatchallenge.rhc2013.shared.ResetPasswordTokens;
@@ -540,19 +543,24 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
         }
 
         else {
-            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            Query query = session.createSQLQuery("select count(*) from contestant where country not like 'China%'");
-            int result = (Integer) query.iterate().next();
+            Session currentSession = HibernateUtil.getSessionFactory().getCurrentSession();
 
-            if(result <=300) {
-                return "A1";
-            }
+            try {
+                SQLQuery query = currentSession.createSQLQuery("select count(*) from contestant where country not like 'China%'");
+                int result = (Integer) query.addScalar("count", StandardBasicTypes.INTEGER).uniqueResult();
 
-            else if(result <= 600) {
-                return "A2";
-            }
+                if(result <=300) {
+                    return "A1";
+                }
 
-            else {
+                else if(result <= 600) {
+                    return "A2";
+                }
+
+                else {
+                    return null;
+                }
+            } catch (HibernateException e) {
                 return null;
             }
         }
