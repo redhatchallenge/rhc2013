@@ -3,31 +3,31 @@
     "-//Hibernate/Hibernate Configuration DTD//EN"
     "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 
-<hibernate-configuration>
-    <session-factory>
-        <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
-        <property name="connection.datasource">java:jboss/datasources/PostgreSQLDS</property>
-        <property name="connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.default_schema">public</property>
-        <property name="current_session_context_class">thread</property>
-        <mapping resource="Student.hbm.xml" />
-        <mapping resource="ConfirmationTokens.hbm.xml"/>
-        <mapping resource="ResetPasswordTokens.hbm.xml"/>
-    </session-factory>
-</hibernate-configuration>
-
 <!--<hibernate-configuration>-->
     <!--<session-factory>-->
         <!--<property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>-->
-        <!--<property name="connection.url">jdbc:postgresql://127.0.0.1:5432/postgres</property>-->
+        <!--<property name="connection.datasource">java:jboss/datasources/PostgreSQLDS</property>-->
         <!--<property name="connection.driver_class">org.postgresql.Driver</property>-->
         <!--<property name="hibernate.default_schema">public</property>-->
         <!--<property name="current_session_context_class">thread</property>-->
-        <!--<property name="connection.username">rhc2013</property>-->
-        <!--<property name="connection.password">rhcSQL@2013</property>-->
-        <!--<property name="hibernate.show_sql">true</property>-->
         <!--<mapping resource="Student.hbm.xml" />-->
-        <!--<mapping resource="ConfirmationTokens.hbm.xml" />-->
+        <!--<mapping resource="ConfirmationTokens.hbm.xml"/>-->
         <!--<mapping resource="ResetPasswordTokens.hbm.xml"/>-->
     <!--</session-factory>-->
 <!--</hibernate-configuration>-->
+
+<hibernate-configuration>
+    <session-factory>
+        <property name="dialect">org.hibernate.dialect.PostgreSQL82Dialect</property>
+        <property name="connection.url">jdbc:postgresql://127.0.0.1:5432/postgres</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.default_schema">public</property>
+        <property name="current_session_context_class">thread</property>
+        <property name="connection.username">rhc2013</property>
+        <property name="connection.password">rhcSQL@2013</property>
+        <property name="hibernate.show_sql">true</property>
+        <mapping resource="Student.hbm.xml" />
+        <mapping resource="ConfirmationTokens.hbm.xml" />
+        <mapping resource="ResetPasswordTokens.hbm.xml"/>
+    </session-factory>
+</hibernate-configuration>
