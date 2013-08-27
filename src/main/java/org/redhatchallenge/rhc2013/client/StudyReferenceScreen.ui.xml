@@ -1,0 +1,89 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
+<ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
+             xmlns:g='urn:import:com.google.gwt.user.client.ui'
+             ui:generateFormat="com.google.gwt.i18n.rebind.format.PropertiesFormat"
+             ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
+             ui:generateLocales="en">
+
+    <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
+
+    <g:HTMLPanel>
+        <div class="{res.grid.clear}"/>
+        <div class="{res.grid.container_12}">
+            <div id="main">
+                <div class="{res.grid.grid_12}">
+                    <div>
+                        <div >
+                            <g:HTML ui:field="welcomeLabel"/>
+
+                            <div id="countdown"/>
+
+                            <p id="note"/><br />
+
+                            <div class="{res.grid.grid_8} {res.grid.alpha}" style="margin-right: 40px">
+                                <div id="table">
+                                    <table ui:field="table" style="width: 563px">
+
+                                        <style>
+                                            p {text-indent:30px;}
+                                            u {text-decoration: none;
+                                            border-bottom: 2px solid black;
+                                            }
+                                        </style>
+
+                                        <td colspan="2"><g:HTML ui:field="Header"/>
+
+                                            &nbsp;
+
+                                        <FONT SIZE='4'><h2><u>RHEL</u></h2></FONT>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/Deployment_Guide/index.html');">RHEL6 Deployment Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('http://docs.redhat.com/docs/en-US/Red_Hat_Enterprise_Linux/6/html-single/Installation_Guide/index.html');">RHEL6 Installation Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/Security-Enhanced_Linux/index.html');">Security-Enhanced Linux</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/Security_Guide/index.html');">Security Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/Storage_Administration_Guide/index.html');">Storage Administration Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/Virtualization_Host_Configuration_and_Guest_Installation_Guide/index.html');">Virtualization And Guest Installation Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/Virtualization_Administration_Guide/index.html');">Virtualization Administration Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Linux/6/html-single/Logical_Volume_Manager_Administration/index.html');">Logical Volume Manager Administration</a></FONT></p>
+
+                                        <FONT SIZE='4'><h2><u>RHEV</u></h2></FONT>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html-single/Quick_Start_Guide/index.html');">RHEV Quick Start Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html-single/Administration_Guide/index.html');">RHEV Administration Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html-single/Installation_Guide/index.html');">RHEV Installation Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html-single/Hypervisor_Deployment_Guide/index.html');">Hypervisor Deployment Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_Enterprise_Virtualization/3.2/html-single/User_Portal_Guide/index.html');">User Portal Guide</a></FONT></p>
+
+                                        <FONT SIZE='4'><h2><u>Cloud</u></h2></FONT>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/CloudForms/2.0/html-single/Management_Engine_5.1_Settings_and_Operations_Guide/index.html');">CloudForm</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/1/html-single/Administration_Guide/index.html');">OpenShift Enterprise Administration Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/OpenShift_Enterprise/1/html-single/User_Guide/index.html');">OpenShift Enterprise User Guide</a></FONT></p>
+
+                                        <p><FONT SIZE='4'><a href="javascript:window.open('https://access.redhat.com/site/documentation/en-US/Red_Hat_OpenStack/3/html-single/Getting_Started_Guide/index.html');">Red Hat OpenStack</a></FONT></p>
+                                        </td>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="{res.grid.clear}"/>
+                </div><!-- /.grid_12 -->
+            </div><!-- /#main -->
+        </div>
+    </g:HTMLPanel>
+</ui:UiBinder>

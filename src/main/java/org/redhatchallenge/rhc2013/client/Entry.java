@@ -9,6 +9,9 @@ import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.RootPanel;
+import org.redhatchallenge.rhc2013.shared.RegStatus;
+
+import java.util.List;
 
 /**
  * @author  Terry Chia (terrycwk1994@gmail.com)
@@ -49,7 +52,34 @@ public class Entry implements EntryPoint {
                 }
 
                 else if(historyToken.equalsIgnoreCase("registration")) {
-                    ContentContainer.INSTANCE.setContent(new RegisterScreen());
+                    authenticationService.getRegStatus(new AsyncCallback<List<RegStatus>>() {
+                        @Override
+                        public void onFailure(Throwable throwable) {
+                            throwable.printStackTrace();
+                        }
+
+                        @Override
+                        public void onSuccess(List<RegStatus> regStatuses) {
+                            Boolean status;
+                            for(RegStatus r : regStatuses)
+                            {
+                                if(r.getStatus_id() == 1){
+                                    status = r.getReg_status_bool();
+                                    if(status.equals(Boolean.FALSE)){
+                                        ContentContainer.INSTANCE.setContent(new RegisterScreen());
+                                    }
+                                    else{
+                                        ContentContainer.INSTANCE.setContent(new MessageScreen(messages.registrationClose()));
+                                    }
+                                }
+                            }
+                        }
+                    });
+
+                }
+
+                else if(historyToken.equalsIgnoreCase("studyref")) {
+                    ContentContainer.INSTANCE.setContent(new StudyReferenceScreen());
                 }
 
                 else if(historyToken.equalsIgnoreCase("login")) {

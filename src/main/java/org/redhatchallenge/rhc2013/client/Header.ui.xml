@@ -33,7 +33,8 @@
                     <li class="{res.main.navFirst}"><g:Hyperlink ui:field="indexLink" text="Home" styleName="{res.main.link}" /></li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="tcLink" text="Terms &amp; Conditions" styleName="{res.main.link}" targetHistoryToken="tc"/> </li>
                     <li class="{res.main.navLink}"><g:Hyperlink ui:field="registrationLink" text="Registration" styleName="{res.main.link}" targetHistoryToken="registration"/></li>
-                    <li class="{res.main.navLink}" style="margin-left: 490px"><g:Hyperlink ui:field="loginLink" text="Login" styleName="{res.main.link}" targetHistoryToken="login"/></li>
+                    <li class="{res.main.navLink}"><g:Hyperlink ui:field="studyrefLink" text="Study Reference" styleName="{res.main.link}" targetHistoryToken="studyref"/></li>
+                    <li class="{res.main.navLink}" style="margin-left: 320px"><g:Hyperlink ui:field="loginLink" text="Login" styleName="{res.main.link}" targetHistoryToken="login"/></li>
                     </ui:msg>
                 </ul><!-- /#nav -->
             </div><!-- /#primary-nav -->

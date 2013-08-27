@@ -148,5 +148,11 @@ public interface MessageMessages extends Messages {
     @Messages.DefaultMessage("You have enter incorrect password")
     String invalidPassword();
 
+    @Messages.DefaultMessage("Registration have Close! Please try again next year. Thank you!")
+    String registrationClose();
+
+    @Messages.DefaultMessage("Your Account has been locked/deleted.")
+    String lockDelete();
+
 
 }
