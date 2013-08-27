@@ -76,6 +76,8 @@ public class RegisterScreen extends Composite {
     @UiField Label contactLabel;
     @UiField Label schoolLabel;
     @UiField Label termsLabel;
+    @UiField HTML qqHTML;
+
 
 
     private AuthenticationServiceAsync authenticationService = null;
@@ -102,6 +104,7 @@ public class RegisterScreen extends Composite {
             socialButton1.setVisible(false);
             socialButton2.setTarget("_blank");
             socialButton2.setHref("http://e.weibo.com/redhatchina");
+            qqHTML.setHTML("<FONT SIZE=\"3\"><B>2) 我们建议您不要使用QQ邮箱地址， 因为QQ郵件服務器自动阻拦任何由\n</FONT></B><FONT SIZE=\"3\" COLOR=\"red\"><B>contact@redhatchallenge.mailgun.org</FONT></B><FONT SIZE =\"3\"><B>发出的电子邮件。</FONT></B>");
         }
         else {
             socialButton1.setTarget("_blank");
@@ -109,6 +112,7 @@ public class RegisterScreen extends Composite {
             socialButton2.setTarget("_blank");
             socialButton2.setHref("https://twitter.com/red_hat_apac");
         }
+
     }
 
     @UiHandler("countryField")

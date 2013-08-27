@@ -26,7 +26,7 @@
 
                     <div class="{res.grid.grid_8} {res.grid.alpha}" style="margin-right: 40px">
                         <div id="table">
-                            <table ui:field="table" style="width: 563px">
+                            <table ui:field="table" style="width: 593px">
                                 <tr>
                                     <td colspan="2">
                                         <p><FONT SIZE="5"><B><ui:msg description="RegisterScreen Header1">REGISTRATION</ui:msg></B></FONT></p>
@@ -163,6 +163,12 @@
                                             <ui:msg description="RegisterScreen Add our email"><FONT SIZE="3"><B>Please add</B></FONT><FONT SIZE="3" COLOR="red"><B> contact@redhatchallenge.mailgun.org</B></FONT><FONT SIZE ="3"><B> to your email contact before clicking the submit button
                                             to prevent the verification email being filtered as a junk/bulk mail.</B></FONT></ui:msg>
                                         </br>
+                                    </td>
+                                </tr>
+                                <tr><td colspan="2">&nbsp;</td></tr>
+                                <tr>
+                                    <td colspan="2">
+                                        <g:HTML ui:field="qqHTML"/>
                                     </td>
                                 </tr>
                                 <tr><td colspan="2">&nbsp;</td></tr>
