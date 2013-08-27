@@ -86,7 +86,7 @@ public class ContestDetailsScreen extends Composite {
                          */
                         if(result.getTimeslot() != 0) {
                             Date date = new Date(result.getTimeslot());
-                            timeSlotField.setText(DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).format(date));
+                            timeSlotField.setText(DateTimeFormat.getFormat(DateTimeFormat.PredefinedFormat.DATE_TIME_SHORT).format(date) + "  GMT+8");
                         }
 
                         else {

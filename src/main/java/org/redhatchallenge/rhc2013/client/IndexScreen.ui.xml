@@ -61,7 +61,8 @@
                             <ui:msg description="Travelling and Accomdation">**Internship does not include travelling and accommodation expenses.</ui:msg></font></p> <br />
 
                         <!--<p><h1><font color="#CC0000">Take the Challenge now!</font></h1></p>-->
-                        <p><g:HTML ui:field="challengeLink"/> </p>
+                        <p><g:HTML ui:field="challengeLink"/></p>
+                        <p><g:HTML ui:field="countChina500"/></p>
                     </div>
                     <!-- /.grid_7 -->
 

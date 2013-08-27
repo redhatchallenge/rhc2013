@@ -28,6 +28,14 @@
         <servlet-name>captchaServiceImpl</servlet-name>
         <url-pattern>/registration/CaptchaService</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>org.redhatchallenge.rhc2013 GetAllStudentService</servlet-name>
+        <servlet-class>org.redhatchallenge.rhc2013.server.GetAllStudentImpl</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>org.redhatchallenge.rhc2013 GetAllStudentService</servlet-name>
+        <url-pattern>/registration/GetAllStudentService</url-pattern>
+    </servlet-mapping>
     <!-- Servlets -->
     <!--<servlet>-->
         <!--<servlet-name>greetServlet</servlet-name>-->
