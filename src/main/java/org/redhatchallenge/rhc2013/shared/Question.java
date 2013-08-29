@@ -1,11 +1,12 @@
 package org.redhatchallenge.rhc2013.shared;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
-public class Question {
+public class Question implements Serializable {
 
     private int id;
     private String question;
