@@ -30,7 +30,9 @@
                                 <tr>
                                     <td colspan="2">
                                         <p><FONT SIZE="5"><B><ui:msg description="RegisterScreen Header1">REGISTRATION</ui:msg></B></FONT></p>
+
                                         <FONT SIZE="2"><B><ui:msg description="RegisterScreen Header1">*Please fill in all the required fields below.</ui:msg></B></FONT>
+
                                     </td>
                                 </tr>
                                 <tr>
@@ -39,6 +41,8 @@
                                 <tr>
                                     <td colspan="2">
                                         <font size="2" color="#CC0000"><ui:msg description="RegisterScreen Personal Details">PERSONAL DETAILS</ui:msg></font><div class="border2" style="width:360px; color: #CC0000; border-bottom: solid 3px"/>
+                                        &nbsp;
+                                        <g:HTML ui:field="contactUs"/>
                                     </td>
                                 </tr>
                                 <tr><td colspan="2">&nbsp;</td></tr>

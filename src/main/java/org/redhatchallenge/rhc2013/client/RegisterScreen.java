@@ -77,6 +77,7 @@ public class RegisterScreen extends Composite {
     @UiField Label schoolLabel;
     @UiField Label termsLabel;
     @UiField HTML qqHTML;
+    @UiField HTML contactUs;
 
 
 
@@ -104,13 +105,20 @@ public class RegisterScreen extends Composite {
             socialButton1.setVisible(false);
             socialButton2.setTarget("_blank");
             socialButton2.setHref("http://e.weibo.com/redhatchina");
-            qqHTML.setHTML("<FONT SIZE=\"3\"><B>2) 我们建议您不要使用QQ邮箱地址， 因为QQ郵件服務器自动阻拦任何由\n</FONT></B><FONT SIZE=\"3\" COLOR=\"red\"><B>contact@redhatchallenge.mailgun.org</FONT></B><FONT SIZE =\"3\"><B>发出的电子邮件。</FONT></B>");
+            qqHTML.setHTML("<FONT SIZE=\"3\"><B>2) 我们建议您不要使用QQ邮箱地址注册比赛，因为QQ郵件服務器在接收我们所发出的电子邮件时会有某些延迟事故。</FONT></B>");
+//            </FONT></B><FONT SIZE="3" COLOR="red"><B>contact@redhatchallenge.mailgun.org</FONT></B><FONT SIZE ="3"><B>
+            contactUs.setHTML("<FONT SIZE=\"2\"><B>如果您在注册过程中遇到任何问题，请发电邮到 <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT> 与我们联系</B></FONT>");
         }
-        else {
+        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
             socialButton1.setTarget("_blank");
             socialButton1.setHref("https://www.facebook.com/redhatinc?fref=ts");
             socialButton2.setTarget("_blank");
             socialButton2.setHref("https://twitter.com/red_hat_apac");
+            contactUs.setHTML("<FONT SIZE=\"2\"><B>如果您在註冊過程中遇到任何問題，請發電郵到 <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT> 與我們聯繫</B></FONT>");
+        }
+        else{
+            contactUs.setHTML("<FONT SIZE=\"2\"><B>If you encounter any problems during registration, please email us at <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT><B></FONT>");
+
         }
 
     }
