@@ -24,6 +24,7 @@ public class Header extends Composite {
     @UiField Hyperlink registrationLink;
     @UiField Hyperlink tcLink;
     @UiField Hyperlink loginLink;
+    @UiField Hyperlink studyrefLink;
 
     public Header() {
         Resources.INSTANCE.main().ensureInjected();

@@ -8,14 +8,14 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.History;
-import com.google.gwt.user.client.ui.Anchor;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTML;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.*;
 import org.redhatchallenge.rhc2013.resources.Resources;
+import org.redhatchallenge.rhc2013.shared.Student;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author  Terry Chia (terrycwk1994@gmail.com)
@@ -33,6 +33,11 @@ public class IndexScreen extends Composite {
     @UiField HTML videoOne;
     @UiField HTML videoTwo;
     @UiField HTML videoThree;
+
+    @UiField HTML countChina500 ;
+    private GetAllStudentServiceAsync getAllStudentService = null;
+    private  List<Student> allStudent = new ArrayList<Student>();
+    private  List<Student> chinaStudents = new ArrayList<Student>();
 
     public IndexScreen() {
 
@@ -56,6 +61,30 @@ public class IndexScreen extends Composite {
             videoOne.setHTML("<a href=\"http://player.youku.com/player.php/sid/XNTk5Mzk0OTgw/;iframe=true\" rel=\"prettyPhoto\"><img src=\"images/home_video_21_ch.jpg\" /></a>");
             videoTwo.setHTML("<a href=\"http://player.youku.com/player.php/sid/XMzQyMzc5MDYw/;iframe=true\" rel=\"prettyPhoto\"><img src=\"images/home_video_22_ch.jpg\" /></a>");
             videoThree.setHTML("<a href=\"http://you.video.sina.com.cn/api/sinawebApi/outplayrefer.php/vid=93232834_2298930370_P0q1RnNqDDXK+l1lHz2stqlF+6xCpv2xhGi2slqtJg5aUgyYJMXNb9QE4irUCMxG5yoUEJU2dvwl1RUubA;iframe=true\" rel=\"prettyPhoto\"><img src=\"images/home_video_23_ch.jpg\" /></a>");
+
+            getAllStudentService = GetAllStudentService.Util.getInstance();
+
+            getAllStudentService.getListOfStudents(new AsyncCallback<List<Student>>() {
+                @Override
+                public void onFailure(Throwable throwable) {
+                    throwable.printStackTrace();
+                }
+
+                @Override
+                public void onSuccess(List< Student > students) {
+                    allStudent = students;
+                    for (Student s : allStudent){
+                        if (s.getCountry().contains("China")){
+                            chinaStudents.add(s);
+                        }
+                    }
+                    if (chinaStudents.size() >= 2500){
+                        int remainingSlot = 3000 - chinaStudents.size();
+                        countChina500.setHTML("<FONT SIZE='5' COLOR='8f0203'>剩余报名数量: " + remainingSlot + "</FONT>");
+                    }
+                }
+            });
+
         }
 
         else {
@@ -69,7 +98,7 @@ public class IndexScreen extends Composite {
             videoThree.setHTML("<a href=\"https://www.facebook.com/video/embed?video_id=10151393170889283&amp;iframe=true\" rel=\"prettyPhoto\"><img src=\"images/home_video_23.jpg\" /></a>");
         }
 
-    }
+}
 
     @UiHandler({"registerImage", "challengeLink"})
     public void handleClick(ClickEvent event) {

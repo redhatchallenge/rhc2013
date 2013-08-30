@@ -35,6 +35,7 @@ public class AuthenticatedHeader extends Composite {
     @UiField Hyperlink tcLink;
     @UiField Hyperlink profileLink;
     @UiField Hyperlink logoutLink;
+    @UiField Hyperlink studyrefLink;
     @UiField Label welcomeLabel;
 
     public AuthenticatedHeader() {

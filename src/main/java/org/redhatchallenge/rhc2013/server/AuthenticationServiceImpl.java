@@ -245,7 +245,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
 
     @Override
     public boolean setConfirmationStatus(String token) throws IllegalArgumentException {
-
+        String html = null;
         ConfirmationTokens tokens = lookUpConfirmationToken(token);
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -270,6 +270,29 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                 session.update(student);
 
                 session.delete(tokens);
+
+                try {
+                    if(student.getLanguage().equalsIgnoreCase("English")) {
+                        String path = getServletContext().getRealPath("emails/verified_en.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                    }
+
+                    else if(student.getLanguage().equalsIgnoreCase("Chinese (Simplified)")) {
+                        String path = getServletContext().getRealPath("emails/verified_ch.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                    }
+
+                    else if(student.getLanguage().equals("Chinese (Traditional)")) {
+                        String path = getServletContext().getRealPath("emails/verified_zh.html");
+                        html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+                    }
+
+                } catch(IOException e) {
+                    e.printStackTrace();
+                }
+
+                EmailUtil.sendEmail("Thank You for Your Verification", html, "Thank You", student.getEmail());
+
                 session.getTransaction().commit();
 
                 return true;

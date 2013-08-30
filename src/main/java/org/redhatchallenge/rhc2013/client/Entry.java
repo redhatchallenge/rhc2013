@@ -52,6 +52,10 @@ public class Entry implements EntryPoint {
                     ContentContainer.INSTANCE.setContent(new RegisterScreen());
                 }
 
+                else if(historyToken.equalsIgnoreCase("studyref")) {
+                    ContentContainer.INSTANCE.setContent(new StudyReferenceScreen());
+                }
+
                 else if(historyToken.equalsIgnoreCase("login")) {
                     ContentContainer.INSTANCE.setContent(new LoginScreen());
                 }
