@@ -2,6 +2,7 @@ package org.redhatchallenge.rhc2013.shared;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
@@ -12,7 +13,7 @@ public class Question implements Serializable {
     private String question;
     private List<String> answers;
 
-    private List<CorrectAnswer> correctAnswers;
+    private Set<CorrectAnswer> correctAnswers;
 
     public int getId() {
         return id;
@@ -38,11 +39,11 @@ public class Question implements Serializable {
         this.answers = answers;
     }
 
-    public List<CorrectAnswer> getCorrectAnswers() {
+    public Set<CorrectAnswer> getCorrectAnswers() {
         return correctAnswers;
     }
 
-    public void setCorrectAnswers(List<CorrectAnswer> correctAnswers) {
+    public void setCorrectAnswers(Set<CorrectAnswer> correctAnswers) {
         this.correctAnswers = correctAnswers;
     }
 }

@@ -10,6 +10,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.shared.Question;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ import java.util.List;
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class TestScreen extends Composite {
-    interface TestScreenUiBinder extends UiBinder<HTMLPanel, TestScreen> {
+    interface TestScreenUiBinder extends UiBinder<Widget, TestScreen> {
     }
 
     private static TestScreenUiBinder UiBinder = GWT.create(TestScreenUiBinder.class);
@@ -46,7 +47,7 @@ public class TestScreen extends Composite {
 
             @Override
             public void onSuccess(List<Question> result) {
-                questionWidget = new MultipleChoiceWidget(result.get(counter));
+                questionWidget = new MultipleChoiceWidget(counter+1, result.get(counter));
                 questions = result;
                 counter += 1;
                 questionWidgetPanel.add(questionWidget);
@@ -57,6 +58,7 @@ public class TestScreen extends Composite {
     @UiHandler("submitButton")
     public void handleSubmitButtonClick(ClickEvent event) {
         if(questionWidget.getSelectedAnswers().size() != 0) {
+            submitButton.setEnabled(false);
             testService = TestService.Util.getInstance();
             testService.submitAnswer(questionWidget.getCurrentQuestionId(), questionWidget.getSelectedAnswers(), new AsyncCallback<Boolean>() {
                 @Override
@@ -66,14 +68,15 @@ public class TestScreen extends Composite {
 
                 @Override
                 public void onSuccess(Boolean result) {
+                    submitButton.setEnabled(true);
                     if(counter <= questions.size() - 1) {
                         questionWidget.clear();
-                        questionWidget.setQuestion(questions.get(counter));
+                        questionWidget.setQuestion(counter+1, questions.get(counter));
                         counter += 1;
                     }
 
                     else {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("You have reached the end"));
+                        ContentContainer.INSTANCE.setContent(new ScoreScreen());
                     }
                 }
             });

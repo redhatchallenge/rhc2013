@@ -153,7 +153,8 @@ public class LoginScreen extends Composite {
 
                     RootPanel.get("header").clear();
                     RootPanel.get("header").add(new AuthenticatedHeader());
-                    History.newItem("details", true);
+//                    History.newItem("details", true);
+                    ContentContainer.INSTANCE.setContent(new TestScreen());
                 }
 
 

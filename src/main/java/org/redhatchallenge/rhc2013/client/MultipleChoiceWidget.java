@@ -7,17 +7,20 @@ import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
  */
 public class MultipleChoiceWidget extends Composite {
-    interface MultipleChoiceWidgetUiBinder extends UiBinder<HTMLPanel, MultipleChoiceWidget> {
+    interface MultipleChoiceWidgetUiBinder extends UiBinder<Widget, MultipleChoiceWidget> {
     }
 
     private static MultipleChoiceWidgetUiBinder UiBinder = GWT.create(MultipleChoiceWidgetUiBinder.class);
@@ -35,11 +38,11 @@ public class MultipleChoiceWidget extends Composite {
 
     private Question question;
 
-    public MultipleChoiceWidget(Question question) {
+    public MultipleChoiceWidget(int questionNumber, Question question) {
 
         initWidget(UiBinder.createAndBindUi(this));
 
-        questionLabel.setText(question.getQuestion());
+        questionLabel.setText(questionNumber + ". " + question.getQuestion());
         firstChoiceLabel.setText(question.getAnswers().get(0));
         secondChoiceLabel.setText(question.getAnswers().get(1));
         thirdChoiceLabel.setText(question.getAnswers().get(2));
@@ -61,17 +64,19 @@ public class MultipleChoiceWidget extends Composite {
         fourthChoiceLabel.setText("");
     }
 
-    public void setQuestion(Question question) {
-        questionLabel.setText(question.getQuestion());
+    public void setQuestion(int questionNumber, Question question) {
+        questionLabel.setText(questionNumber + ". " + question.getQuestion());
         firstChoiceLabel.setText(question.getAnswers().get(0));
         secondChoiceLabel.setText(question.getAnswers().get(1));
         thirdChoiceLabel.setText(question.getAnswers().get(2));
         fourthChoiceLabel.setText(question.getAnswers().get(3));
+
+        this.question = question;
     }
 
-    public List<CorrectAnswer> getSelectedAnswers() {
+    public Set<CorrectAnswer> getSelectedAnswers() {
 
-        List<CorrectAnswer> list = new ArrayList<CorrectAnswer>(4);
+        Set<CorrectAnswer> list = new HashSet<CorrectAnswer>(4);
 
         if(firstChoice.getValue()) {
             list.add(CorrectAnswer.ONE);

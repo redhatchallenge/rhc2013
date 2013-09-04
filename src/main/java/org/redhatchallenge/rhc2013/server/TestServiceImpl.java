@@ -1,7 +1,6 @@
 package org.redhatchallenge.rhc2013.server;
 
 import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.HibernateException;
@@ -11,15 +10,15 @@ import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.Student;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
@@ -27,6 +26,7 @@ import java.util.Map;
 public class TestServiceImpl extends RemoteServiceServlet implements TestService {
 
     private Map<Integer, Question> questionMap;
+    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
 
     public TestServiceImpl() {
         questionMap = parseCSV("/questions.csv");
@@ -38,30 +38,27 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         List<Question> listOfQuestions = new ArrayList<>(150);
 
-//        try {
-//            String id = SecurityUtils.getSubject().getPrincipal().toString();
-//            session.beginTransaction();
-//            Student student = (Student)session.get(Student.class, Integer.parseInt(id));
-//
-//            int[] questionsArray = student.getQuestions();
-//            for (int i : questionsArray) {
-//                listOfQuestions.add(questionMap.get(i));
-//            }
-//
-//            return listOfQuestions;
-//
-//        } catch (HibernateException e) {
-//            throw new RuntimeException("Failed to retrieve profile information from the database");
-//        } finally {
-//            session.close();
-//        }
+        try {
+            String id = SecurityUtils.getSubject().getPrincipal().toString();
+            session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(id));
 
-        listOfQuestions.addAll(questionMap.values());
-        return listOfQuestions;
+            int[] questionsArray = student.getQuestions();
+            for (int i : questionsArray) {
+                listOfQuestions.add(questionMap.get(i));
+            }
+
+            return listOfQuestions;
+
+        } catch (HibernateException e) {
+            throw new RuntimeException("Failed to retrieve profile information from the database");
+        } finally {
+            session.close();
+        }
     }
 
     @Override
-    public boolean submitAnswer(int id, List<CorrectAnswer> answers) throws IllegalArgumentException {
+    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException {
         /**
          * TODO: Implement Logic
          */
@@ -77,17 +74,35 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         }
     }
 
-    private boolean compare(int id, List<CorrectAnswer> provided) {
-        List<CorrectAnswer> correctAnswers = questionMap.get(id).getCorrectAnswers();
-        return !correctAnswers.retainAll(provided);
+    @Override
+    public int getScore() throws IllegalArgumentException {
+//        String id = SecurityUtils.getSubject().getPrincipal().toString();
+        String id = "0";
+        return scoreMap.get(id);
+    }
+
+    private boolean compare(int id, Set<CorrectAnswer> provided) {
+        Set<CorrectAnswer> correctAnswers = questionMap.get(id).getCorrectAnswers();
+        return provided.equals(correctAnswers);
     }
 
     private void updateScore(boolean correct) {
         /**
          * TODO: Implement a way to fetch the current score
+         *
+         * Score is currently stored in a non-persistent HashMap.
+         * I'll need to investigate a way to make this storage persistent,
+         * either through Infinispan or flushing the HashMap directly into
+         * the PostgreSQL database when I'm finished with it.
          */
 
-        int score = 0; //stub value, this needs to be populated from a db or cache
+//        String id = SecurityUtils.getSubject().getPrincipal().toString();
+        String id = "0";
+        if(!scoreMap.containsKey(id)) {
+            scoreMap.put(id, 0);
+        }
+
+        int score = scoreMap.get(id);
 
         if(correct) {
             score += 2;
@@ -96,6 +111,9 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         else {
             score -= 1;
         }
+
+        scoreMap.put(id, score);
+
     }
 
 
@@ -122,7 +140,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                 answers.add(nextLine[7]);
                 question.setAnswers(answers);
 
-                List<CorrectAnswer> correctAnswers = new ArrayList<CorrectAnswer>(4);
+                Set<CorrectAnswer> correctAnswers = new HashSet<CorrectAnswer>(4);
                 String[] parts = nextLine[8].split(",");
                 for (String s : parts) {
                     int selection = Integer.parseInt(s);
