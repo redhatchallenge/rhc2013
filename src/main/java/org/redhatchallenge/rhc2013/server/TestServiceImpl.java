@@ -3,6 +3,7 @@ package org.redhatchallenge.rhc2013.server;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.redhatchallenge.rhc2013.client.TestService;
@@ -29,26 +30,21 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
 
     public TestServiceImpl() {
-        questionMap = parseCSV("/questions.csv");
+        InputStream in = TestServiceImpl.class.getResourceAsStream("/questions.csv");
+        questionMap = parseCSV(in);
     }
 
     @Override
     public List<Question> loadQuestions() throws IllegalArgumentException {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        List<Question> listOfQuestions = new ArrayList<>(150);
 
         try {
             String id = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(id));
 
-            int[] questionsArray = student.getQuestions();
-            for (int i : questionsArray) {
-                listOfQuestions.add(questionMap.get(i));
-            }
-
-            return listOfQuestions;
+            return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
 
         } catch (HibernateException e) {
             throw new RuntimeException("Failed to retrieve profile information from the database");
@@ -59,9 +55,6 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
 
     @Override
     public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException {
-        /**
-         * TODO: Implement Logic
-         */
 
         if(compare(id, answers)) {
             updateScore(true);
@@ -76,8 +69,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
 
     @Override
     public int getScore() throws IllegalArgumentException {
-//        String id = SecurityUtils.getSubject().getPrincipal().toString();
-        String id = "0";
+        String id = SecurityUtils.getSubject().getPrincipal().toString();
         return scoreMap.get(id);
     }
 
@@ -96,8 +88,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
          * the PostgreSQL database when I'm finished with it.
          */
 
-//        String id = SecurityUtils.getSubject().getPrincipal().toString();
-        String id = "0";
+        String id = SecurityUtils.getSubject().getPrincipal().toString();
         if(!scoreMap.containsKey(id)) {
             scoreMap.put(id, 0);
         }
@@ -117,15 +108,11 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
 
-    private Map<Integer, Question> parseCSV(String filename) {
+    private Map<Integer, Question> parseCSV(InputStream in) {
 
-        /**
-         * TODO: Write a unit test for this function.
-         */
         HashMap<Integer, Question> map = new HashMap<>();
 
         try {
-            InputStream in = TestServiceImpl.class.getResourceAsStream(filename);
             CSVReader reader = new CSVReader(new InputStreamReader(in));
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
@@ -167,7 +154,17 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             return map;
 
         } catch (IOException e) {
-            throw new RuntimeException("Unable to parse " + filename);
+            throw new RuntimeException("Unable to parse input stream");
         }
+    }
+
+    private List<Question> getQuestionsFromListOfQuestionNumbers(int[] questionNumberArray) {
+        List<Question> listOfQuestions = new ArrayList<>(150);
+
+        for (int i : questionNumberArray) {
+            listOfQuestions.add(questionMap.get(i));
+        }
+
+        return listOfQuestions;
     }
 }

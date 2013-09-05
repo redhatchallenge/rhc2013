@@ -42,7 +42,7 @@ public class TestScreen extends Composite {
         testService.loadQuestions(new AsyncCallback<List<Question>>() {
             @Override
             public void onFailure(Throwable caught) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                caught.printStackTrace();
             }
 
             @Override
@@ -63,7 +63,7 @@ public class TestScreen extends Composite {
             testService.submitAnswer(questionWidget.getCurrentQuestionId(), questionWidget.getSelectedAnswers(), new AsyncCallback<Boolean>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    //To change body of implemented methods use File | Settings | File Templates.
+                    caught.printStackTrace();
                 }
 
                 @Override
