@@ -14,7 +14,9 @@ import org.redhatchallenge.rhc2013.shared.Student;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -79,14 +81,6 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     private void updateScore(boolean correct) {
-        /**
-         * TODO: Implement a way to fetch the current score
-         *
-         * Score is currently stored in a non-persistent HashMap.
-         * I'll need to investigate a way to make this storage persistent,
-         * either through Infinispan or flushing the HashMap directly into
-         * the PostgreSQL database when I'm finished with it.
-         */
 
         String id = SecurityUtils.getSubject().getPrincipal().toString();
         if(!scoreMap.containsKey(id)) {
@@ -104,7 +98,6 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         }
 
         scoreMap.put(id, score);
-
     }
 
 
@@ -166,5 +159,24 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         }
 
         return listOfQuestions;
+    }
+
+    private void flushScoreToDatabase(String id) {
+
+        int score = scoreMap.get(id);
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+
+        try {
+            session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(id));
+            student.setScore(score);
+            student.setEndTime(new Timestamp(System.currentTimeMillis()));
+            session.getTransaction().commit();
+            scoreMap.remove(id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            session.getTransaction().rollback();
+        }
     }
 }

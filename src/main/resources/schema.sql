@@ -56,7 +56,6 @@ CREATE TRIGGER update_last_modified BEFORE UPDATE
   ON contestant FOR EACH ROW EXECUTE PROCEDURE
   update_last_modified_column();
 
-
 CREATE TABLE reset_tokens (
     email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
     token character varying(50) NOT NULL primary key
@@ -66,3 +65,8 @@ CREATE TABLE confirm_tokens (
     email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
     token character varying(50) NOT NULL primary key
 );
+
+ALTER TABLE contestant ADD COLUMN score int;
+ALTER TABLE contestant ADD COLUMN start_time timestamp;
+ALTER TABLE contestant ADD COLUMN end_time timestamp;
+
