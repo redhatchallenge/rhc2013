@@ -24,6 +24,24 @@ CREATE TABLE contestant (
     last_modified timestamp
 );
 
+CREATE TABLE timeslot_list (
+    timeslot_id serial primary key,
+    timeslot bigint  NOT NULL UNIQUE,
+);
+
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382490000000, 1);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382494500000, 2);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382499000000, 3);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382503500000, 4);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382508000000, 5);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382512500000, 6);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382517000000, 7);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382521500000, 8);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382526000000, 9);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382530500000, 10);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382594400000, 11);
+INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382601600000, 12);
+
 CREATE OR REPLACE FUNCTION update_last_modified_column()
   RETURNS TRIGGER AS $$
   BEGIN

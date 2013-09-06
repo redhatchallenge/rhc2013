@@ -6,29 +6,24 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
-import org.hibernate.Hibernate;
-import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.type.StandardBasicTypes;
 import org.redhatchallenge.rhc2013.client.AuthenticationService;
-import org.redhatchallenge.rhc2013.shared.ConfirmationTokens;
-import org.redhatchallenge.rhc2013.shared.ResetPasswordTokens;
-import org.redhatchallenge.rhc2013.shared.Student;
+import org.redhatchallenge.rhc2013.shared.*;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.exception.ConstraintViolationException;
-import org.infinispan.Cache;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.redhatchallenge.rhc2013.shared.UnconfirmedStudentException;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
@@ -164,7 +159,24 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
     }
 
     @Override
-    public Boolean authenticateStudent(String email, String password, Boolean rememberMe) throws IllegalArgumentException, UnconfirmedStudentException {
+    public List<RegStatus> getRegStatus() throws IllegalArgumentException {
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            session.beginTransaction();
+            //noinspection unchecked
+            List<RegStatus> regStatus = session.createCriteria(RegStatus.class).list();
+            session.close();
+
+            return regStatus;
+        } catch (HibernateException e) {
+            session.close();
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean authenticateStudent(String email, String password, Boolean rememberMe) throws IllegalArgumentException, UnconfirmedStudentException, LockOutStudentException {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         Subject currentUser = SecurityUtils.getSubject();
@@ -190,19 +202,22 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
             }
 
             else {
+                if (!student.getStatus().equals(Boolean.FALSE))  {
+                    UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
+                    token.setRememberMe(rememberMe);
 
+                    currentUser.login(token);
+                    if(student.getVerified()) {
+                        return true;
+                    }
 
-                UsernamePasswordToken token = new UsernamePasswordToken(String.valueOf(student.getContestantId()), password);
-                token.setRememberMe(rememberMe);
-
-                currentUser.login(token);
-                if(student.getVerified()) {
-                    return true;
+                    else {
+                        currentUser.logout();
+                        throw new UnconfirmedStudentException();
+                    }
                 }
-
                 else {
-                    currentUser.logout();
-                    throw new UnconfirmedStudentException();
+                    throw new LockOutStudentException();
                 }
             }
 

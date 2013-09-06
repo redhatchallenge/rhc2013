@@ -23,6 +23,7 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.resources.Resources;
+import org.redhatchallenge.rhc2013.shared.LockOutStudentException;
 import org.redhatchallenge.rhc2013.shared.UnconfirmedStudentException;
 import org.redhatchallenge.rhc2013.shared.FieldVerifier;
 
@@ -129,6 +130,11 @@ public class LoginScreen extends Composite {
                    ContentContainer.INSTANCE.setContent(new MessageScreen(messages.verifyBeforeLogin(email), messages.verifyBeforeLoginUrl(), email));
                 }
 
+                else if (throwable instanceof LockOutStudentException){
+                    errorLabel.setText(messages.lockDelete());
+                    loginButton.setResource(Resources.INSTANCE.loginButton());
+                }
+
                 else {
                     errorLabel.setText(messages.unexpectedError());
                     loginButton.setResource(Resources.INSTANCE.loginButton());
@@ -137,7 +143,7 @@ public class LoginScreen extends Composite {
 
             @Override
             public void onSuccess(Boolean bool) {
-                if(bool) {
+                if(bool.equals(true)) {
                     /**
                      * Clears the local storage on a fresh login to prevent the
                      * data of an old user from being populated.
@@ -149,6 +155,7 @@ public class LoginScreen extends Composite {
                     RootPanel.get("header").add(new AuthenticatedHeader());
                     History.newItem("details", true);
                 }
+
 
                 else {
                     errorLabel.setText(messages.loginUnsuccessful());

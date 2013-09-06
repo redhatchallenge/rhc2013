@@ -30,6 +30,9 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.FieldVerifier;
+import org.redhatchallenge.rhc2013.shared.RegStatus;
+
+import java.util.List;
 
 import static org.redhatchallenge.rhc2013.client.LocaleUtil.getCountryFromIndex;
 import static org.redhatchallenge.rhc2013.client.LocaleUtil.getLanguageFromIndex;
@@ -79,49 +82,46 @@ public class RegisterScreen extends Composite {
     @UiField HTML qqHTML;
     @UiField HTML contactUs;
 
-
-
     private AuthenticationServiceAsync authenticationService = null;
 
     DecoratedPopupPanel popupPanel = new DecoratedPopupPanel(true);
 
     public RegisterScreen() {
 
-        Resources.INSTANCE.main().ensureInjected();
-        Resources.INSTANCE.grid().ensureInjected();
-        Resources.INSTANCE.buttons().ensureInjected();
+            Resources.INSTANCE.main().ensureInjected();
+            Resources.INSTANCE.grid().ensureInjected();
+            Resources.INSTANCE.buttons().ensureInjected();
 
-        initWidget(UiBinder.createAndBindUi(this));
+            initWidget(UiBinder.createAndBindUi(this));
 
-        table.setCellPadding(3);
-        table.setCellSpacing(3);
-        table.setBorder(0);
+            table.setCellPadding(3);
+            table.setCellSpacing(3);
+            table.setBorder(0);
 
-        registerButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
+            registerButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
-        contactField.setWatermark("XXXXXXXX");
+            contactField.setWatermark("XXXXXXXX");
 
-        if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
-            socialButton1.setVisible(false);
-            socialButton2.setTarget("_blank");
-            socialButton2.setHref("http://e.weibo.com/redhatchina");
-            qqHTML.setHTML("<FONT SIZE=\"3\"><B>2) 我们建议您不要使用QQ邮箱地址注册比赛，因为QQ郵件服務器在接收我们所发出的电子邮件时会有某些延迟事故。</FONT></B>");
-//            </FONT></B><FONT SIZE="3" COLOR="red"><B>contact@redhatchallenge.mailgun.org</FONT></B><FONT SIZE ="3"><B>
-            contactUs.setHTML("<FONT SIZE=\"2\"><B>如果您在注册过程中遇到任何问题，请发电邮到 <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT> 与我们联系</B></FONT>");
-        }
-        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
-            socialButton1.setTarget("_blank");
-            socialButton1.setHref("https://www.facebook.com/redhatinc?fref=ts");
-            socialButton2.setTarget("_blank");
-            socialButton2.setHref("https://twitter.com/red_hat_apac");
-            contactUs.setHTML("<FONT SIZE=\"2\"><B>如果您在註冊過程中遇到任何問題，請發電郵到 <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT> 與我們聯繫</B></FONT>");
-        }
-        else{
-            contactUs.setHTML("<FONT SIZE=\"2\"><B>If you encounter any problems during registration, please email us at <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT><B></FONT>");
+            if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+                socialButton1.setVisible(false);
+                socialButton2.setTarget("_blank");
+                socialButton2.setHref("http://e.weibo.com/redhatchina");
+                qqHTML.setHTML("<FONT SIZE=\"3\"><B>2) 我们建议您不要使用QQ邮箱地址注册比赛，因为QQ郵件服務器在接收我们所发出的电子邮件时会有某些延迟事故。</FONT></B>");
+    //            </FONT></B><FONT SIZE="3" COLOR="red"><B>contact@redhatchallenge.mailgun.org</FONT></B><FONT SIZE ="3"><B>
+                contactUs.setHTML("<FONT SIZE=\"2\"><B>如果您在注册过程中遇到任何问题，请发电邮到 <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT> 与我们联系</B></FONT>");
 
-        }
-
-    }
+            }
+            else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
+                socialButton1.setTarget("_blank");
+                socialButton1.setHref("https://www.facebook.com/redhatinc?fref=ts");
+                socialButton2.setTarget("_blank");
+                socialButton2.setHref("https://twitter.com/red_hat_apac");
+                contactUs.setHTML("<FONT SIZE=\"2\"><B>如果您在註冊過程中遇到任何問題，請發電郵到 <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT> 與我們聯繫</B></FONT>");
+            }
+            else{
+                contactUs.setHTML("<FONT SIZE=\"2\"><B>If you encounter any problems during registration, please email us at <FONT SIZE=\"2\" COLOR=\"red\">contact@redhatchallenge.mailgun.org</FONT><B></FONT>");
+            }
+   }
 
     @UiHandler("countryField")
     public void handleCountryChange(ChangeEvent event) {
