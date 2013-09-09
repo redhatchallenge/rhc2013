@@ -48,7 +48,10 @@ public class TestScreen extends Composite {
 
             @Override
             public void onSuccess(List<Question> result) {
-                questionWidget = new MultipleChoiceWidget(counter+1, result.get(counter));
+                /**
+                 * TODO: Change the value "6" on the following line to 151 for the actual thing.
+                 */
+                questionWidget = new MultipleChoiceWidget(6-result.size(), result.get(counter));
                 questions = result;
                 counter += 1;
                 questionWidgetPanel.add(questionWidget);
@@ -74,7 +77,10 @@ public class TestScreen extends Composite {
                     submitButton.setEnabled(true);
                     if(counter <= questions.size() - 1) {
                         questionWidget.clear();
-                        questionWidget.setQuestion(counter+1, questions.get(counter));
+                        /**
+                         * TODO: Change the value "6" on the following line to 151 for the actual thing.
+                         */
+                        questionWidget.setQuestion(6-questions.size()+counter, questions.get(counter));
                         counter += 1;
                     }
 

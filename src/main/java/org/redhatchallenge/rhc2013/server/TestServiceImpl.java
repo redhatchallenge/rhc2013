@@ -2,6 +2,7 @@ package org.redhatchallenge.rhc2013.server;
 
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -31,6 +32,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
 
     private Map<Integer, Question> questionMap;
     private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
+    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
 
     public TestServiceImpl() {
         InputStream in = TestServiceImpl.class.getResourceAsStream("/questions.csv");
@@ -46,32 +48,40 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             String id = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(id));
-            student.setStartTime(new Timestamp(System.currentTimeMillis()));
-            session.update(student);
-            session.getTransaction().commit();
 
-            class TimesUp extends TimerTask {
+            if(!assignedQuestionsMap.containsKey(id)) {
+                student.setStartTime(new Timestamp(System.currentTimeMillis()));
+                session.update(student);
+                session.getTransaction().commit();
 
-                private final Student student;
+                class TimesUp extends TimerTask {
 
-                TimesUp(Student student) {
-                    this.student = student;
+                    private final Student student;
+
+                    TimesUp(Student student) {
+                        this.student = student;
+                    }
+
+                    @Override
+                    public void run() {
+                        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+                        session.beginTransaction();
+                        student.setEndTime(new Timestamp(System.currentTimeMillis()));
+                        session.update(student);
+                        session.getTransaction().commit();
+                    }
                 }
 
-                @Override
-                public void run() {
-                    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-                    session.beginTransaction();
-                    student.setEndTime(new Timestamp(System.currentTimeMillis()));
-                    session.update(student);
-                    session.getTransaction().commit();
-                }
+                Timer timer = new Timer();
+                timer.schedule(new TimesUp(student), 60000);
+
+                assignedQuestionsMap.put(id, student.getQuestions());
+                return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
             }
 
-            Timer timer = new Timer();
-            timer.schedule(new TimesUp(student), 60000);
-
-            return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
+            else {
+                return getQuestionsFromListOfQuestionNumbers(assignedQuestionsMap.get(id));
+            }
 
         } catch (HibernateException e) {
             session.getTransaction().rollback();
@@ -87,6 +97,10 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             String studentId = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
+
+            int[] array = assignedQuestionsMap.get(studentId);
+            array = ArrayUtils.removeElement(array, id);
+            assignedQuestionsMap.put(studentId, array);
 
             if(student.getEndTime() == null) {
                 if(compare(id, answers)) {
