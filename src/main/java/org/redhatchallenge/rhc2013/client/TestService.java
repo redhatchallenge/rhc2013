@@ -5,6 +5,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
+import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
 
 import java.util.List;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
 @RemoteServiceRelativePath("TestService")
 public interface TestService extends RemoteService {
 
-    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException;
+    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException;
 
     public List<Question> loadQuestions() throws IllegalArgumentException;
 

@@ -66,7 +66,7 @@ CREATE TABLE confirm_tokens (
     token character varying(50) NOT NULL primary key
 );
 
-ALTER TABLE contestant ADD COLUMN score int;
+ALTER TABLE contestant ADD COLUMN score int DEFAULT 0;
 ALTER TABLE contestant ADD COLUMN start_time timestamp;
 ALTER TABLE contestant ADD COLUMN end_time timestamp;
 

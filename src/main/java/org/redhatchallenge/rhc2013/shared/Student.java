@@ -27,7 +27,7 @@ public class Student implements Serializable {
     private Boolean status = true;
     private int[] questions = {};
     private long timeslot;
-    private int score;
+    private int score = 0;
     private Timestamp startTime;
     private Timestamp endTime;
 

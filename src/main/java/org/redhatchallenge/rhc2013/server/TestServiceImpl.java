@@ -3,25 +3,26 @@ package org.redhatchallenge.rhc2013.server;
 import au.com.bytecode.opencsv.CSVReader;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.redhatchallenge.rhc2013.client.TestService;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.Student;
+import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
@@ -45,9 +46,63 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             String id = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(id));
+            student.setStartTime(new Timestamp(System.currentTimeMillis()));
+            session.update(student);
+            session.getTransaction().commit();
+
+            class TimesUp extends TimerTask {
+
+                private final Student student;
+
+                TimesUp(Student student) {
+                    this.student = student;
+                }
+
+                @Override
+                public void run() {
+                    Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+                    session.beginTransaction();
+                    student.setEndTime(new Timestamp(System.currentTimeMillis()));
+                    session.update(student);
+                    session.getTransaction().commit();
+                }
+            }
+
+            Timer timer = new Timer();
+            timer.schedule(new TimesUp(student), 60000);
 
             return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
 
+        } catch (HibernateException e) {
+            session.getTransaction().rollback();
+            throw new RuntimeException("Failed to retrieve profile information from the database");
+        }
+    }
+
+    @Override
+    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException {
+
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            String studentId = SecurityUtils.getSubject().getPrincipal().toString();
+            session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
+
+            if(student.getEndTime() == null) {
+                if(compare(id, answers)) {
+                    updateScore(true);
+                    return true;
+                }
+
+                else {
+                    updateScore(false);
+                    return false;
+                }
+            }
+
+            else {
+                throw new TimeIsUpException();
+            }
         } catch (HibernateException e) {
             throw new RuntimeException("Failed to retrieve profile information from the database");
         } finally {
@@ -56,23 +111,11 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     @Override
-    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException {
-
-        if(compare(id, answers)) {
-            updateScore(true);
-            return true;
-        }
-
-        else {
-            updateScore(false);
-            return false;
-        }
-    }
-
-    @Override
     public int getScore() throws IllegalArgumentException {
         String id = SecurityUtils.getSubject().getPrincipal().toString();
-        return scoreMap.get(id);
+        int score = scoreMap.get(id);
+        flushScoreToDatabase(id);
+        return score;
     }
 
     private boolean compare(int id, Set<CorrectAnswer> provided) {

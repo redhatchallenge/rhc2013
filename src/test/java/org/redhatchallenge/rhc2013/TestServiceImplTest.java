@@ -6,6 +6,7 @@ import org.junit.Test;
 import org.redhatchallenge.rhc2013.server.TestServiceImpl;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
+import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 import java.io.ByteArrayInputStream;
@@ -91,7 +92,7 @@ public class TestServiceImplTest extends AbstractShiroTest {
     }
 
     @Test
-    public void testUpdateScore() throws NoSuchFieldException, IllegalAccessException {
+    public void testUpdateScore() throws NoSuchFieldException, IllegalAccessException, TimeIsUpException {
 
         /**
          * Mock the Shiro Subject required.
