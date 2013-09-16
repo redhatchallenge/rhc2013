@@ -13,6 +13,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
+import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,7 +44,9 @@ public class TestScreen extends Composite {
         testService.loadQuestions(new AsyncCallback<List<Question>>() {
             @Override
             public void onFailure(Throwable caught) {
-                caught.printStackTrace();
+                if(caught instanceof TimeslotExpiredException) {
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Your timeslot is over. Sorry.</h1>"));
+                }
             }
 
             @Override

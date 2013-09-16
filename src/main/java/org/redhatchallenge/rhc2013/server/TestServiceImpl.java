@@ -11,6 +11,7 @@ import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.Student;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
+import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -40,7 +41,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     @Override
-    public List<Question> loadQuestions() throws IllegalArgumentException {
+    public List<Question> loadQuestions() throws IllegalArgumentException, TimeslotExpiredException {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
@@ -49,38 +50,44 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(id));
 
-            if(!assignedQuestionsMap.containsKey(id)) {
-                student.setStartTime(new Timestamp(System.currentTimeMillis()));
-                session.update(student);
-                session.getTransaction().commit();
+            if(student.getTimeslot() + 3600000 < System.currentTimeMillis()) {
+                if(!assignedQuestionsMap.containsKey(id)) {
+                    student.setStartTime(new Timestamp(System.currentTimeMillis()));
+                    session.update(student);
+                    session.getTransaction().commit();
 
-                class TimesUp extends TimerTask {
+                    class TimesUp extends TimerTask {
 
-                    private final Student student;
+                        private final Student student;
 
-                    TimesUp(Student student) {
-                        this.student = student;
+                        TimesUp(Student student) {
+                            this.student = student;
+                        }
+
+                        @Override
+                        public void run() {
+                            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+                            session.beginTransaction();
+                            student.setEndTime(new Timestamp(System.currentTimeMillis()));
+                            session.update(student);
+                            session.getTransaction().commit();
+                        }
                     }
 
-                    @Override
-                    public void run() {
-                        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-                        session.beginTransaction();
-                        student.setEndTime(new Timestamp(System.currentTimeMillis()));
-                        session.update(student);
-                        session.getTransaction().commit();
-                    }
+                    Timer timer = new Timer();
+                    timer.schedule(new TimesUp(student), 60000);
+
+                    assignedQuestionsMap.put(id, student.getQuestions());
+                    return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
                 }
 
-                Timer timer = new Timer();
-                timer.schedule(new TimesUp(student), 60000);
-
-                assignedQuestionsMap.put(id, student.getQuestions());
-                return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
+                else {
+                    return getQuestionsFromListOfQuestionNumbers(assignedQuestionsMap.get(id));
+                }
             }
 
             else {
-                return getQuestionsFromListOfQuestionNumbers(assignedQuestionsMap.get(id));
+                throw new TimeslotExpiredException();
             }
 
         } catch (HibernateException e) {

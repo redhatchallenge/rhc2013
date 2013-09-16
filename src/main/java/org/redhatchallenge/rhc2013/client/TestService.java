@@ -6,6 +6,7 @@ import com.google.gwt.core.client.GWT;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
+import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
 
 import java.util.List;
 import java.util.Set;
@@ -18,7 +19,7 @@ public interface TestService extends RemoteService {
 
     public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException;
 
-    public List<Question> loadQuestions() throws IllegalArgumentException;
+    public List<Question> loadQuestions() throws IllegalArgumentException, TimeslotExpiredException;
 
     public int getScore() throws IllegalArgumentException;
 
