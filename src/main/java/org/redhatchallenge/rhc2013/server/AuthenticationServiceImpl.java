@@ -356,7 +356,7 @@ public class AuthenticationServiceImpl extends RemoteServiceServlet implements A
                     if(student.getLanguage().equalsIgnoreCase("English")) {
                         String path = getServletContext().getRealPath("emails/reset_en.html");
                         html = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com#/?locale=enresetToken/" + token.getToken());
+                        html = html.replaceAll("REPLACEME", "https://redhatchallenge2013-rhc2013.rhcloud.com/?locale=en#resetToken/" + token.getToken());
                     }
 
                     else if(student.getLanguage().equalsIgnoreCase("Chinese (Simplified)")) {
