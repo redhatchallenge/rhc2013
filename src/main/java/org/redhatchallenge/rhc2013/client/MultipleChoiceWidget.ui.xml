@@ -1,23 +1,27 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:HTMLPanel>
         <table>
-            <tr><g:Label ui:field="questionLabel"/></tr>
+            <tr>&nbsp;</tr>
+            <tr><h1><g:Label ui:field="questionNumberLabel"/></h1></tr>
+            <tr><p><g:Label ui:field="questionLabel"/></p></tr>
             <tr>
-                <td><g:CheckBox ui:field="firstChoice"/></td>
-                <td><g:Label ui:field="firstChoiceLabel"/></td>
+                <td><p><g:CheckBox ui:field="firstChoice"/></p></td>
+                <td><p><g:Label ui:field="firstChoiceLabel"/></p></td>
             </tr>
             <tr>
-                <td><g:CheckBox ui:field="secondChoice"/></td>
-                <td><g:Label ui:field="secondChoiceLabel"/></td>
+                <td><p><g:CheckBox ui:field="secondChoice"/></p></td>
+                <td><p><g:Label ui:field="secondChoiceLabel"/></p></td>
             </tr>
             <tr>
-                <td><g:CheckBox ui:field="thirdChoice"/></td>
-                <td><g:Label ui:field="thirdChoiceLabel"/></td>
+                <td><p><g:CheckBox ui:field="thirdChoice"/></p></td>
+                <td><p><g:Label ui:field="thirdChoiceLabel"/></p></td>
             </tr>
             <tr>
-                <td><g:CheckBox ui:field="fourthChoice"/></td>
-                <td><g:Label ui:field="fourthChoiceLabel"/></td>
+                <td><p><g:CheckBox ui:field="fourthChoice"/></p></td>
+                <td><p><g:Label ui:field="fourthChoiceLabel"/></p></td>
             </tr>
         </table>
     </g:HTMLPanel>

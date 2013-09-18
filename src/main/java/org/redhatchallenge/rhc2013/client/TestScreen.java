@@ -1,6 +1,7 @@
 package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -10,6 +11,8 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
@@ -28,7 +31,7 @@ public class TestScreen extends Composite {
     private static TestScreenUiBinder UiBinder = GWT.create(TestScreenUiBinder.class);
 
     @UiField HorizontalPanel questionWidgetPanel;
-    @UiField Button submitButton;
+    @UiField Image submitButton;
 
     MultipleChoiceWidget questionWidget;
     List<Question> questions;
@@ -38,7 +41,10 @@ public class TestScreen extends Composite {
 
     public TestScreen() {
 
+        RootPanel.get("header").clear();
         initWidget(UiBinder.createAndBindUi(this));
+
+        submitButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
         testService = TestService.Util.getInstance();
         testService.loadQuestions(new AsyncCallback<List<Question>>() {
@@ -65,7 +71,6 @@ public class TestScreen extends Composite {
     @UiHandler("submitButton")
     public void handleSubmitButtonClick(ClickEvent event) {
         if(questionWidget.getSelectedAnswers().size() != 0) {
-            submitButton.setEnabled(false);
             testService = TestService.Util.getInstance();
             testService.submitAnswer(questionWidget.getCurrentQuestionId(), questionWidget.getSelectedAnswers(), new AsyncCallback<Boolean>() {
                 @Override
@@ -77,7 +82,6 @@ public class TestScreen extends Composite {
 
                 @Override
                 public void onSuccess(Boolean result) {
-                    submitButton.setEnabled(true);
                     if(counter <= questions.size() - 1) {
                         questionWidget.clear();
                         /**

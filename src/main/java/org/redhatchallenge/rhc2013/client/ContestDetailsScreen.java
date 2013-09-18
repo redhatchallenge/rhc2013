@@ -1,6 +1,7 @@
 package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
@@ -108,8 +109,8 @@ public class ContestDetailsScreen extends Composite {
                             timeSlotField.setText(messages.noTimeSlot());
                         }
 
-                        long time = result.getTimeslot()/1000 - new Date().getTime()/1000;
-//                        long time = 30;
+//                        long time = result.getTimeslot()/1000 - new Date().getTime()/1000;
+                        long time = 5;
 
                         if(time > 0) {
                             if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
@@ -137,10 +138,11 @@ public class ContestDetailsScreen extends Composite {
                                     };
 
                                     Image startButton = new Image();
-                                    startButton.setResource(Resources.INSTANCE.submitButton());
+                                    startButton.setResource(Resources.INSTANCE.beginButtonEn());
                                     countdown.remove(simple);
                                     countdown.setWidget(startButton);
                                     countdown.addClickHandler(c);
+                                    countdown.getElement().getStyle().setCursor(Style.Cursor.POINTER);
                                 }
                             };
 
@@ -151,7 +153,7 @@ public class ContestDetailsScreen extends Composite {
                             Element note = DOM.getElementById("note");
                             note.removeFromParent();
                             Image startButton = new Image();
-                            startButton.setResource(Resources.INSTANCE.submitButtonGrey());
+                            startButton.setResource(Resources.INSTANCE.timeslotClosed());
                             countdown.remove(simple);
                             countdown.setWidget(startButton);
                         }
@@ -222,8 +224,8 @@ public class ContestDetailsScreen extends Composite {
          */
         if(localStorageMap.size() == 12) {
 
-            long time = Long.parseLong(localStorage.getItem("timeSlot"))/1000 - new Date().getTime()/1000;
-//            long time = 30;
+//            long time = Long.parseLong(localStorage.getItem("timeSlot"))/1000 - new Date().getTime()/1000;
+            long time = 5;
 
             if(time > 0) {
                 if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
@@ -251,10 +253,11 @@ public class ContestDetailsScreen extends Composite {
                         };
 
                         Image startButton = new Image();
-                        startButton.setResource(Resources.INSTANCE.submitButton());
+                        startButton.setResource(Resources.INSTANCE.beginButtonEn());
                         countdown.remove(simple);
                         countdown.setWidget(startButton);
                         countdown.addClickHandler(c);
+                        countdown.getElement().getStyle().setCursor(Style.Cursor.POINTER);
                     }
                 };
 
@@ -265,7 +268,7 @@ public class ContestDetailsScreen extends Composite {
                 Element note = DOM.getElementById("note");
                 note.removeFromParent();
                 Image startButton = new Image();
-                startButton.setResource(Resources.INSTANCE.submitButtonGrey());
+                startButton.setResource(Resources.INSTANCE.timeslotClosed());
                 countdown.remove(simple);
                 countdown.setWidget(startButton);
             }

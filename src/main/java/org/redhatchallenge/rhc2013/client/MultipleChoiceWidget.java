@@ -8,6 +8,7 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
+import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 
@@ -25,6 +26,7 @@ public class MultipleChoiceWidget extends Composite {
 
     private static MultipleChoiceWidgetUiBinder UiBinder = GWT.create(MultipleChoiceWidgetUiBinder.class);
 
+    @UiField Label questionNumberLabel;
     @UiField Label questionLabel;
     @UiField Label firstChoiceLabel;
     @UiField Label secondChoiceLabel;
@@ -40,9 +42,12 @@ public class MultipleChoiceWidget extends Composite {
 
     public MultipleChoiceWidget(int questionNumber, Question question) {
 
+        Resources.INSTANCE.main().ensureInjected();
+
         initWidget(UiBinder.createAndBindUi(this));
 
-        questionLabel.setText(questionNumber + ". " + question.getQuestion());
+        questionNumberLabel.setText("Question " + questionNumber);
+        questionLabel.setText(question.getQuestion());
         firstChoiceLabel.setText(question.getAnswers().get(0));
         secondChoiceLabel.setText(question.getAnswers().get(1));
         thirdChoiceLabel.setText(question.getAnswers().get(2));
@@ -65,7 +70,8 @@ public class MultipleChoiceWidget extends Composite {
     }
 
     public void setQuestion(int questionNumber, Question question) {
-        questionLabel.setText(questionNumber + ". " + question.getQuestion());
+        questionNumberLabel.setText("Question " + questionNumber);
+        questionLabel.setText(question.getQuestion());
         firstChoiceLabel.setText(question.getAnswers().get(0));
         secondChoiceLabel.setText(question.getAnswers().get(1));
         thirdChoiceLabel.setText(question.getAnswers().get(2));

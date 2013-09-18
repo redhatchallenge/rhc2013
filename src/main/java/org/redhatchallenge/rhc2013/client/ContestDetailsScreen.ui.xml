@@ -17,7 +17,7 @@
                         <div >
                             <g:HTML ui:field="welcomeLabel"/>
 
-                            <g:FocusPanel ui:field="countdown"/>
+                            <center><g:FocusPanel ui:field="countdown"/></center>
 
                             <p id="note"/><br />
 

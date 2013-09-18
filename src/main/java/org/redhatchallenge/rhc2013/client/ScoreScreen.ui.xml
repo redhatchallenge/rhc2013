@@ -1,6 +1,11 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
     <g:HTMLPanel>
-        <g:HTML ui:field="message"/>
+        <p>&nbsp;</p>
+        <h1><g:HTML ui:field="message"/></h1>
+        <center><g:Image ui:field="medal"/></center>
+        <g:HTML ui:field="score"/>
     </g:HTMLPanel>
 </ui:UiBinder>
