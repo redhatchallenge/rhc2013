@@ -48,10 +48,44 @@ public class MultipleChoiceWidget extends Composite {
 
         questionNumberLabel.setText("Question " + questionNumber);
         questionLabel.setText(question.getQuestion());
-        firstChoiceLabel.setText(question.getAnswers().get(0));
-        secondChoiceLabel.setText(question.getAnswers().get(1));
-        thirdChoiceLabel.setText(question.getAnswers().get(2));
-        fourthChoiceLabel.setText(question.getAnswers().get(3));
+
+        if(!question.getAnswers().get(0).isEmpty()) {
+            firstChoiceLabel.setText(question.getAnswers().get(0));
+        }
+
+        else {
+            firstChoiceLabel.setVisible(false);
+            firstChoice.setVisible(false);
+        }
+
+        if(!question.getAnswers().get(1).isEmpty()) {
+            secondChoiceLabel.setText(question.getAnswers().get(1));
+        }
+
+        else {
+            secondChoiceLabel.setVisible(false);
+            secondChoice.setVisible(false);
+        }
+
+
+        if(!question.getAnswers().get(2).isEmpty()) {
+            thirdChoiceLabel.setText(question.getAnswers().get(2));
+        }
+
+        else {
+            thirdChoiceLabel.setVisible(false);
+            thirdChoice.setVisible(false);
+        }
+
+
+        if(!question.getAnswers().get(3).isEmpty()) {
+            fourthChoiceLabel.setText(question.getAnswers().get(3));
+        }
+
+        else {
+            fourthChoiceLabel.setVisible(false);
+            fourthChoice.setVisible(false);
+        }
 
         this.question = question;
     }

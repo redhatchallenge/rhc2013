@@ -50,7 +50,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(id));
 
-            if(student.getTimeslot() + 3600000 < System.currentTimeMillis()) {
+            if(System.currentTimeMillis() > student.getTimeslot() && System.currentTimeMillis() < student.getTimeslot() + 3600000) {
                 if(!assignedQuestionsMap.containsKey(id)) {
                     student.setStartTime(new Timestamp(System.currentTimeMillis()));
                     session.update(student);
@@ -58,24 +58,31 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
 
                     class TimesUp extends TimerTask {
 
-                        private final Student student;
+                        private final int studentId;
 
-                        TimesUp(Student student) {
-                            this.student = student;
+                        TimesUp(int id) {
+                            this.studentId = id;
                         }
 
                         @Override
                         public void run() {
                             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-                            session.beginTransaction();
-                            student.setEndTime(new Timestamp(System.currentTimeMillis()));
-                            session.update(student);
-                            session.getTransaction().commit();
+                            try {
+                                session.beginTransaction();
+                                Student student = (Student)session.get(Student.class, studentId);
+                                if(student.getEndTime() == null) {
+                                    student.setEndTime(new Timestamp(System.currentTimeMillis()));
+                                }
+                                session.update(student);
+                                session.getTransaction().commit();
+                            } catch (HibernateException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
                     Timer timer = new Timer();
-                    timer.schedule(new TimesUp(student), 60000);
+                    timer.schedule(new TimesUp(student.getContestantId()), 60000);
 
                     assignedQuestionsMap.put(id, student.getQuestions());
                     return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
@@ -170,7 +177,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         HashMap<Integer, Question> map = new HashMap<>();
 
         try {
-            CSVReader reader = new CSVReader(new InputStreamReader(in));
+            CSVReader reader = new CSVReader(new InputStreamReader(in, "UTF-8"));
             String[] nextLine;
             while ((nextLine = reader.readNext()) != null) {
                 Question question = new Question();

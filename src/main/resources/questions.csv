@@ -1,4 +1,4 @@
-1,Cloud,1,This is the first question!,Choice 1, Choice 2, Choice 3, Choice 4,1
+1,Cloud,1,This is the first question!,Choice 1, Choice 2,,,1
 2,Virtualization,2,This is the second question!,Choice 1, Choice 2, Choice 3, Choice 4,2
 3,RHEL,3,This is the third question!,Choice 1, Choice 2, Choice 3, Choice 4,"1,2,3,4"
 4,Cloud,1,"This is the first question!","Choice 1","Choice 2","Choice 3","Choice 4",1

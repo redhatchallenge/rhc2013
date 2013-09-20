@@ -52,62 +52,6 @@ public class Entry implements EntryPoint {
                 }
 
                 else if(historyToken.equalsIgnoreCase("registration")) {
-                    ContentContainer.INSTANCE.setContent(new RegisterScreen());
-                }
-
-                else if(historyToken.equalsIgnoreCase("login")) {
-                    ContentContainer.INSTANCE.setContent(new LoginScreen());
-                }
-
-                else if(historyToken.equalsIgnoreCase("tc")) {
-                    ContentContainer.INSTANCE.setContent(new TCScreen());
-                }
-
-                else if(historyToken.equalsIgnoreCase("profile")) {
-                    ContentContainer.INSTANCE.setContent(new ProfileScreen());
-                }
-
-                else if(historyToken.equalsIgnoreCase("details")) {
-                    ContentContainer.INSTANCE.setContent(new ContestDetailsScreen());
-                }
-                else if(historyToken.equalsIgnoreCase("forget-password")){
-                    ContentContainer.INSTANCE.setContent(new TriggerPasswordResetScreen());
-                }
-
-
-                else if(historyToken.substring(0, 10).equalsIgnoreCase("resetToken")) {
-                    ContentContainer.INSTANCE.setContent(new ResetPasswordScreen(historyToken.substring(11)));
-                }
-
-                else if(historyToken.substring(0, 12).equalsIgnoreCase("confirmToken")) {
-                    authenticationService.setConfirmationStatus(historyToken.substring(13), new AsyncCallback<Boolean>() {
-                        @Override
-                        public void onFailure(Throwable caught) {
-                            ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>"+ messages.confirmationTokenError() +"</h1>"));
-                        }
-
-                        @Override
-                        public void onSuccess(Boolean result) {
-                            if(result) {
-                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h2>"+ messages.confirmedAccount() +"</h2>"));
-                            }
-
-                            else {
-                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h2>"+ messages.confirmationTokenError() +"</h2>"));
-                            }
-                        }
-                    });
-                }
-
-                else {
-                    ContentContainer.INSTANCE.setContent(new IndexScreen());
-                }
-            }
-        });
-
-        History.fireCurrentHistoryState();
-
-                else if(historyToken.equalsIgnoreCase("registration")) {
                     authenticationService.getRegStatus(new AsyncCallback<List<RegStatus>>() {
                         @Override
                         public void onFailure(Throwable throwable) {
