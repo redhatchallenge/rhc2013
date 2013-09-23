@@ -31,13 +31,17 @@ import java.util.TimerTask;
  */
 public class TestServiceImpl extends RemoteServiceServlet implements TestService {
 
-    private Map<Integer, Question> questionMap;
+    private Map<Integer, Question> questionMapEn;
+    private Map<Integer, Question> questionMapCh;
     private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
     private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
 
     public TestServiceImpl() {
-        InputStream in = TestServiceImpl.class.getResourceAsStream("/questions.csv");
-        questionMap = parseCSV(in);
+        InputStream inEn = TestServiceImpl.class.getResourceAsStream("/en.csv");
+        InputStream inCh = TestServiceImpl.class.getResourceAsStream("/ch.csv");
+
+        questionMapEn = parseCSV(inEn);
+        questionMapCh = parseCSV(inCh);
     }
 
     @Override
@@ -85,11 +89,11 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                     timer.schedule(new TimesUp(student.getContestantId()), 60000);
 
                     assignedQuestionsMap.put(id, student.getQuestions());
-                    return getQuestionsFromListOfQuestionNumbers(student.getQuestions());
+                    return getQuestionsFromListOfQuestionNumbers(student.getQuestions(), student.getLanguage());
                 }
 
                 else {
-                    return getQuestionsFromListOfQuestionNumbers(assignedQuestionsMap.get(id));
+                    return getQuestionsFromListOfQuestionNumbers(assignedQuestionsMap.get(id), student.getLanguage());
                 }
             }
 
@@ -147,7 +151,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     private boolean compare(int id, Set<CorrectAnswer> provided) {
-        Set<CorrectAnswer> correctAnswers = questionMap.get(id).getCorrectAnswers();
+        Set<CorrectAnswer> correctAnswers = questionMapEn.get(id).getCorrectAnswers();
         return provided.equals(correctAnswers);
     }
 
@@ -222,11 +226,19 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         }
     }
 
-    private List<Question> getQuestionsFromListOfQuestionNumbers(int[] questionNumberArray) {
+    private List<Question> getQuestionsFromListOfQuestionNumbers(int[] questionNumberArray, String language) {
         List<Question> listOfQuestions = new ArrayList<>(150);
 
-        for (int i : questionNumberArray) {
-            listOfQuestions.add(questionMap.get(i));
+        if (language.equals("English")) {
+            for (int i : questionNumberArray) {
+                listOfQuestions.add(questionMapEn.get(i));
+            }
+        }
+
+        else if (language.equals("Chinese (Simplified)")) {
+            for (int i : questionNumberArray) {
+                listOfQuestions.add(questionMapCh.get(i));
+            }
         }
 
         return listOfQuestions;
@@ -245,6 +257,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             student.setEndTime(new Timestamp(System.currentTimeMillis()));
             session.getTransaction().commit();
             scoreMap.remove(id);
+            assignedQuestionsMap.remove(id);
         } catch (HibernateException e) {
             e.printStackTrace();
             session.getTransaction().rollback();

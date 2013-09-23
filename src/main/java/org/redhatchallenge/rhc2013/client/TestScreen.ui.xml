@@ -1,9 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+
 <ui:UiBinder xmlns:ui='urn:ui:com.google.gwt.uibinder'
              xmlns:g='urn:import:com.google.gwt.user.client.ui'>
 
     <ui:with field="res" type="org.redhatchallenge.rhc2013.resources.Resources"/>
 
     <g:HTMLPanel>
+        <p>&nbsp;</p>
+        <center><div id="zx"/></center>
         <g:HorizontalPanel ui:field="questionWidgetPanel"/>
         <g:Image ui:field="submitButton" resource="{res.submitButton}"/>
     </g:HTMLPanel>

@@ -1,14 +1,18 @@
 package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.LoadHandler;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
@@ -40,7 +44,6 @@ public class TestScreen extends Composite {
     private TestServiceAsync testService = null;
 
     public TestScreen() {
-
         RootPanel.get("header").clear();
         initWidget(UiBinder.createAndBindUi(this));
 
@@ -64,6 +67,7 @@ public class TestScreen extends Composite {
                 questions = result;
                 counter += 1;
                 questionWidgetPanel.add(questionWidget);
+                Jquery.questionTimer("10","00");
             }
         });
     }
