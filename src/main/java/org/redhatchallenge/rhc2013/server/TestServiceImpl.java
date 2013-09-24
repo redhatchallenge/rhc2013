@@ -81,18 +81,20 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                                 session.getTransaction().commit();
                             } catch (HibernateException e) {
                                 e.printStackTrace();
+                                session.getTransaction().rollback();
                             }
                         }
                     }
 
                     Timer timer = new Timer();
-                    timer.schedule(new TimesUp(student.getContestantId()), 60000);
+                    timer.schedule(new TimesUp(student.getContestantId()), 3600000);
 
                     assignedQuestionsMap.put(id, student.getQuestions());
                     return getQuestionsFromListOfQuestionNumbers(student.getQuestions(), student.getLanguage());
                 }
 
                 else {
+                    session.close();
                     return getQuestionsFromListOfQuestionNumbers(assignedQuestionsMap.get(id), student.getLanguage());
                 }
             }
@@ -158,6 +160,23 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
             return student.getEndTime() != null;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Unable to get user");
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public int getTimeLeft() throws IllegalArgumentException {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            String studentId = SecurityUtils.getSubject().getPrincipal().toString();
+            session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
+            long timeLeft = System.currentTimeMillis() - (student.getStartTime().getTime() + 3600000);
+            return safeLongToInt(timeLeft/1000);
         } catch (HibernateException e) {
             e.printStackTrace();
             throw new RuntimeException("Unable to get user");
@@ -278,5 +297,13 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             e.printStackTrace();
             session.getTransaction().rollback();
         }
+    }
+
+    private static int safeLongToInt(long l) {
+        if (l < Integer.MIN_VALUE || l > Integer.MAX_VALUE) {
+            throw new IllegalArgumentException
+                    (l + " cannot be cast to int without changing its value.");
+        }
+        return (int) l;
     }
 }

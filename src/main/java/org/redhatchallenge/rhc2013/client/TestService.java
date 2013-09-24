@@ -25,6 +25,8 @@ public interface TestService extends RemoteService {
 
     public boolean checkIfTestIsOver() throws IllegalArgumentException;
 
+    public int getTimeLeft() throws IllegalArgumentException;
+
     public static class Util {
         private static final TestServiceAsync Instance = (TestServiceAsync) GWT.create(TestService.class);
 

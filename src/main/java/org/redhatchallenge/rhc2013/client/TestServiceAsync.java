@@ -18,4 +18,6 @@ public interface TestServiceAsync {
     void getScore(AsyncCallback<Integer> async);
 
     void checkIfTestIsOver(AsyncCallback<Boolean> async);
+
+    void getTimeLeft(AsyncCallback<Integer> async);
 }

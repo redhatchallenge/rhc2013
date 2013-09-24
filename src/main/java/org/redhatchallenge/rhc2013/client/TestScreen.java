@@ -53,7 +53,7 @@ public class TestScreen extends Composite {
         testService.checkIfTestIsOver(new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
-                //To change body of implemented methods use File | Settings | File Templates.
+                caught.printStackTrace();
             }
 
             @Override
@@ -80,7 +80,18 @@ public class TestScreen extends Composite {
                             questions = result;
                             counter += 1;
                             questionWidgetPanel.add(questionWidget);
-                            Jquery.questionTimer("10","00");
+
+                            testService.getTimeLeft(new AsyncCallback<Integer>() {
+                                @Override
+                                public void onFailure(Throwable caught) {
+                                    caught.printStackTrace();
+                                }
+
+                                @Override
+                                public void onSuccess(Integer result) {
+                                    Jquery.questionTimer(Integer.toString(result/60),Integer.toString(result%60));
+                                }
+                            });
                         }
                     });
 
