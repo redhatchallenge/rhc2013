@@ -16,4 +16,6 @@ public interface TestServiceAsync {
     void loadQuestions(AsyncCallback<List<Question>> async);
 
     void getScore(AsyncCallback<Integer> async);
+
+    void checkIfTestIsOver(AsyncCallback<Boolean> async);
 }

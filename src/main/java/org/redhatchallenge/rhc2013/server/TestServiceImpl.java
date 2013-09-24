@@ -150,6 +150,22 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         return score;
     }
 
+    @Override
+    public boolean checkIfTestIsOver() throws IllegalArgumentException {
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        try {
+            String studentId = SecurityUtils.getSubject().getPrincipal().toString();
+            session.beginTransaction();
+            Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
+            return student.getEndTime() != null;
+        } catch (HibernateException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Unable to get user");
+        } finally {
+            session.close();
+        }
+    }
+
     private boolean compare(int id, Set<CorrectAnswer> provided) {
         Set<CorrectAnswer> correctAnswers = questionMapEn.get(id).getCorrectAnswers();
         return provided.equals(correctAnswers);

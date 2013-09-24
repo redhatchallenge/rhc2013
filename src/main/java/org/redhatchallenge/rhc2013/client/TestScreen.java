@@ -50,24 +50,41 @@ public class TestScreen extends Composite {
         submitButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
 
         testService = TestService.Util.getInstance();
-        testService.loadQuestions(new AsyncCallback<List<Question>>() {
+        testService.checkIfTestIsOver(new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
-                if(caught instanceof TimeslotExpiredException) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Your timeslot is over. Sorry.</h1>"));
-                }
+                //To change body of implemented methods use File | Settings | File Templates.
             }
 
             @Override
-            public void onSuccess(List<Question> result) {
-                /**
-                 * TODO: Change the value "6" on the following line to 151 for the actual thing.
-                 */
-                questionWidget = new MultipleChoiceWidget(6-result.size(), result.get(counter));
-                questions = result;
-                counter += 1;
-                questionWidgetPanel.add(questionWidget);
-                Jquery.questionTimer("10","00");
+            public void onSuccess(Boolean result) {
+                if(result) {
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>You have already completed the test</h1>"));
+                }
+
+                else {
+                    testService.loadQuestions(new AsyncCallback<List<Question>>() {
+                        @Override
+                        public void onFailure(Throwable caught) {
+                            if(caught instanceof TimeslotExpiredException) {
+                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Your timeslot is over. Sorry.</h1>"));
+                            }
+                        }
+
+                        @Override
+                        public void onSuccess(List<Question> result) {
+                            /**
+                             * TODO: Change the value "6" on the following line to 151 for the actual thing.
+                             */
+                            questionWidget = new MultipleChoiceWidget(6-result.size(), result.get(counter));
+                            questions = result;
+                            counter += 1;
+                            questionWidgetPanel.add(questionWidget);
+                            Jquery.questionTimer("10","00");
+                        }
+                    });
+
+                }
             }
         });
     }
