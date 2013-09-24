@@ -51,6 +51,8 @@ public class MultipleChoiceWidget extends Composite {
 
         if(!question.getAnswers().get(0).isEmpty()) {
             firstChoiceLabel.setText(question.getAnswers().get(0));
+            firstChoiceLabel.setVisible(true);
+            firstChoice.setVisible(true);
         }
 
         else {
@@ -60,6 +62,8 @@ public class MultipleChoiceWidget extends Composite {
 
         if(!question.getAnswers().get(1).isEmpty()) {
             secondChoiceLabel.setText(question.getAnswers().get(1));
+            secondChoiceLabel.setVisible(true);
+            secondChoice.setVisible(true);
         }
 
         else {
@@ -70,6 +74,8 @@ public class MultipleChoiceWidget extends Composite {
 
         if(!question.getAnswers().get(2).isEmpty()) {
             thirdChoiceLabel.setText(question.getAnswers().get(2));
+            thirdChoiceLabel.setVisible(true);
+            thirdChoice.setVisible(true);
         }
 
         else {
@@ -80,6 +86,8 @@ public class MultipleChoiceWidget extends Composite {
 
         if(!question.getAnswers().get(3).isEmpty()) {
             fourthChoiceLabel.setText(question.getAnswers().get(3));
+            fourthChoiceLabel.setVisible(true);
+            fourthChoice.setVisible(true);
         }
 
         else {
@@ -106,10 +114,52 @@ public class MultipleChoiceWidget extends Composite {
     public void setQuestion(int questionNumber, Question question) {
         questionNumberLabel.setText("Question " + questionNumber);
         questionLabel.setText(question.getQuestion());
-        firstChoiceLabel.setText(question.getAnswers().get(0));
-        secondChoiceLabel.setText(question.getAnswers().get(1));
-        thirdChoiceLabel.setText(question.getAnswers().get(2));
-        fourthChoiceLabel.setText(question.getAnswers().get(3));
+
+        if(!question.getAnswers().get(0).isEmpty()) {
+            firstChoiceLabel.setText(question.getAnswers().get(0));
+            firstChoiceLabel.setVisible(true);
+            firstChoice.setVisible(true);
+        }
+
+        else {
+            firstChoiceLabel.setVisible(false);
+            firstChoice.setVisible(false);
+        }
+
+        if(!question.getAnswers().get(1).isEmpty()) {
+            secondChoiceLabel.setText(question.getAnswers().get(1));
+            secondChoiceLabel.setVisible(true);
+            secondChoice.setVisible(true);
+        }
+
+        else {
+            secondChoiceLabel.setVisible(false);
+            secondChoice.setVisible(false);
+        }
+
+
+        if(!question.getAnswers().get(2).isEmpty()) {
+            thirdChoiceLabel.setText(question.getAnswers().get(2));
+            thirdChoiceLabel.setVisible(true);
+            thirdChoice.setVisible(true);
+        }
+
+        else {
+            thirdChoiceLabel.setVisible(false);
+            thirdChoice.setVisible(false);
+        }
+
+
+        if(!question.getAnswers().get(3).isEmpty()) {
+            fourthChoiceLabel.setText(question.getAnswers().get(3));
+            fourthChoiceLabel.setVisible(true);
+            fourthChoice.setVisible(true);
+        }
+
+        else {
+            fourthChoiceLabel.setVisible(false);
+            fourthChoice.setVisible(false);
+        }
 
         this.question = question;
     }
