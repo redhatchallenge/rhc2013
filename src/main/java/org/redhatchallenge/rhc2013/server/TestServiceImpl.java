@@ -179,7 +179,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             String studentId = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
-            long timeLeft = System.currentTimeMillis() - (student.getStartTime().getTime() + 3600000);
+            long timeLeft = (student.getStartTime().getTime() + 3600000) - System.currentTimeMillis();
             return safeLongToInt(timeLeft/1000);
         } catch (HibernateException e) {
             e.printStackTrace();
