@@ -9,6 +9,6 @@
         <p>&nbsp;</p>
         <center><div id="zx"/></center>
         <g:HorizontalPanel ui:field="questionWidgetPanel"/>
-        <g:Image ui:field="submitButton" resource="{res.submitButton}"/>
+        <g:PushButton ui:field="submitButton"/>
     </g:HTMLPanel>
 </ui:UiBinder>

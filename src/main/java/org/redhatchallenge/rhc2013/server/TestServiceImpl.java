@@ -90,8 +90,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                     }
 
                     Timer timer = new Timer();
-//                    timer.schedule(new TimesUp(student.getContestantId()), 3600000);
-                    timer.schedule(new TimesUp(student.getContestantId()), 60000);
+                    timer.schedule(new TimesUp(student.getContestantId()), 3600000);
                     assignedQuestionsMap.put(id, student.getQuestions());
                     return getQuestionsFromListOfQuestionNumbers(student.getQuestions(), student.getLanguage());
                 }

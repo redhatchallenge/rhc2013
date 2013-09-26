@@ -16,6 +16,7 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTMLPanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.PushButton;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 import org.redhatchallenge.rhc2013.resources.Resources;
@@ -36,7 +37,7 @@ public class TestScreen extends Composite {
     private static TestScreenUiBinder UiBinder = GWT.create(TestScreenUiBinder.class);
 
     @UiField HorizontalPanel questionWidgetPanel;
-    @UiField Image submitButton;
+    @UiField(provided = true) PushButton submitButton;
 
     MultipleChoiceWidget questionWidget;
     List<Question> questions;
@@ -45,7 +46,9 @@ public class TestScreen extends Composite {
     private TestServiceAsync testService = null;
 
     public TestScreen() {
+
         RootPanel.get("header").clear();
+        this.submitButton = new PushButton(new Image(Resources.INSTANCE.submitButton()), new Image(Resources.INSTANCE.submitButtonGrey()));
         initWidget(UiBinder.createAndBindUi(this));
 
         submitButton.getElement().getStyle().setCursor(Style.Cursor.POINTER);
@@ -90,7 +93,7 @@ public class TestScreen extends Composite {
 
                                 @Override
                                 public void onSuccess(Integer result) {
-                                    Jquery.questionTimer(Integer.toString(result / 60),Integer.toString(result%60));
+                                    Jquery.questionTimer(Integer.toString(result / 60), Integer.toString(result % 60));
                                 }
                             });
                         }
@@ -103,7 +106,7 @@ public class TestScreen extends Composite {
 
     @UiHandler("submitButton")
     public void handleSubmitButtonClick(ClickEvent event) {
-        submitButton.setResource(Resources.INSTANCE.submitButtonGrey());
+        submitButton.setEnabled(false);
         if(questionWidget.getSelectedAnswers().size() != 0) {
             testService = TestService.Util.getInstance();
             testService.submitAnswer(questionWidget.getCurrentQuestionId(), questionWidget.getSelectedAnswers(), new AsyncCallback<Boolean>() {
@@ -114,14 +117,14 @@ public class TestScreen extends Composite {
                     }
 
                     else {
-                        submitButton.setResource(Resources.INSTANCE.submitButton());
+                        submitButton.setEnabled(true);
                     }
                 }
 
                 @Override
                 public void onSuccess(Boolean result) {
                     if(counter <= questions.size() - 1) {
-                        submitButton.setResource(Resources.INSTANCE.submitButton());
+                        submitButton.setEnabled(true);
                         questionWidget.clear();
                         /**
                          * TODO: Change the value "6" on the following line to 151 for the actual thing.
@@ -135,6 +138,10 @@ public class TestScreen extends Composite {
                     }
                 }
             });
+        }
+
+        else {
+            submitButton.setEnabled(true);
         }
     }
 }
