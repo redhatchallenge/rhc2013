@@ -75,10 +75,13 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                                 session.beginTransaction();
                                 Student student = (Student)session.get(Student.class, studentId);
                                 if(student.getEndTime() == null) {
+                                    student.setScore(scoreMap.get(String.valueOf(studentId)));
                                     student.setEndTime(new Timestamp(System.currentTimeMillis()));
                                 }
                                 session.update(student);
                                 session.getTransaction().commit();
+                                assignedQuestionsMap.remove(String.valueOf(studentId));
+
                             } catch (HibernateException e) {
                                 e.printStackTrace();
                                 session.getTransaction().rollback();
@@ -87,8 +90,8 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                     }
 
                     Timer timer = new Timer();
-                    timer.schedule(new TimesUp(student.getContestantId()), 3600000);
-
+//                    timer.schedule(new TimesUp(student.getContestantId()), 3600000);
+                    timer.schedule(new TimesUp(student.getContestantId()), 60000);
                     assignedQuestionsMap.put(id, student.getQuestions());
                     return getQuestionsFromListOfQuestionNumbers(student.getQuestions(), student.getLanguage());
                 }
@@ -149,6 +152,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         String id = SecurityUtils.getSubject().getPrincipal().toString();
         int score = scoreMap.get(id);
         flushScoreToDatabase(id);
+        scoreMap.remove(id);
         return score;
     }
 
@@ -291,7 +295,6 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             student.setScore(score);
             student.setEndTime(new Timestamp(System.currentTimeMillis()));
             session.getTransaction().commit();
-            scoreMap.remove(id);
             assignedQuestionsMap.remove(id);
         } catch (HibernateException e) {
             e.printStackTrace();

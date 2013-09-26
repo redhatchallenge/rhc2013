@@ -38,7 +38,18 @@ public class ScoreScreen extends Composite {
             @Override
             public void onSuccess(Integer result) {
                 message.setHTML("<center>Thank you for completing the red hat challenge 2013!<br/>we will notify you if you are qualified for the 2nd round</center>");
-                medal.setResource(Resources.INSTANCE.goldTrophy());
+                if(result>=240) {
+                    medal.setResource(Resources.INSTANCE.goldTrophy());
+                }
+
+                else if(result<240 && result >= 150) {
+                    medal.setResource(Resources.INSTANCE.silverTrophy());
+                }
+
+                else {
+                    medal.setResource(Resources.INSTANCE.bronzeTrophy());
+                }
+
                 score.setHTML("<center><h1>" + result + " POINTS</h1></center>");
             }
         });

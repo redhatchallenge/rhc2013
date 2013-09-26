@@ -18,6 +18,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
+import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
 import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
@@ -89,7 +90,7 @@ public class TestScreen extends Composite {
 
                                 @Override
                                 public void onSuccess(Integer result) {
-                                    Jquery.questionTimer(Integer.toString(result/60),Integer.toString(result%60));
+                                    Jquery.questionTimer(Integer.toString(result / 60),Integer.toString(result%60));
                                 }
                             });
                         }
@@ -102,6 +103,7 @@ public class TestScreen extends Composite {
 
     @UiHandler("submitButton")
     public void handleSubmitButtonClick(ClickEvent event) {
+        submitButton.setResource(Resources.INSTANCE.submitButtonGrey());
         if(questionWidget.getSelectedAnswers().size() != 0) {
             testService = TestService.Util.getInstance();
             testService.submitAnswer(questionWidget.getCurrentQuestionId(), questionWidget.getSelectedAnswers(), new AsyncCallback<Boolean>() {
@@ -110,11 +112,16 @@ public class TestScreen extends Composite {
                     if(caught instanceof TimeIsUpException) {
                         ContentContainer.INSTANCE.setContent(new ScoreScreen());
                     }
+
+                    else {
+                        submitButton.setResource(Resources.INSTANCE.submitButton());
+                    }
                 }
 
                 @Override
                 public void onSuccess(Boolean result) {
                     if(counter <= questions.size() - 1) {
+                        submitButton.setResource(Resources.INSTANCE.submitButton());
                         questionWidget.clear();
                         /**
                          * TODO: Change the value "6" on the following line to 151 for the actual thing.
