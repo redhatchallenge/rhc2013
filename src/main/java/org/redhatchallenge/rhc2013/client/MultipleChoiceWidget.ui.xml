@@ -6,7 +6,7 @@
         <table>
             <tr>&nbsp;</tr>
             <tr><h1><g:Label ui:field="questionNumberLabel"/></h1></tr>
-            <tr><p><g:Label ui:field="questionLabel"/></p></tr>
+            <tr><p><g:HTML ui:field="questionLabel"/></p></tr>
             <tr>
                 <td><p><g:CheckBox ui:field="firstChoice"/></p></td>
                 <td><p><g:Label ui:field="firstChoiceLabel"/></p></td>

@@ -1,13 +1,10 @@
 package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.safehtml.shared.SafeHtmlBuilder;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.HTMLPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
@@ -27,7 +24,7 @@ public class MultipleChoiceWidget extends Composite {
     private static MultipleChoiceWidgetUiBinder UiBinder = GWT.create(MultipleChoiceWidgetUiBinder.class);
 
     @UiField Label questionNumberLabel;
-    @UiField Label questionLabel;
+    @UiField HTML questionLabel;
     @UiField Label firstChoiceLabel;
     @UiField Label secondChoiceLabel;
     @UiField Label thirdChoiceLabel;
@@ -47,7 +44,7 @@ public class MultipleChoiceWidget extends Composite {
         initWidget(UiBinder.createAndBindUi(this));
 
         questionNumberLabel.setText("Question " + questionNumber);
-        questionLabel.setText(question.getQuestion());
+        questionLabel.setHTML(new SafeHtmlBuilder().appendEscapedLines(question.getQuestion().replaceAll("replacethis", "\n")).toSafeHtml());
 
         if(!question.getAnswers().get(0).isEmpty()) {
             firstChoiceLabel.setText(question.getAnswers().get(0));
@@ -113,7 +110,7 @@ public class MultipleChoiceWidget extends Composite {
 
     public void setQuestion(int questionNumber, Question question) {
         questionNumberLabel.setText("Question " + questionNumber);
-        questionLabel.setText(question.getQuestion());
+        questionLabel.setHTML(new SafeHtmlBuilder().appendEscapedLines(question.getQuestion().replaceAll("replacethis", "\n")).toSafeHtml());
 
         if(!question.getAnswers().get(0).isEmpty()) {
             firstChoiceLabel.setText(question.getAnswers().get(0));
