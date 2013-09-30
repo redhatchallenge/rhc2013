@@ -9,6 +9,7 @@
         <p>&nbsp;</p>
         <center><div id="zx"/></center>
         <g:HorizontalPanel ui:field="questionWidgetPanel"/>
+        <g:HTML ui:field="warningLabel"/>
         <g:PushButton ui:field="submitButton"/>
     </g:HTMLPanel>
 </ui:UiBinder>

@@ -7,5 +7,6 @@
         <h1><g:HTML ui:field="message"/></h1>
         <center><g:Image ui:field="medal"/></center>
         <g:HTML ui:field="score"/>
+        <center><g:Hyperlink ui:field="homeLink" text="Click here to return to homepage"/></center>
     </g:HTMLPanel>
 </ui:UiBinder>
