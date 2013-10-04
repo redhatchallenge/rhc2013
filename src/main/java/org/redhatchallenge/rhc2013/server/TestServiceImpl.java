@@ -6,6 +6,8 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.shiro.SecurityUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.infinispan.Cache;
+import org.infinispan.manager.EmbeddedCacheManager;
 import org.redhatchallenge.rhc2013.client.TestService;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
@@ -13,6 +15,7 @@ import org.redhatchallenge.rhc2013.shared.Student;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
 import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -33,8 +36,15 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
 
     private Map<Integer, Question> questionMapEn;
     private Map<Integer, Question> questionMapCh;
-    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
-    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
+//    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
+//    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
+
+
+    @Resource(lookup = "java:jboss/infinispan/cluster")
+    EmbeddedCacheManager container;
+
+    private Cache<String, Integer> scoreMap = container.getCache("scoreMap", true);
+    private Cache<String, int[]> assignedQuestionsMap = container.getCache("assignedQuestionsMap", true);
 
     public TestServiceImpl() {
         InputStream inEn = TestServiceImpl.class.getResourceAsStream("/en.csv");
