@@ -8,6 +8,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.*;
 import org.redhatchallenge.rhc2013.resources.Resources;
+import org.redhatchallenge.rhc2013.shared.UnauthenticatedException;
 
 /**
  * @author: Terry Chia (terrycwk1994@gmail.com)
@@ -43,7 +44,13 @@ public class ScoreScreen extends Composite {
             testService.getScore(new AsyncCallback<Integer>() {
                 @Override
                 public void onFailure(Throwable caught) {
-                    getScoreRPC(count+1);
+                    if(caught instanceof UnauthenticatedException) {
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                    }
+
+                    else {
+                        getScoreRPC(count+1);
+                    }
                 }
 
                 @Override

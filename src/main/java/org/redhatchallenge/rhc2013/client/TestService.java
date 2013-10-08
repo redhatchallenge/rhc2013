@@ -3,10 +3,7 @@ package org.redhatchallenge.rhc2013.client;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 import com.google.gwt.core.client.GWT;
-import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
-import org.redhatchallenge.rhc2013.shared.Question;
-import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
-import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
+import org.redhatchallenge.rhc2013.shared.*;
 
 import java.util.List;
 import java.util.Set;
@@ -17,15 +14,15 @@ import java.util.Set;
 @RemoteServiceRelativePath("TestService")
 public interface TestService extends RemoteService {
 
-    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException;
+    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException, UnauthenticatedException;
 
-    public List<Question> loadQuestions() throws IllegalArgumentException, TimeslotExpiredException;
+    public List<Question> loadQuestions() throws IllegalArgumentException, TimeslotExpiredException, UnauthenticatedException;
 
-    public int getScore() throws IllegalArgumentException;
+    public int getScore() throws IllegalArgumentException, UnauthenticatedException;
 
-    public boolean checkIfTestIsOver() throws IllegalArgumentException;
+    public boolean checkIfTestIsOver() throws IllegalArgumentException, UnauthenticatedException;
 
-    public int getTimeLeft() throws IllegalArgumentException;
+    public int getTimeLeft() throws IllegalArgumentException, UnauthenticatedException;
 
     public static class Util {
         private static final TestServiceAsync Instance = (TestServiceAsync) GWT.create(TestService.class);

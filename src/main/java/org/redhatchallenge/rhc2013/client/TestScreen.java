@@ -15,6 +15,7 @@ import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
 import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
+import org.redhatchallenge.rhc2013.shared.UnauthenticatedException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +51,9 @@ public class TestScreen extends Composite {
         testService.checkIfTestIsOver(new AsyncCallback<Boolean>() {
             @Override
             public void onFailure(Throwable caught) {
-                caught.printStackTrace();
+                if(caught instanceof UnauthenticatedException) {
+                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                }
             }
 
             @Override
@@ -77,6 +80,10 @@ public class TestScreen extends Composite {
                 public void onFailure(Throwable caught) {
                     if(caught instanceof TimeIsUpException) {
                         ContentContainer.INSTANCE.setContent(new ScoreScreen());
+                    }
+
+                    else if(caught instanceof UnauthenticatedException) {
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
                     }
 
                     else {
@@ -119,6 +126,10 @@ public class TestScreen extends Composite {
                         ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Your timeslot is over. Sorry.</h1>"));
                     }
 
+                    else if(caught instanceof UnauthenticatedException) {
+                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                    }
+
                     else {
                         loadQuestionsRPC(count+1);
                     }
@@ -137,7 +148,9 @@ public class TestScreen extends Composite {
                     testService.getTimeLeft(new AsyncCallback<Integer>() {
                         @Override
                         public void onFailure(Throwable caught) {
-                            caught.printStackTrace();
+                            if(caught instanceof UnauthenticatedException) {
+                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                            }
                         }
 
                         @Override

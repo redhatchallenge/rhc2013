@@ -9,11 +9,7 @@ import org.hibernate.Session;
 import org.infinispan.Cache;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.redhatchallenge.rhc2013.client.TestService;
-import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
-import org.redhatchallenge.rhc2013.shared.Question;
-import org.redhatchallenge.rhc2013.shared.Student;
-import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
-import org.redhatchallenge.rhc2013.shared.TimeslotExpiredException;
+import org.redhatchallenge.rhc2013.shared.*;
 
 import javax.annotation.Resource;
 import java.io.IOException;
@@ -36,30 +32,39 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
 
     private Map<Integer, Question> questionMapEn;
     private Map<Integer, Question> questionMapCh;
-//    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
-//    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
+    private Map<Integer, Question> questionMapZh;
+
+    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
+    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
 
 
-    @Resource(lookup = "java:jboss/infinispan/cluster")
-    EmbeddedCacheManager container;
-
-    private Cache<String, Integer> scoreMap = container.getCache("scoreMap", true);
-    private Cache<String, int[]> assignedQuestionsMap = container.getCache("assignedQuestionsMap", true);
+//    @Resource(lookup = "java:jboss/infinispan/cluster")
+//    EmbeddedCacheManager container;
+//
+//    private Cache<String, Integer> scoreMap = container.getCache("scoreMap", true);
+//    private Cache<String, int[]> assignedQuestionsMap = container.getCache("assignedQuestionsMap", true);
 
     public TestServiceImpl() {
         InputStream inEn = TestServiceImpl.class.getResourceAsStream("/en.csv");
         InputStream inCh = TestServiceImpl.class.getResourceAsStream("/ch.csv");
+        InputStream inZh = TestServiceImpl.class.getResourceAsStream("/zh.csv");
 
         questionMapEn = parseCSV(inEn);
         questionMapCh = parseCSV(inCh);
+        questionMapZh = parseCSV(inZh);
     }
 
     @Override
-    public List<Question> loadQuestions() throws IllegalArgumentException, TimeslotExpiredException {
+    public List<Question> loadQuestions() throws IllegalArgumentException, TimeslotExpiredException, UnauthenticatedException {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
 
         try {
+
+            if(SecurityUtils.getSubject() == null) {
+                throw new UnauthenticatedException();
+            }
+
             String id = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(id));
@@ -122,10 +127,15 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     @Override
-    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException {
+    public boolean submitAnswer(int id, Set<CorrectAnswer> answers) throws IllegalArgumentException, TimeIsUpException, UnauthenticatedException {
 
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
+
+            if(SecurityUtils.getSubject() == null) {
+                throw new UnauthenticatedException();
+            }
+
             String studentId = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
@@ -157,7 +167,12 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     @Override
-    public int getScore() throws IllegalArgumentException {
+    public int getScore() throws IllegalArgumentException, UnauthenticatedException {
+
+        if(SecurityUtils.getSubject() == null) {
+            throw new UnauthenticatedException();
+        }
+
         String id = SecurityUtils.getSubject().getPrincipal().toString();
         int score = scoreMap.get(id);
         flushScoreToDatabase(id);
@@ -166,9 +181,14 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     @Override
-    public boolean checkIfTestIsOver() throws IllegalArgumentException {
+    public boolean checkIfTestIsOver() throws IllegalArgumentException, UnauthenticatedException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
+
+            if(SecurityUtils.getSubject() == null) {
+                throw new UnauthenticatedException();
+            }
+
             String studentId = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
@@ -182,9 +202,14 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     }
 
     @Override
-    public int getTimeLeft() throws IllegalArgumentException {
+    public int getTimeLeft() throws IllegalArgumentException, UnauthenticatedException {
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         try {
+
+            if(SecurityUtils.getSubject() == null) {
+                throw new UnauthenticatedException();
+            }
+
             String studentId = SecurityUtils.getSubject().getPrincipal().toString();
             session.beginTransaction();
             Student student = (Student)session.get(Student.class, Integer.parseInt(studentId));
@@ -286,6 +311,12 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         else if (language.equals("Chinese (Simplified)")) {
             for (int i : questionNumberArray) {
                 listOfQuestions.add(questionMapCh.get(i));
+            }
+        }
+
+        else if (language.equals("Chinese (Traditional)")) {
+            for (int i : questionNumberArray) {
+                listOfQuestions.add(questionMapZh.get(i));
             }
         }
 
