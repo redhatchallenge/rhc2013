@@ -7,11 +7,15 @@ import org.apache.shiro.SecurityUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.infinispan.Cache;
+import org.infinispan.manager.CacheContainer;
 import org.infinispan.manager.EmbeddedCacheManager;
 import org.redhatchallenge.rhc2013.client.TestService;
 import org.redhatchallenge.rhc2013.shared.*;
 
 import javax.annotation.Resource;
+import javax.enterprise.inject.Produces;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -34,15 +38,12 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     private Map<Integer, Question> questionMapCh;
     private Map<Integer, Question> questionMapZh;
 
-    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
-    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
+//    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
+//    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
 
 
-//    @Resource(lookup = "java:jboss/infinispan/cluster")
-//    EmbeddedCacheManager container;
-//
-//    private Cache<String, Integer> scoreMap = container.getCache("scoreMap", true);
-//    private Cache<String, int[]> assignedQuestionsMap = container.getCache("assignedQuestionsMap", true);
+    private Cache<String, Integer> scoreMap;
+    private Cache<String, int[]> assignedQuestionsMap;
 
     public TestServiceImpl() {
         InputStream inEn = TestServiceImpl.class.getResourceAsStream("/en.csv");
@@ -52,6 +53,25 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         questionMapEn = parseCSV(inEn);
         questionMapCh = parseCSV(inCh);
         questionMapZh = parseCSV(inZh);
+
+        try {
+            InitialContext ic = new InitialContext();
+
+            Object expectedContainer = ic.lookup("java:jboss/infinispan/foobar");
+            CacheContainer container = null;
+
+            if (expectedContainer instanceof CacheContainer) {
+                container = (CacheContainer) expectedContainer;
+            } else {
+                throw new RuntimeException("blah");
+            }
+
+            scoreMap = container.getCache("scoreMap");
+            assignedQuestionsMap = container.getCache("assignedQuestionsMap");
+
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -216,8 +236,7 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
             long timeLeft = (student.getStartTime().getTime() + 3600000) - System.currentTimeMillis();
             return safeLongToInt(timeLeft/1000);
         } catch (HibernateException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Unable to get user");
+            throw new RuntimeException("Unable to get user", e);
         } finally {
             session.close();
         }

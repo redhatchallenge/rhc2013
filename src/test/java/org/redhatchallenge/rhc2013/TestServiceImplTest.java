@@ -7,6 +7,7 @@ import org.redhatchallenge.rhc2013.server.TestServiceImpl;
 import org.redhatchallenge.rhc2013.shared.CorrectAnswer;
 import org.redhatchallenge.rhc2013.shared.Question;
 import org.redhatchallenge.rhc2013.shared.TimeIsUpException;
+import org.redhatchallenge.rhc2013.shared.UnauthenticatedException;
 import org.unitils.reflectionassert.ReflectionComparatorMode;
 
 import java.io.ByteArrayInputStream;
@@ -148,7 +149,11 @@ public class TestServiceImplTest extends AbstractShiroTest {
          * Assert score is +2 after a correct answer.
          */
         correctAnswers.add(CorrectAnswer.ONE);
-        testService.submitAnswer(1, correctAnswers);
+        try {
+            testService.submitAnswer(1, correctAnswers);
+        } catch (UnauthenticatedException e) {
+            e.printStackTrace();
+        }
         assertFalse(scoreMap.isEmpty());
         assertTrue(scoreMap.get("0").equals(2));
 
@@ -158,7 +163,11 @@ public class TestServiceImplTest extends AbstractShiroTest {
         correctAnswers.clear();
         correctAnswers.add(CorrectAnswer.TWO);
         correctAnswers.add(CorrectAnswer.THREE);
-        testService.submitAnswer(1, correctAnswers);
+        try {
+            testService.submitAnswer(1, correctAnswers);
+        } catch (UnauthenticatedException e) {
+            e.printStackTrace();
+        }
         assertFalse(scoreMap.isEmpty());
         assertTrue(scoreMap.get("0").equals(1));
     }
