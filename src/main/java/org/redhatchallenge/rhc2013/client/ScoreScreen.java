@@ -17,6 +17,7 @@ public class ScoreScreen extends Composite {
     interface ScoreScreenUiBinder extends UiBinder<Widget, ScoreScreen> {
     }
 
+    private static MessageMessages messages = GWT.create(MessageMessages.class);
     private static ScoreScreenUiBinder UiBinder = GWT.create(ScoreScreenUiBinder.class);
 
     @UiField HTML message;
@@ -45,7 +46,7 @@ public class ScoreScreen extends Composite {
                 @Override
                 public void onFailure(Throwable caught) {
                     if(caught instanceof UnauthenticatedException) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen(messages.errorLogin()));
                     }
 
                     else {
@@ -55,7 +56,7 @@ public class ScoreScreen extends Composite {
 
                 @Override
                 public void onSuccess(Integer result) {
-                    message.setHTML("<center>Thank you for completing the red hat challenge 2013!<br/>we will notify you if you are qualified for the 2nd round</center>");
+                    message.setHTML(messages.completeMessage());
                     if(result>=240) {
                         medal.setResource(Resources.INSTANCE.goldTrophy());
                     }

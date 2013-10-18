@@ -27,6 +27,7 @@ public class TestScreen extends Composite {
     interface TestScreenUiBinder extends UiBinder<Widget, TestScreen> {
     }
 
+    private static MessageMessages messages = GWT.create(MessageMessages.class);
     private static TestScreenUiBinder UiBinder = GWT.create(TestScreenUiBinder.class);
 
     @UiField HorizontalPanel questionWidgetPanel;
@@ -52,14 +53,14 @@ public class TestScreen extends Composite {
             @Override
             public void onFailure(Throwable caught) {
                 if(caught instanceof UnauthenticatedException) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen(messages.errorLogin()));
                 }
             }
 
             @Override
             public void onSuccess(Boolean result) {
                 if(result) {
-                    ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>You have already completed the test</h1>"));
+                    ContentContainer.INSTANCE.setContent(new MessageScreen(messages.alreadyCompleted()));
                 }
 
                 else {
@@ -83,11 +84,11 @@ public class TestScreen extends Composite {
                     }
 
                     else if(caught instanceof UnauthenticatedException) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen(messages.errorLogin()));
                     }
 
                     else {
-                        warningLabel.setHTML("<font color='red'>An unexpected error has occurred. Please wait a while before submitting your answer again.</font>");
+                        warningLabel.setHTML(messages.unexpectedErrorWhileAnswering());
                         submitButton.setEnabled(true);
                     }
                 }
@@ -112,7 +113,7 @@ public class TestScreen extends Composite {
         }
 
         else {
-            warningLabel.setHTML("<font color='red'>Please select an option before submitting...</font>");
+            warningLabel.setHTML(messages.selectAnswerDammit());
             submitButton.setEnabled(true);
         }
     }
@@ -123,11 +124,11 @@ public class TestScreen extends Composite {
                 @Override
                 public void onFailure(Throwable caught) {
                     if(caught instanceof TimeslotExpiredException) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Your timeslot is over. Sorry.</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen(messages.timeSlotOver()));
                     }
 
                     else if(caught instanceof UnauthenticatedException) {
-                        ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                        ContentContainer.INSTANCE.setContent(new MessageScreen(messages.errorLogin()));
                     }
 
                     else {
@@ -149,7 +150,7 @@ public class TestScreen extends Composite {
                         @Override
                         public void onFailure(Throwable caught) {
                             if(caught instanceof UnauthenticatedException) {
-                                ContentContainer.INSTANCE.setContent(new MessageScreen("<h1>Please login</h1>"));
+                                ContentContainer.INSTANCE.setContent(new MessageScreen(messages.errorLogin()));
                             }
                         }
 
