@@ -38,12 +38,8 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
     private Map<Integer, Question> questionMapCh;
     private Map<Integer, Question> questionMapZh;
 
-    private Map<String, Integer> scoreMap = new HashMap<String, Integer>();
-    private Map<String, int[]> assignedQuestionsMap = new HashMap<String, int[]>();
-
-
-//    private Cache<String, Integer> scoreMap;
-//    private Cache<String, int[]> assignedQuestionsMap;
+    private Cache<String, Integer> scoreMap;
+    private Cache<String, int[]> assignedQuestionsMap;
 
     public TestServiceImpl() {
         InputStream inEn = TestServiceImpl.class.getResourceAsStream("/en.csv");
@@ -54,24 +50,24 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
         questionMapCh = parseCSV(inCh);
         questionMapZh = parseCSV(inZh);
 
-//        try {
-//            InitialContext ic = new InitialContext();
-//
-//            Object expectedContainer = ic.lookup("java:jboss/infinispan/foobar");
-//            CacheContainer container = null;
-//
-//            if (expectedContainer instanceof CacheContainer) {
-//                container = (CacheContainer) expectedContainer;
-//            } else {
-//                throw new RuntimeException("blah");
-//            }
-//
-//            scoreMap = container.getCache("scoreMap");
-//            assignedQuestionsMap = container.getCache("assignedQuestionsMap");
-//
-//        } catch (NamingException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            InitialContext ic = new InitialContext();
+
+            Object expectedContainer = ic.lookup("java:jboss/infinispan/foobar");
+            CacheContainer container = null;
+
+            if (expectedContainer instanceof CacheContainer) {
+                container = (CacheContainer) expectedContainer;
+            } else {
+                throw new RuntimeException("blah");
+            }
+
+            scoreMap = container.getCache("scoreMap");
+            assignedQuestionsMap = container.getCache("assignedQuestionsMap");
+
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -115,10 +111,11 @@ public class TestServiceImpl extends RemoteServiceServlet implements TestService
                                 }
                                 session.update(student);
                                 session.getTransaction().commit();
-                                assignedQuestionsMap.remove(String.valueOf(studentId));
 
                             } catch (HibernateException e) {
                                 e.printStackTrace();
+                                session.getTransaction().rollback();
+                            } catch (NullPointerException e) {
                                 session.getTransaction().rollback();
                             }
                         }

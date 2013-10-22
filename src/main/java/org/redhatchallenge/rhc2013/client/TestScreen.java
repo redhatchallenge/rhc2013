@@ -101,7 +101,7 @@ public class TestScreen extends Composite {
                         /**
                          * TODO: Change the value "6" on the following line to 151 for the actual thing.
                          */
-                        questionWidget.setQuestion(6-questions.size()+counter, questions.get(counter));
+                        questionWidget.setQuestion(151-questions.size()+counter, questions.get(counter));
                         counter += 1;
                     }
 
@@ -141,7 +141,7 @@ public class TestScreen extends Composite {
                     /**
                      * TODO: Change the value "6" on the following line to 151 for the actual thing.
                      */
-                    questionWidget = new MultipleChoiceWidget(6-result.size(), result.get(counter));
+                    questionWidget = new MultipleChoiceWidget(151-result.size(), result.get(counter));
                     questions = result;
                     counter += 1;
                     questionWidgetPanel.add(questionWidget);
