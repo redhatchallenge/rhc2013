@@ -4,3 +4,6 @@ lib/
 *.iml
 
 .DS_Store
+en.csv
+ch.csv
+zh.csv

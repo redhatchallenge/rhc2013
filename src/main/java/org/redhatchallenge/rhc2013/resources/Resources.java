@@ -69,6 +69,20 @@ public interface Resources extends ClientBundle {
     @Source("image/socialbutton11.png")
     ImageResource socialButton11();
 
+    @Source("image/begin_button_el.png")
+    ImageResource beginButtonEn();
+
+    @Source("image/time_slot_closed.png")
+    ImageResource timeslotClosed();
+
+    @Source("image/bronze_trophy.png")
+    ImageResource bronzeTrophy();
+
+    @Source("image/silver_trophy.png")
+    ImageResource silverTrophy();
+
+    @Source("image/gold_trophy.png")
+    ImageResource goldTrophy();
 
     public interface Grid extends CssResource {
 
