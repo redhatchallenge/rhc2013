@@ -24,5 +24,8 @@
         <property name="status" column="status" type="boolean"/>
         <property name="questions" column="questions" type="org.redhatchallenge.rhc2013.server.IntegerArrayType"/>
         <property name="timeslot" column="timeslot" type="long"/>
+        <property name="score" column="score" type="int"/>
+        <property name="startTime" column="start_time" type="timestamp"/>
+        <property name="endTime" column="end_time" type="timestamp"/>
     </class>
 </hibernate-mapping>

@@ -289,4 +289,14 @@ public class Jquery {
             description: 'Looking for a stage to showcase your knowledge on cloud computing, operating systems and virtualization? Join the Red Hat Challenge 2013!.'
         }, function(response){});
     }-*/;
+
+    public static native void questionTimer(String minute, String seconds) /*-{
+        $wnd.$(function(){
+            $wnd.$('#zx').questionTimer({
+                image: 'images/digits.png',
+                startTime: minute + ':' + seconds,
+                format: 'mm:ss'
+            });
+        });
+    }-*/;
 }

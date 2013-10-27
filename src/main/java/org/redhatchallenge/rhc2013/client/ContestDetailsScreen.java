@@ -1,17 +1,27 @@
 package org.redhatchallenge.rhc2013.client;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.i18n.client.LocaleInfo;
 import com.google.gwt.storage.client.Storage;
 import com.google.gwt.storage.client.StorageMap;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.Element;
+import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FocusPanel;
 import com.google.gwt.user.client.ui.HTML;
+import com.google.gwt.user.client.ui.Image;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import org.redhatchallenge.rhc2013.resources.Resources;
 import org.redhatchallenge.rhc2013.shared.Student;
 
 import java.util.Date;
@@ -33,12 +43,18 @@ public class ContestDetailsScreen extends Composite {
     @UiField TextBox emailField;
     @UiField TextBox timeSlotField;
     @UiField TextBox languageField;
+    @UiField FocusPanel countdown;
+
+    SimplePanel simple = new SimplePanel();
 
     public ContestDetailsScreen() {
 
         Jquery.countdown();
 
         initWidget(UiBinder.createAndBindUi(this));
+
+        simple.getElement().setId("countdown");
+        countdown.add(simple);
 
         emailField.setReadOnly(true);
         timeSlotField.setReadOnly(true);
@@ -93,15 +109,53 @@ public class ContestDetailsScreen extends Composite {
                             timeSlotField.setText(messages.noTimeSlot());
                         }
 
-                        if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
-                            Jquery.bindEn(safeLongToInt(result.getTimeslot()/1000 - new Date().getTime()/1000));
+//                        long time = result.getTimeslot()/1000 - new Date().getTime()/1000;
+                        long time = 5;
+
+                        if(time > 0) {
+                            if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
+                                Jquery.bindEn(safeLongToInt(time));
+                            }
+
+                            else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+                                Jquery.bindCh(safeLongToInt(time));
+                            }
+                            else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
+                                Jquery.bindZh(safeLongToInt(time));
+                            }
+
+                            Timer timer = new Timer() {
+                                @Override
+                                public void run() {
+                                    Element note = DOM.getElementById("note");
+                                    note.removeFromParent();
+
+                                    ClickHandler c = new ClickHandler() {
+                                        @Override
+                                        public void onClick(ClickEvent event) {
+                                            ContentContainer.INSTANCE.setContent(new TestScreen());
+                                        }
+                                    };
+
+                                    Image startButton = new Image();
+                                    startButton.setResource(Resources.INSTANCE.beginButtonEn());
+                                    countdown.remove(simple);
+                                    countdown.setWidget(startButton);
+                                    countdown.addClickHandler(c);
+                                    countdown.getElement().getStyle().setCursor(Style.Cursor.POINTER);
+                                }
+                            };
+
+                            timer.schedule(safeLongToInt(time*1000));
                         }
 
-                        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
-                            Jquery.bindCh(safeLongToInt(result.getTimeslot()/1000 - new Date().getTime()/1000));
-                        }
-                        else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
-                            Jquery.bindZh(safeLongToInt(result.getTimeslot()/1000 - new Date().getTime()/1000));
+                        else {
+                            Element note = DOM.getElementById("note");
+                            note.removeFromParent();
+                            Image startButton = new Image();
+                            startButton.setResource(Resources.INSTANCE.timeslotClosed());
+                            countdown.remove(simple);
+                            countdown.setWidget(startButton);
                         }
 
                         /**
@@ -169,16 +223,54 @@ public class ContestDetailsScreen extends Composite {
          * populate the countdown timer.
          */
         if(localStorageMap.size() == 12) {
-            if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
-                Jquery.bindEn(safeLongToInt(Long.parseLong(localStorage.getItem("timeSlot"))/1000 - new Date().getTime()/1000));
+
+//            long time = Long.parseLong(localStorage.getItem("timeSlot"))/1000 - new Date().getTime()/1000;
+            long time = 5;
+
+            if(time > 0) {
+                if(LocaleInfo.getCurrentLocale().getLocaleName().equals("en")) {
+                    Jquery.bindEn(safeLongToInt(time));
+                }
+
+                else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
+                    Jquery.bindCh(safeLongToInt(time));
+                }
+                else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
+                    Jquery.bindZh(safeLongToInt(time));
+                }
+
+                Timer timer = new Timer() {
+                    @Override
+                    public void run() {
+                        Element note = DOM.getElementById("note");
+                        note.removeFromParent();
+
+                        ClickHandler c = new ClickHandler() {
+                            @Override
+                            public void onClick(ClickEvent event) {
+                                ContentContainer.INSTANCE.setContent(new TestScreen());
+                            }
+                        };
+
+                        Image startButton = new Image();
+                        startButton.setResource(Resources.INSTANCE.beginButtonEn());
+                        countdown.remove(simple);
+                        countdown.setWidget(startButton);
+                        countdown.addClickHandler(c);
+                        countdown.getElement().getStyle().setCursor(Style.Cursor.POINTER);
+                    }
+                };
+
+                timer.schedule(safeLongToInt(time*1000));
             }
 
-            else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("ch")) {
-                Jquery.bindCh(safeLongToInt(Long.parseLong(localStorage.getItem("timeSlot"))/1000 - new Date().getTime()/1000));
-            }
-
-            else if(LocaleInfo.getCurrentLocale().getLocaleName().equals("zh")) {
-                Jquery.bindZh(safeLongToInt(Long.parseLong(localStorage.getItem("timeSlot"))/1000 - new Date().getTime()/1000));
+            else {
+                Element note = DOM.getElementById("note");
+                note.removeFromParent();
+                Image startButton = new Image();
+                startButton.setResource(Resources.INSTANCE.timeslotClosed());
+                countdown.remove(simple);
+                countdown.setWidget(startButton);
             }
         }
     }
@@ -190,6 +282,4 @@ public class ContestDetailsScreen extends Composite {
         }
         return (int) l;
     }
-
-
 }

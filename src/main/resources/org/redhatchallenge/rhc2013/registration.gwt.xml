@@ -36,5 +36,6 @@
     <servlet path="/AuthenticationService" class="org.redhatchallenge.rhc2013.server.AuthenticationServiceImpl"/>
     <servlet path="/ProfileService" class="org.redhatchallenge.rhc2013.server.ProfileServiceImpl"/>
     <servlet path="/CaptchaService" class="org.redhatchallenge.rhc2013.server.CaptchaServiceImpl"/>
+    <servlet path="/TestService" class="org.redhatchallenge.rhc2013.server.TestServiceImpl"/>
     <servlet path="/GetAllStudentService" class="org.redhatchallenge.rhc2013.server.GetAllStudentImpl"/>
 </module>

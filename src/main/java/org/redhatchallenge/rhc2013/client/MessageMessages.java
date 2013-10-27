@@ -154,5 +154,21 @@ public interface MessageMessages extends Messages {
     @Messages.DefaultMessage("Your Account has been locked/deleted.")
     String lockDelete();
 
+    @Messages.DefaultMessage("Thank you for completing the red hat challenge 2013!<br/>we will notify you if you are qualified for the 2nd round")
+    String completeMessage();
 
+    @Messages.DefaultMessage("Please select your answer before submitting")
+    String selectAnswerDammit();
+
+    @Messages.DefaultMessage("You have already completed Red Hat Challenge 2013")
+    String alreadyCompleted();
+
+    @Messages.DefaultMessage("An unexpected error has occurred. Please wait awhile before submitting your answer.")
+    String unexpectedErrorWhileAnswering();
+
+    @Messages.DefaultMessage("Your timeslot is over.")
+    String timeSlotOver();
+
+    @Messages.DefaultMessage("Return to homepage")
+    String returnHome();
 }

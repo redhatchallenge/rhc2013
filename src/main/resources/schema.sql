@@ -24,9 +24,16 @@ CREATE TABLE contestant (
     last_modified timestamp
 );
 
+CREATE TABLE  registration_status (
+  status_id serial primary key,
+  reg_status_bool boolean DEFAULT FALSE NOT NULL
+);
+
+INSERT INTO registration_status(status_id, reg_status_bool) VALUES (1, FALSE);
+
 CREATE TABLE timeslot_list (
     timeslot_id serial primary key,
-    timeslot bigint  NOT NULL UNIQUE,
+    timeslot bigint  NOT NULL UNIQUE
 );
 
 INSERT INTO timeslot_list(timeslot, timeslot_id) VALUES (1382490000000, 1);
@@ -56,7 +63,6 @@ CREATE TRIGGER update_last_modified BEFORE UPDATE
   ON contestant FOR EACH ROW EXECUTE PROCEDURE
   update_last_modified_column();
 
-
 CREATE TABLE reset_tokens (
     email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
     token character varying(50) NOT NULL primary key
@@ -66,3 +72,8 @@ CREATE TABLE confirm_tokens (
     email character varying(50) NOT NULL references contestant(email) ON DELETE CASCADE ON UPDATE CASCADE,
     token character varying(50) NOT NULL primary key
 );
+
+ALTER TABLE contestant ADD COLUMN score int DEFAULT 0;
+ALTER TABLE contestant ADD COLUMN start_time timestamp;
+ALTER TABLE contestant ADD COLUMN end_time timestamp;
+
